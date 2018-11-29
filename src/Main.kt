@@ -9,7 +9,6 @@ import java.lang.Math.random
 fun main(args: Array<String>) {
 
     val leds = AnimatedLEDStrip(180, 12)
-    val nLock = Mutex()
 //    println("Constructed")
 //    while (true) {
 //        leds.multiPixelRun(3, Direction.FORWARD, ColorContainer(255, 0, 0))
