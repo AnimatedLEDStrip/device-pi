@@ -1,9 +1,6 @@
 import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import java.lang.Math.random
-import java.sql.Time
-import java.time.LocalDateTime
-import java.util.*
 
 enum class Direction {
     FORWARD, BACKWARD
@@ -15,7 +12,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
 
     init {
         for (i in 0 until numLEDs) shuffleArray.add(i)
-
     }
 
     fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delayTime: Int) {
@@ -226,19 +222,7 @@ show()
 
     fun sparkle(rIn: Int, gIn: Int, bIn: Int) = sparkle(ColorContainer(rIn, gIn, bIn))
 
-    fun sparkle2(sparkleColor: ColorContainer) {
-//        for(i in 0 until ledStrip.numPixels) {
-//            GlobalScope.launch {
-//                //val time = LocalDateTime.now()
-//                val originalColor: ColorContainer = getPixelColor(i)
-//                val delay = random().toInt() % 4950
-//                setPixelColor(i, sparkleColor)
-show()
-//                delay(50)
-//                setPixelColor(i, originalColor)
-//            }
-//        }
-
+    fun sparkleCC(sparkleColor: ColorContainer) {
         val deferred = (0 until ledStrip.numPixels).map {n ->
             GlobalScope.async {
                 val originalColor: ColorContainer = getPixelColor(n)
@@ -252,10 +236,9 @@ show()
         runBlocking {
             deferred.awaitAll()
         }
-        //delay(5000)
     }
 
-    fun sparkle2(rIn: Int, gIn: Int, bIn: Int) = sparkle2(ColorContainer(rIn, gIn, bIn))
+    fun sparkleCC(rIn: Int, gIn: Int, bIn: Int) = sparkleCC(ColorContainer(rIn, gIn, bIn))
 
     fun sparkleToColor(destinationColor: ColorContainer) {
         shuffleArray.shuffle()

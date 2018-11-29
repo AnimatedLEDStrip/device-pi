@@ -1,15 +1,29 @@
 import com.diozero.ws281xj.rpiws281x.WS281x
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
-open class LEDStrip(var numLEDs: Int, pin: Int) {
+open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     var ledStrip: WS281x
+    private val locks = mutableMapOf<Int, Mutex>()
+    private val renderLock = Mutex()
 
     init {
+        for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         ledStrip = WS281x(pin, 255, numLEDs)
         println("using GPIO $pin")
     }
 
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
-        ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in setPixelColor")
+        }
     }
 
     fun setPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
@@ -17,15 +31,39 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
     }
 
     fun setPixelRed(pixel: Int, rIn: Int) {
-        ledStrip.setRedComponent(pixel, rIn)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    ledStrip.setRedComponent(pixel, rIn)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in setPixelColor")
+        }
     }
 
     fun setPixelGreen(pixel: Int, gIn: Int) {
-        ledStrip.setGreenComponent(pixel, gIn)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    ledStrip.setGreenComponent(pixel, gIn)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in setPixelColor")
+        }
     }
 
     fun setPixelBlue(pixel: Int, bIn: Int) {
-        ledStrip.setBlueComponent(pixel, bIn)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    ledStrip.setBlueComponent(pixel, bIn)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in setPixelColor")
+        }
     }
 
     fun setStripColor(colorValues: ColorContainer) {
@@ -44,15 +82,42 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
     }
 
     fun getPixelRed(pixel: Int): Int {
-        return ledStrip.getRedComponent(pixel)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    return@runBlocking ledStrip.getRedComponent(pixel)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in getPixelRed")
+        }
+        return 0
     }
 
     fun getPixelGreen(pixel: Int): Int {
-        return ledStrip.getGreenComponent(pixel)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    return@runBlocking ledStrip.getGreenComponent(pixel)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in getPixelGreen")
+        }
+        return 0
     }
 
     fun getPixelBlue(pixel: Int): Int {
-        return ledStrip.getBlueComponent(pixel)
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    return@runBlocking ledStrip.getBlueComponent(pixel)
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in getPixelBlue")
+        }
+        return 0
     }
 
     fun getPixelColor(pixel: Int): ColorContainer = ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
@@ -120,6 +185,14 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
     }
 
     fun show() {
-        ledStrip.render()
+        try {
+            runBlocking {
+                renderLock.withLock {
+                    ledStrip.render()
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in show")
+        }
     }
 }
