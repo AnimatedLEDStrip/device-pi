@@ -2,7 +2,7 @@
 
 A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) to Kotlin for Raspberry Pis
 
-Dependencies (Maven coordinates):
+## Dependencies (Maven coordinates):
 
 ### diozero Core
 > com.diozero:diozero-core:0.11
