@@ -2,7 +2,7 @@ import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import java.lang.Math.random
 
-class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
+class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(numLEDs, pin) {
 
     private var shuffleArray = mutableListOf<Int>()
 
@@ -247,7 +247,7 @@ show()
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
 
-    fun wipe(colorValues: ColorContainer, wipeDirection: Direction) {
+    fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(i, colorValues)
@@ -263,7 +263,7 @@ show()
         }
     }
 
-    fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction) = wipe(ColorContainer(rIn, gIn, bIn), wipeDirection)
+    fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction, delay: Int = 10) = wipe(ColorContainer(rIn, gIn, bIn), wipeDirection)
 
 
 }

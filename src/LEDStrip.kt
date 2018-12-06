@@ -16,6 +16,10 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
         setPixelColor(pixel, ColorContainer(rIn, gIn, bIn))
     }
 
+    fun setPixelColor(pixel: Int, hexIn: Long) {
+        setPixelColor(pixel, ColorContainer(hexIn))
+    }
+
     fun setPixelRed(pixel: Int, rIn: Int) {
         ledStrip.setRedComponent(pixel, rIn)
     }
@@ -29,17 +33,18 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
     }
 
     fun setStripColor(colorValues: ColorContainer) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, colorValues.r, colorValues.g, colorValues.b)
+        for (i in 0 until numLEDs) setPixelColor(i, colorValues)
         show()
     }
 
     fun setStripColor(hexIn: Long) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, (hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
+        for (i in 0 until numLEDs) setPixelColor(i, hexIn)
+//        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, (hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
         show()
     }
 
     fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
+        for (i in 0 until numLEDs) setPixelColor(i, rIn, gIn, bIn)
         show()
     }
 

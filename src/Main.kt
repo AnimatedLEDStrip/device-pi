@@ -1,14 +1,11 @@
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
+import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.lang.Math.random
 
 fun main(args: Array<String>) {
 
-    val leds = AnimatedLEDStrip(180, 12)
+    val leds = AnimatedLEDStripConcurrent(180, 12)
 //    println("Constructed")
 //    while (true) {
 //        leds.multiPixelRun(3, Direction.FORWARD, ColorContainer(255, 0, 0))
@@ -47,25 +44,46 @@ fun main(args: Array<String>) {
 ////            println("Loop E")
 //        }
 //    }
-    GlobalScope.launch {
-        var n = 0
-        while (n < 15) {
-            println("R: $n")
-            Thread.sleep((random()*1000000.0 % 1000).toInt().toLong())
-            leds.wipe(80, 0, 0, Direction.BACKWARD)
-            n++
+
+    for (n in 1..10) {
+        GlobalScope.launch {
+            var n = 0
+            when ((random() * 10000 % 2).toInt()) {
+                0 -> while (n < 15) {
+//                println("R: $n")
+                    Thread.sleep((random() * 1000000.0 % 1000).toInt().toLong())
+                    leds.wipe(80, 0, 0, Direction.BACKWARD)
+                    n++
+                }
+                1 -> while (n < 15) {
+                    //                println("G: $n")
+                    Thread.sleep((random() * 1000000.0 % 1000).toInt().toLong())
+                    leds.wipe(0, 80, 0, Direction.FORWARD)
+                    n++
+                }
+            }
         }
     }
-    GlobalScope.launch {
+
+//    GlobalScope.launch {
+//        var n = 0
+//        while (n < 15) {
+//            println("R: $n")
+//            Thread.sleep((random() * 1000000.0 % 1000).toInt().toLong())
+//            leds.wipe(80, 0, 0, Direction.BACKWARD)
+//            n++
+//        }
+//    }
+    runBlocking {
         var n = 0
         while (n < 15) {
             println("G: $n")
-            Thread.sleep((random()*1000000.0 % 1000).toInt().toLong())
+            Thread.sleep((random() * 1000000.0 % 1000).toInt().toLong())
             leds.wipe(0, 80, 0, Direction.FORWARD)
             n++
         }
     }
 
-    while (readLine() != ""){}
+//    while (readLine() != ""){}
 
 }

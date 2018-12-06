@@ -17,7 +17,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
         try {
             runBlocking {
-                locks[pixel]!!.withLock {
+                locks[pixel]!!.tryWithLock {
                     ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
                 }
             }
@@ -30,10 +30,14 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
         setPixelColor(pixel, ColorContainer(rIn, gIn, bIn))
     }
 
+    fun setPixelColor(pixel: Int, hexIn: Long) {
+        setPixelColor(pixel, ColorContainer(hexIn))
+    }
+
     fun setPixelRed(pixel: Int, rIn: Int) {
         try {
             runBlocking {
-                locks[pixel]!!.withLock {
+                locks[pixel]!!.tryWithLock {
                     ledStrip.setRedComponent(pixel, rIn)
                 }
             }
@@ -45,7 +49,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     fun setPixelGreen(pixel: Int, gIn: Int) {
         try {
             runBlocking {
-                locks[pixel]!!.withLock {
+                locks[pixel]!!.tryWithLock {
                     ledStrip.setGreenComponent(pixel, gIn)
                 }
             }
@@ -57,7 +61,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     fun setPixelBlue(pixel: Int, bIn: Int) {
         try {
             runBlocking {
-                locks[pixel]!!.withLock {
+                locks[pixel]!!.tryWithLock {
                     ledStrip.setBlueComponent(pixel, bIn)
                 }
             }
@@ -67,12 +71,12 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     }
 
     fun setStripColor(colorValues: ColorContainer) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, colorValues.r, colorValues.g, colorValues.b)
+        for (i in 0 until numLEDs) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
         show()
     }
 
     fun setStripColor(hexIn: Long) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, (hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
+        for (i in 0 until numLEDs) setPixelColor(i, hexIn)
         show()
     }
 
@@ -122,6 +126,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
 
     fun getPixelColor(pixel: Int): ColorContainer = ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
 
+    // Not thread safe!
     fun setStripFromPalette(paletteType: RGBPalette16, startIndex: Int, blendType: TBlendType = TBlendType.LINEARBLEND, brightness: Int = 255) {
 
         var index = startIndex
