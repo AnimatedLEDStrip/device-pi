@@ -247,6 +247,36 @@ show()
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
 
+    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+        if (stackDirection == Direction.FORWARD) {
+            setStripColor(colorValues2)
+            for (q in ledStrip.numPixels - 1 downTo 0) {
+                for (i in 0 until q) {
+                    setPixelColor(i, colorValues1)
+                    show()
+                    delay(10)
+                    setPixelColor(i, colorValues2)
+                }
+                setPixelColor(q, colorValues1)
+                show()
+            }
+        } else if (stackDirection == Direction.BACKWARD) {
+            setStripColor(colorValues2)
+            for (q in 0 until ledStrip.numPixels) {
+                for (i in q-1 downTo 0) {
+                    setPixelColor(i, colorValues1)
+                    show()
+                    delay(10)
+                    setPixelColor(i, colorValues2)
+                }
+                setPixelColor(q, colorValues1)
+                show()
+            }
+        }
+    }
+
+//    fun stackOverflow
+
     fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
