@@ -275,7 +275,9 @@ show()
         }
     }
 
-//    fun stackOverflow
+    fun stackOverflow(stackColor: ColorContainer) {
+
+    }
 
     private fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10) {
         if (wipeDirection == Direction.BACKWARD) {
