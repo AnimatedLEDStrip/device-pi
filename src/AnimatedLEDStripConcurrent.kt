@@ -279,7 +279,7 @@ show()
 
     }
 
-    fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10) {
+    private fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(i, colorValues)

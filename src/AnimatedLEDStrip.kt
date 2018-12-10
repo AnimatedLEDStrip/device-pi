@@ -226,7 +226,7 @@ show()
         val deferred = (0 until ledStrip.numPixels).map {n ->
             GlobalScope.async {
                 val originalColor: ColorContainer = getPixelColor(n)
-                delay(random().toInt() % 4950)
+                delay((random()*100000 % 4950).toInt())
                 setPixelColor(n, sparkleColor)
                 show()
                 delay(50)
@@ -240,16 +240,63 @@ show()
 
     fun sparkleCC(rIn: Int, gIn: Int, bIn: Int) = sparkleCC(ColorContainer(rIn, gIn, bIn))
 
-    fun sparkleToColor(destinationColor: ColorContainer) {
+    fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
             setPixelColor(shuffleArray[i], destinationColor)
+//            println("Test $i")
             show()
-            delay(50)
+            delay(delay)
         }
     }
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
+
+    fun sparkleToColorCC(sparkleColor: ColorContainer) {
+        shuffleArray.shuffle()
+        shuffleArray.forEach {n ->
+            GlobalScope.launch {
+                Thread.sleep((random()*100000 % 50).toLong())
+//                println(n)
+                setPixelColor(n, sparkleColor)
+                show()
+//                Thread.sleep(50)
+            }
+        }
+//        runBlocking {
+//            deferred.awaitAll()
+//        }
+    }
+
+    fun sparkleToColorCC(rIn: Int, gIn: Int, bIn: Int) = sparkleToColorCC(ColorContainer(rIn, gIn, bIn))
+
+    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+        if (stackDirection == Direction.FORWARD) {
+            setStripColor(colorValues2)
+            for (q in ledStrip.numPixels - 1 downTo 0) {
+                for (i in 0 until q) {
+                    setPixelColor(i, colorValues1)
+                    show()
+                    delay(10)
+                    setPixelColor(i, colorValues2)
+                }
+                setPixelColor(q, colorValues1)
+                show()
+            }
+        } else if (stackDirection == Direction.BACKWARD) {
+            setStripColor(colorValues2)
+            for (q in 0 until ledStrip.numPixels) {
+                for (i in q-1 downTo 0) {
+                    setPixelColor(i, colorValues1)
+                    show()
+                    delay(10)
+                    setPixelColor(i, colorValues2)
+                }
+                setPixelColor(q, colorValues1)
+                show()
+            }
+        }
+    }
 
     fun wipe(colorValues: ColorContainer, wipeDirection: Direction) {
         if (wipeDirection == Direction.BACKWARD) {
