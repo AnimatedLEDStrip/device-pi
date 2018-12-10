@@ -10,11 +10,11 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
         for (i in 0 until numLEDs) shuffleArray.add(i)
     }
 
-    fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delayTime: Int) {
+    fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delay: Int = 1000) {
         setStripColor(colorValues1)
-        delay(delayTime)
+        delay(delay)
         setStripColor(colorValues2)
-        delay(delayTime)
+        delay(delay)
     }
 
     fun alternate(r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delayTime: Int) = alternate(ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delayTime)
@@ -96,13 +96,13 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
         //Todo: fill in function
     }
 
-    fun multiPixelRun(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+    fun multiPixelRun(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 100) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
                 setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues1)
                 show()
-                delay(100)
+                delay(delay)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         } else if (chaseDirection == Direction.FORWARD) {
@@ -110,21 +110,21 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
                 setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues1)
                 show()
-                delay(100)
+                delay(delay)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         }
     }
 
-    fun multiPixelRun(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int) = multiPixelRun(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
+    fun multiPixelRun(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delay: Int = 100) = multiPixelRun(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay)
 
-    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer) {
+    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer, delay: Int = 150) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
 //                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues1)
                 show()
-                delay(150)
+                delay(delay)
 //                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         } else if (chaseDirection == Direction.FORWARD) {
@@ -132,43 +132,43 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 //                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues1)
                 show()
-                delay(150)
+                delay(delay)
 //                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         }
     }
 
-    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int) = multiPixelRunToColor(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In))
+    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int, delay: Int = 150) = multiPixelRunToColor(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), delay)
 
-    fun pixelRun(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+    fun pixelRun(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 50) {
         setStripColor(colorValues2)
         if (movementDirection == Direction.FORWARD) {
             for (q in 0 until ledStrip.numPixels) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay(delay)
                 setPixelColor(q, colorValues2)
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay(delay)
                 setPixelColor(q, colorValues2)
             }
         }
     }
 
-    fun pixelRun(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int) = pixelRun(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
+    fun pixelRun(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delay: Int = 50) = pixelRun(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay)
 
-    fun pixelRunWithTrail(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+    fun pixelRunWithTrail(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 50) {
         if (movementDirection == Direction.FORWARD) {
             for (q in 0 until ledStrip.numPixels) {
                 for (i in 0 until ledStrip.numPixels - 1) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
-                delay(50)
+                delay(delay)
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in ledStrip.numPixels - 1 downTo 0) {
@@ -176,14 +176,14 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
-                delay(50)
+                delay(delay)
             }
         }
     }
 
     fun pixelRunWithTrail(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int) = pixelRunWithTrail(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
 
-    fun smoothChase(palette: RGBPalette16, movementDirection: Direction, brightness: Int = 255) {
+    fun smoothChase(palette: RGBPalette16, movementDirection: Direction, brightness: Int = 255, delay: Int = 50) {
         for (i in 0 until numLEDs) {
             colorListFromPalette(palette, i)
         }
@@ -191,41 +191,41 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 //            for (startIndex in 255 downTo 1) {
 //                setStripFromPalette(palette, startIndex, TBlendType.LINEARBLEND, brightness)
 //                println(ledStrip.getPixelColour(0).toString(16))
-//                delay(50)
+//                delay(delay)
 show()
 //            }
 //        } else if (movementDirection == Direction.BACKWARD) {
 //            for (startIndex in 0 until 256) {
 //                setStripFromPalette(palette, startIndex, TBlendType.LINEARBLEND, brightness)
-//                delay(50)
+//                delay(delay)
 show()
 //            }
 //        }
 
     }
 
-    fun sparkle(sparkleColor: ColorContainer) {
+    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50) {
         var originalColor: ColorContainer
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
             originalColor = getPixelColor(shuffleArray[i])
             setPixelColor(shuffleArray[i], sparkleColor)
             show()
-            delay(50)
+            delay(delay)
             setPixelColor(shuffleArray[i], originalColor)
         }
     }
 
-    fun sparkle(rIn: Int, gIn: Int, bIn: Int) = sparkle(ColorContainer(rIn, gIn, bIn))
+    fun sparkle(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50) = sparkle(ColorContainer(rIn, gIn, bIn), delay)
 
-    fun sparkleCC(sparkleColor: ColorContainer) {
+    fun sparkleCC(sparkleColor: ColorContainer, delay: Int = 50) {
         val deferred = (0 until ledStrip.numPixels).map {n ->
             GlobalScope.async {
                 val originalColor: ColorContainer = getPixelColor(n)
                 delay(random().toInt() % 4950)
                 setPixelColor(n, sparkleColor)
                 show()
-                delay(50)
+                delay(delay)
                 setPixelColor(n, originalColor)
             }
         }
@@ -234,27 +234,27 @@ show()
         }
     }
 
-    fun sparkleCC(rIn: Int, gIn: Int, bIn: Int) = sparkleCC(ColorContainer(rIn, gIn, bIn))
+    fun sparkleCC(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50) = sparkleCC(ColorContainer(rIn, gIn, bIn), delay)
 
-    fun sparkleToColor(destinationColor: ColorContainer) {
+    fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
             setPixelColor(shuffleArray[i], destinationColor)
             show()
-            delay(50)
+            delay(delay)
         }
     }
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
 
-    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 10) {
         if (stackDirection == Direction.FORWARD) {
             setStripColor(colorValues2)
             for (q in ledStrip.numPixels - 1 downTo 0) {
                 for (i in 0 until q) {
                     setPixelColor(i, colorValues1)
                     show()
-                    delay(10)
+                    delay(delay)
                     setPixelColor(i, colorValues2)
                 }
                 setPixelColor(q, colorValues1)
@@ -266,7 +266,7 @@ show()
                 for (i in q-1 downTo 0) {
                     setPixelColor(i, colorValues1)
                     show()
-                    delay(10)
+                    delay(delay)
                     setPixelColor(i, colorValues2)
                 }
                 setPixelColor(q, colorValues1)
@@ -282,13 +282,13 @@ show()
             for (i in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(10)
+                delay(delay)
             }
         } else if (wipeDirection == Direction.FORWARD) {
             for (i in 0 until ledStrip.numPixels) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(10)
+                delay(delay)
             }
         }
     }
