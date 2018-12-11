@@ -1,13 +1,21 @@
 import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.lang.Math.random
 
 class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(numLEDs, pin) {
 
     private var shuffleArray = mutableListOf<Int>()
 
+    private val shuffleLock = Mutex()
+
     init {
-        for (i in 0 until numLEDs) shuffleArray.add(i)
+        runBlocking {
+            shuffleLock.withLock {
+                for (i in 0 until numLEDs) shuffleArray.add(i)
+            }
+        }
     }
 
     fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delay: Int = 1000, delayMod: Double = 1.0) {
@@ -206,13 +214,17 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0) {
         var originalColor: ColorContainer
-        shuffleArray.shuffle()
+        val myShuffleArray = runBlocking {
+            shuffleLock.withLock { shuffleArray.shuffle() }
+            return@runBlocking shuffleArray
+        }
+        myShuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
-            originalColor = getPixelColor(shuffleArray[i])
-            setPixelColor(shuffleArray[i], sparkleColor)
+            originalColor = getPixelColor(myShuffleArray[i])
+            setPixelColor(myShuffleArray[i], sparkleColor)
             show()
             delay(delay * delayMod.toInt())
-            setPixelColor(shuffleArray[i], originalColor)
+            setPixelColor(myShuffleArray[i], originalColor)
         }
     }
 
@@ -237,9 +249,13 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
     fun sparkleCC(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) = sparkleCC(ColorContainer(rIn, gIn, bIn), delay, delayMod)
 
     fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0) {
-        shuffleArray.shuffle()
+        val myShuffleArray = runBlocking {
+            shuffleLock.withLock { shuffleArray.shuffle() }
+            return@runBlocking shuffleArray
+        }
+        myShuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
-            setPixelColor(shuffleArray[i], destinationColor)
+            setPixelColor(myShuffleArray[i], destinationColor)
             show()
             delay(delay * delayMod.toInt())
         }
@@ -267,16 +283,15 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 //            setStripColor(colorValues2)
             for (q in 0..ledStrip.numPixels) {
                 var originalColor: ColorContainer
-                for (i in q - 1 downTo 0) {
+                for (i in numLEDs - 1 downTo q) {
                     originalColor = getPixelColor(i)
-//                    if (i%10 ==0) println("$i color: ${originalColor.getColorHex()}")
                     setPixelColor(i, colorValues1)
                     show()
                     delay(delay * delayMod.toInt())
                     setPixelColor(i, originalColor)
 //                    setPixelColor(i, colorValues2)
                 }
-//                setPixelColor(q, colorValues1)
+                setPixelColor(q, colorValues1)
                 show()
             }
         }
@@ -305,7 +320,6 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
                 delay(delay * delayMod.toInt())
             }
         }
-        println("Color: ${ledStrip.getPixelColour(6)}")
     }
 
     fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) = wipe(ColorContainer(rIn, gIn, bIn), wipeDirection, delay, delayMod)

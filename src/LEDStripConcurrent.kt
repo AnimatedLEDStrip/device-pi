@@ -87,7 +87,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
 
     fun getPixelRed(pixel: Int): Int {
         try {
-            runBlocking {
+            return runBlocking {
                 locks[pixel]!!.withLock {
                     return@runBlocking ledStrip.getRedComponent(pixel)
                 }
@@ -100,7 +100,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
 
     fun getPixelGreen(pixel: Int): Int {
         try {
-            runBlocking {
+            return runBlocking {
                 locks[pixel]!!.withLock {
                     return@runBlocking ledStrip.getGreenComponent(pixel)
                 }
@@ -113,7 +113,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
 
     fun getPixelBlue(pixel: Int): Int {
         try {
-            runBlocking {
+            return runBlocking {
                 locks[pixel]!!.withLock {
                     return@runBlocking ledStrip.getBlueComponent(pixel)
                 }
@@ -126,7 +126,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
 
     fun getPixelColor(pixel: Int): ColorContainer {
         try {
-            runBlocking {
+            return runBlocking {
                 locks[pixel]!!.withLock {
                     return@runBlocking ColorContainer(ledStrip.getPixelColour(pixel).toLong())
                 }
@@ -134,6 +134,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
         } catch (e: Exception) {
             println("ERROR in getPixelColor: $e")
         }
+        println("Color not retrieved")
         return CCBlack
     }
 
