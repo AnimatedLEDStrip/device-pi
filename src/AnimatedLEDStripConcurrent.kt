@@ -284,7 +284,7 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
         }
     }
 
-    private fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) {
+    fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(i, colorValues)
