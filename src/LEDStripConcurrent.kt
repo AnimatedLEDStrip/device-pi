@@ -22,7 +22,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelColor")
+            println("ERROR in setPixelColor: $e")
         }
     }
 
@@ -42,7 +42,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelColor")
+            println("ERROR in setPixelRed: $e")
         }
     }
 
@@ -54,7 +54,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelColor")
+            println("ERROR in setPixelGreen: $e")
         }
     }
 
@@ -66,7 +66,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelColor")
+            println("ERROR in setPixelBlue")
         }
     }
 
@@ -93,7 +93,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelRed")
+            println("ERROR in getPixelRed: $e")
         }
         return 0
     }
@@ -106,7 +106,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelGreen")
+            println("ERROR in getPixelGreen: $e")
         }
         return 0
     }
@@ -119,12 +119,23 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelBlue")
+            println("ERROR in getPixelBlue: $e")
         }
         return 0
     }
 
-    fun getPixelColor(pixel: Int): ColorContainer = ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
+    fun getPixelColor(pixel: Int): ColorContainer {
+        try {
+            runBlocking {
+                locks[pixel]!!.withLock {
+                    return@runBlocking ColorContainer(ledStrip.getPixelColour(pixel).toLong())
+                }
+            }
+        } catch (e: Exception) {
+            println("ERROR in getPixelColor: $e")
+        }
+        return CCBlack
+    }
 
     // Not thread safe!
     fun setStripFromPalette(paletteType: RGBPalette16, startIndex: Int, blendType: TBlendType = TBlendType.LINEARBLEND, brightness: Int = 255) {
@@ -197,7 +208,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in show")
+            println("ERROR in show: $e")
         }
     }
 }

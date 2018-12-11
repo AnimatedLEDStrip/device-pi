@@ -249,38 +249,45 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 10, delayMod: Double = 1.0) {
         if (stackDirection == Direction.FORWARD) {
-            setStripColor(colorValues2)
+//            setStripColor(colorValues2)
             for (q in ledStrip.numPixels - 1 downTo 0) {
+                var originalColor: ColorContainer
                 for (i in 0 until q) {
+                    originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
                     show()
                     delay(delay * delayMod.toInt())
-                    setPixelColor(i, colorValues2)
+                    setPixelColor(i, originalColor)
+//                    setPixelColor(i, colorValues2)
                 }
                 setPixelColor(q, colorValues1)
                 show()
             }
         } else if (stackDirection == Direction.BACKWARD) {
-            setStripColor(colorValues2)
-            for (q in 0 until ledStrip.numPixels) {
+//            setStripColor(colorValues2)
+            for (q in 0..ledStrip.numPixels) {
+                var originalColor: ColorContainer
                 for (i in q - 1 downTo 0) {
+                    originalColor = getPixelColor(i)
+//                    if (i%10 ==0) println("$i color: ${originalColor.getColorHex()}")
                     setPixelColor(i, colorValues1)
                     show()
                     delay(delay * delayMod.toInt())
-                    setPixelColor(i, colorValues2)
+                    setPixelColor(i, originalColor)
+//                    setPixelColor(i, colorValues2)
                 }
-                setPixelColor(q, colorValues1)
+//                setPixelColor(q, colorValues1)
                 show()
             }
         }
     }
 
     fun stackOverflow(stackColor1: ColorContainer, stackColor2: ColorContainer) {
-        GlobalScope.launch {
-            stack(Direction.FORWARD, stackColor1)
+        GlobalScope.launch (newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.FORWARD, stackColor1, CCRed, delay = 2)
         }
-        GlobalScope.launch {
-            stack(Direction.BACKWARD, stackColor2)
+        GlobalScope.launch (newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.BACKWARD, stackColor2, CCYellow, delay = 2)
         }
     }
 
@@ -298,6 +305,7 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
                 delay(delay * delayMod.toInt())
             }
         }
+        println("Color: ${ledStrip.getPixelColour(6)}")
     }
 
     fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) = wipe(ColorContainer(rIn, gIn, bIn), wipeDirection, delay, delayMod)
