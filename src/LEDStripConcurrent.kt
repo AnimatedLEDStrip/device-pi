@@ -85,6 +85,21 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
         show()
     }
 
+    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainer) {
+        for (i in start..end) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
+        show()
+    }
+
+    fun setSectionColor(start: Int, end: Int, hexIn: Long) {
+        for (i in start..end) setPixelColor(i, hexIn)
+        show()
+    }
+
+    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
+        for (i in start..end) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
+        show()
+    }
+
     fun getPixelRed(pixel: Int): Int {
         try {
             return runBlocking {
