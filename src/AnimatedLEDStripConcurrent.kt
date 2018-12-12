@@ -23,9 +23,9 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delay: Int = 1000, delayMod: Double = 1.0) {
         setStripColor(colorValues1)
-        delay(delay * delayMod.toInt())
+        delay((delay * delayMod).toInt())
         setStripColor(colorValues2)
-        delay(delay * delayMod.toInt())
+        delay((delay * delayMod).toInt())
     }
 
     fun alternate(r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delay: Int = 1000, delayMod: Double = 1.0) = alternate(ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay, delayMod)
