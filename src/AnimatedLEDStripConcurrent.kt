@@ -245,43 +245,43 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun pixelMarathon(pixelColor1: ColorContainer, pixelColor2: ColorContainer, pixelColor3: ColorContainer, pixelColor4: ColorContainer, pixelColor5: ColorContainer) {
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.FORWARD, pixelColor5, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor5, delay = 8)
         }
         delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, pixelColor4, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor4, delay = 8)
         }
         delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.BACKWARD, pixelColor2, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor2, delay = 8)
         }
         delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.FORWARD, pixelColor3, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor3, delay = 8)
         }
         delay(400)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.FORWARD, pixelColor1, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor1, delay = 8)
         }
         delay(500)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.FORWARD, pixelColor2, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor2, delay = 8)
         }
         delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.BACKWARD, pixelColor5, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor5, delay = 8)
         }
         delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, pixelColor3, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor3, delay = 8)
         }
         delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.FORWARD, pixelColor4, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor4, delay = 8)
         }
-        delay(5000)
+        delay(15000)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, pixelColor1, delay = 2)
+            pixelRun(Direction.BACKWARD, pixelColor1, delay = 2)
         }
     }
 
@@ -367,6 +367,43 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
     }
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) = sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod)
+
+    fun multiSparkleToColor(point1: Int, point2: Int, color1: ColorContainer, color2: ColorContainer, delay: Int = 1000, delayMod: Double = 1.0) {
+        val endptA = 0
+        val endptB: Int
+        val endptC: Int
+        val endptD = numLEDs - 1
+
+        if (point1 <= point2 && point1 > endptA && point2 < endptD) {
+            endptB = point1
+            endptC = point2
+        } else if (point2 > endptA && point1 < endptD) {
+            endptB = point2
+            endptC = point1
+        } else {
+            endptB = numLEDs / 3
+            endptC = (numLEDs * 2 / 3) - 1
+        }
+
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            setSectionColor(endptA, endptB, color1)
+            delay((delay * delayMod).toInt())
+            setSectionColor(endptA, endptB, color2)
+            delay((delay * delayMod).toInt())
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            setSectionColor(endptC, endptD, color1)
+            delay((delay * delayMod).toInt())
+            setSectionColor(endptC, endptD, color2)
+            delay((delay * delayMod).toInt())
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-3")) {
+            setSectionColor(endptB, endptC, color2)
+            delay((delay * delayMod).toInt())
+            setSectionColor(endptB, endptC, color1)
+            delay((delay * delayMod).toInt())
+        }
+    }
 
     fun stack(stackDirection: Direction, colorValues1: ColorContainer, delay: Int = 10, delayMod: Double = 1.0) {
         if (stackDirection == Direction.FORWARD) {
