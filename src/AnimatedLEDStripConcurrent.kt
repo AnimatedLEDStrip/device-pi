@@ -243,7 +243,38 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun pixelRunWithTrail(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delay: Int = 50, delayMod: Double = 1.0) = pixelRunWithTrail(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay, delayMod)
 
-    fun pixelMarathon()
+    fun pixelMarathon(pixelColor1: ColorContainer, pixelColor2: ColorContainer, pixelColor3: ColorContainer, pixelColor4: ColorContainer, pixelColor5: ColorContainer) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.FORWARD, pixelColor5, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.BACKWARD, pixelColor4, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.BACKWARD, pixelColor2, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.FORWARD, pixelColor3, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.FORWARD, pixelColor1, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.FORWARD, pixelColor2, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.BACKWARD, pixelColor5, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.BACKWARD, pixelColor3, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+            stack(Direction.FORWARD, pixelColor4, delay = 8)
+        }
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+            stack(Direction.BACKWARD, pixelColor1, delay = 8)
+        }
+    }
 
     fun smoothChase(palette: RGBPalette16, movementDirection: Direction, brightness: Int = 255, delay: Int = 50, delayMod: Double = 1.0) {
         for (i in 0 until numLEDs) {
@@ -328,7 +359,7 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) = sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod)
 
-    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack, delay: Int = 10, delayMod: Double = 1.0) {
+    fun stack(stackDirection: Direction, colorValues1: ColorContainer, delay: Int = 10, delayMod: Double = 1.0) {
         if (stackDirection == Direction.FORWARD) {
 //            setStripColor(colorValues2)
             for (q in ledStrip.numPixels - 1 downTo 0) {
@@ -375,7 +406,7 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
             stack(Direction.FORWARD, stackColor1, delay = 2)
         }
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, ColorContainer(((random() * 0xFFFFFF) / 2).toLong()), delay = 2)
+            stack(Direction.BACKWARD, stackColor2, delay = 2)
         }
     }
 
