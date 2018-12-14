@@ -247,32 +247,41 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.FORWARD, pixelColor5, delay = 8)
         }
+        delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
             stack(Direction.BACKWARD, pixelColor4, delay = 8)
         }
+        delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.BACKWARD, pixelColor2, delay = 8)
         }
+        delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
             stack(Direction.FORWARD, pixelColor3, delay = 8)
         }
+        delay(400)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.FORWARD, pixelColor1, delay = 8)
         }
+        delay(500)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
             stack(Direction.FORWARD, pixelColor2, delay = 8)
         }
+        delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.BACKWARD, pixelColor5, delay = 8)
         }
+        delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
             stack(Direction.BACKWARD, pixelColor3, delay = 8)
         }
+        delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.FORWARD, pixelColor4, delay = 8)
         }
+        delay(5000)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, pixelColor1, delay = 8)
+            stack(Direction.BACKWARD, pixelColor1, delay = 2)
         }
     }
 
