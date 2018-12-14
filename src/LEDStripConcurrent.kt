@@ -5,7 +5,7 @@ import kotlinx.coroutines.sync.withLock
 
 open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     var ledStrip: WS281x
-    protected val locks = mutableMapOf<Int, Mutex>()
+    private val locks = mutableMapOf<Int, Mutex>()
     private val renderLock = Mutex()
 
     init {

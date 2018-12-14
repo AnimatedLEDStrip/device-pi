@@ -10,10 +10,12 @@ import java.lang.StringBuilder
 class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(numLEDs, pin) {
 
     private var shuffleArray = mutableListOf<Int>()
+    private val locks = mutableMapOf<Int, Mutex>()
 
     private val shuffleLock = Mutex()
 
     init {
+        for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         runBlocking {
             shuffleLock.withLock {
                 for (i in 0 until numLEDs) shuffleArray.add(i)
@@ -194,17 +196,25 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
         setStripColor(colorValues2)
         if (movementDirection == Direction.FORWARD) {
             for (q in 0 until ledStrip.numPixels) {
-                setPixelColor(q, colorValues1)
-                show()
-                delay(delay * delayMod.toInt())
-                setPixelColor(q, colorValues2)
+                runBlocking {
+                    locks[q]!!.tryWithLock {
+                        setPixelColor(q, colorValues1)
+                        show()
+                        delay(delay * delayMod.toInt())
+                        setPixelColor(q, colorValues2)
+                    }
+                }
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in ledStrip.numPixels - 1 downTo 0) {
-                setPixelColor(q, colorValues1)
-                show()
-                delay(delay * delayMod.toInt())
-                setPixelColor(q, colorValues2)
+                runBlocking {
+                    locks[q]!!.tryWithLock {
+                        setPixelColor(q, colorValues1)
+                        show()
+                        delay(delay * delayMod.toInt())
+                        setPixelColor(q, colorValues2)
+                    }
+                }
             }
         }
     }
@@ -301,19 +311,19 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
         }
         myShuffleArray.shuffle()
-        println(System.identityHashCode(myShuffleArray))
-        File("Log_${Thread.currentThread().name}-start").writeText(myShuffleArray.toString())
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("[")
+//        println(System.identityHashCode(myShuffleArray))
+//        File("Log_${Thread.currentThread().name}-start").writeText(myShuffleArray.toString())
+//        val stringBuilder = StringBuilder()
+//        stringBuilder.append("[")
         for (i in 0 until ledStrip.numPixels) {
-            stringBuilder.append("${myShuffleArray[i]}")
-            if (i < ledStrip.numPixels - 1) stringBuilder.append(", ")
+//            stringBuilder.append("${myShuffleArray[i]}")
+//            if (i < ledStrip.numPixels - 1) stringBuilder.append(", ")
             setPixelColor(myShuffleArray[i], destinationColor)
             show()
             delay(delay * delayMod.toInt())
         }
-        stringBuilder.append("]")
-        File("Log_${Thread.currentThread().name}-end").writeText(stringBuilder.toString())
+//        stringBuilder.append("]")
+//        File("Log_${Thread.currentThread().name}-end").writeText(stringBuilder.toString())
     }
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) = sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod)
@@ -324,16 +334,16 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
             for (q in ledStrip.numPixels - 1 downTo 0) {
                 var originalColor: ColorContainer
                 for (i in 0 until q) {
-//                    runBlocking {
-//                        locks[i]!!.tryWithLock {
-                    originalColor = getPixelColor(i)
-                    setPixelColor(i, colorValues1)
-                    show()
-                    delay(delay * delayMod.toInt())
-                    setPixelColor(i, originalColor)
+                    runBlocking {
+                        locks[i]!!.tryWithLock {
+                            originalColor = getPixelColor(i)
+                            setPixelColor(i, colorValues1)
+                            show()
+                            delay(delay * delayMod.toInt())
+                            setPixelColor(i, originalColor)
 //                    setPixelColor(i, colorValues2)
-//                        }
-//                    }
+                        }
+                    }
                 }
                 setPixelColor(q, colorValues1)
                 show()
@@ -343,16 +353,16 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
             for (q in 0 until ledStrip.numPixels) {
                 var originalColor: ColorContainer
                 for (i in numLEDs - 1 downTo q) {
-//                    runBlocking {
-//                        locks[i]!!.tryWithLock {
-                    originalColor = getPixelColor(i)
-                    setPixelColor(i, colorValues1)
-                    show()
-                    delay(delay * delayMod.toInt())
-                    setPixelColor(i, originalColor)
+                    runBlocking {
+                        locks[i]!!.tryWithLock {
+                            originalColor = getPixelColor(i)
+                            setPixelColor(i, colorValues1)
+                            show()
+                            delay(delay * delayMod.toInt())
+                            setPixelColor(i, originalColor)
 //                    setPixelColor(i, colorValues2)
-//                        }
-//                    }
+                        }
+                    }
                 }
                 setPixelColor(q, colorValues1)
                 show()
@@ -362,10 +372,10 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun stackOverflow(stackColor1: ColorContainer, stackColor2: ColorContainer) {
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            stack(Direction.FORWARD, stackColor1, CCRed, delay = 2)
+            stack(Direction.FORWARD, stackColor1, delay = 2)
         }
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            stack(Direction.BACKWARD, stackColor2, CCYellow, delay = 2)
+            stack(Direction.BACKWARD, ColorContainer(((random() * 0xFFFFFF) / 2).toLong()), delay = 2)
         }
     }
 
