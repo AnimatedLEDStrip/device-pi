@@ -7,6 +7,7 @@ import java.io.PrintWriter
 import java.lang.Math.random
 import java.lang.StringBuilder
 
+@ObsoleteCoroutinesApi
 class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(numLEDs, pin) {
 
     private var shuffleArray = mutableListOf<Int>()
