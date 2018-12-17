@@ -219,7 +219,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     fun show() {
         try {
             runBlocking {
-                renderLock.withLock {
+                renderLock.tryWithLock {
                     ledStrip.render()
                 }
             }
