@@ -1,3 +1,4 @@
+import com.diozero.ws281xj.LedDriverInterface
 import java.nio.ByteBuffer
 
 /*-
@@ -34,7 +35,9 @@ import java.nio.ByteBuffer
  * #L%
  */
 
-open class EmulatedWS281x(val pin: Int, val brightness: Int, override val numPixels: Int) : EmulatedLEDDriverInterface {
+open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixels: Int) : LedDriverInterface {
+    override fun getNumPixels() = numPixels
+
     override fun render() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

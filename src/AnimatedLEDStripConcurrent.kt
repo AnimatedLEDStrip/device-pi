@@ -2,13 +2,10 @@ import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.io.File
-import java.io.PrintWriter
 import java.lang.Math.random
-import java.lang.StringBuilder
 
-@ObsoleteCoroutinesApi
-class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(numLEDs, pin) {
+
+open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean = false) : LEDStripConcurrent(numLEDs, pin, emulated) {
 
     private var shuffleArray = mutableListOf<Int>()
     private val locks = mutableMapOf<Int, Mutex>()
@@ -288,7 +285,7 @@ class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int) : LEDStripConcurrent(nu
 
     fun smoothChase(palette: RGBPalette16, movementDirection: Direction, brightness: Int = 255, delay: Int = 50, delayMod: Double = 1.0) {
         for (i in 0 until numLEDs) {
-            colorListFromPalette(palette, i)
+//            colorListFromPalette(palette, i)
         }
 //        if (movementDirection == Direction.FORWARD) {
 //            for (startIndex in 255 downTo 1) {
