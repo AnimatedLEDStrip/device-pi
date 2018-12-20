@@ -11,7 +11,8 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         ledStrip = WS281x(pin, 255, numLEDs)
-        println("using GPIO $pin")
+        println("numLEDs: $numLEDs")
+        println("using GPIO pin: $pin")
     }
 
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
@@ -151,6 +152,14 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int) {
         }
         println("Color not retrieved")
         return CCBlack
+    }
+
+    fun getPixelLong(pin: Int) : Long {
+        return getPixelColor(pin).hex
+    }
+
+    fun getPixelHexString(pin: Int) : String {
+        return getPixelLong(pin).toString(16)
     }
 
     // Not thread safe!

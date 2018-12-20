@@ -62,6 +62,14 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
 
     fun getPixelColor(pixel: Int): ColorContainer = ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
 
+    fun getPixelLong(pin: Int) : Long {
+        return getPixelColor(pin).hex
+    }
+
+    fun getPixelHexString(pin: Int) : String {
+        return getPixelLong(pin).toString(16)
+    }
+
     fun setStripFromPalette(paletteType: RGBPalette16, startIndex: Int, blendType: TBlendType = TBlendType.LINEARBLEND, brightness: Int = 255) {
 
         var index = startIndex
