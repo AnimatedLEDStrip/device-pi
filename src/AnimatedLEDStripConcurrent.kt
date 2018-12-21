@@ -241,45 +241,45 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
 
     fun pixelRunWithTrail(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delay: Int = 50, delayMod: Double = 1.0) = pixelRunWithTrail(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay, delayMod)
 
-    fun pixelMarathon(pixelColor1: ColorContainer, pixelColor2: ColorContainer, pixelColor3: ColorContainer, pixelColor4: ColorContainer, pixelColor5: ColorContainer) {
+    fun pixelMarathon(pixelColor1: ColorContainer, pixelColor2: ColorContainer, pixelColor3: ColorContainer, pixelColor4: ColorContainer, pixelColor5: ColorContainer, delay: Int = 8) {
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            pixelRun(Direction.FORWARD, pixelColor5, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor5, delay = delay)
         }
         delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.BACKWARD, pixelColor4, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor4, delay = delay)
         }
         delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            pixelRun(Direction.BACKWARD, pixelColor2, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor2, delay = delay)
         }
         delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.FORWARD, pixelColor3, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor3, delay = delay)
         }
         delay(400)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            pixelRun(Direction.FORWARD, pixelColor1, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor1, delay = delay)
         }
         delay(500)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.FORWARD, pixelColor2, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor2, delay = delay)
         }
         delay(100)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            pixelRun(Direction.BACKWARD, pixelColor5, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor5, delay = delay)
         }
         delay(200)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.BACKWARD, pixelColor3, delay = 8)
+            pixelRun(Direction.BACKWARD, pixelColor3, delay = delay)
         }
         delay(300)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            pixelRun(Direction.FORWARD, pixelColor4, delay = 8)
+            pixelRun(Direction.FORWARD, pixelColor4, delay = delay)
         }
-        delay(15000)
+        delay(5000)
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.BACKWARD, pixelColor1, delay = 2)
+            pixelRun(Direction.BACKWARD, pixelColor1, delay = delay / 4)
         }
     }
 
