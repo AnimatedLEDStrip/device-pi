@@ -39,15 +39,15 @@ open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixe
     override fun getNumPixels() = numPixels
 
     override fun render() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun allOff() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun close() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private val SIZE_OF_INT = 4
