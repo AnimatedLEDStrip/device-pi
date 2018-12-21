@@ -3,7 +3,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-open class LEDStripConcurrent(var numLEDs: Int, pin: Int, emulated: Boolean = false) {
+open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
     var ledStrip = when (emulated) {
         true -> EmulatedWS281x(pin, 255, numLEDs)
         false -> WS281x(pin, 255, numLEDs)
@@ -17,6 +17,8 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, emulated: Boolean = fa
         println("numLEDs: $numLEDs")
         println("using GPIO pin: $pin")
     }
+
+    fun isEmulated() = emulated
 
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
         try {
