@@ -10,11 +10,11 @@ fun nblend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: I
 
     if (amountOfOverlay == 255) return overlay
 
-    existing.r = blend8(existing.r, overlay.r, amountOfOverlay)
-    existing.g = blend8(existing.g, overlay.g, amountOfOverlay)
-    existing.b = blend8(existing.b, overlay.b, amountOfOverlay)
+    val r = blend8(existing.r, overlay.r, amountOfOverlay)
+    val g = blend8(existing.g, overlay.g, amountOfOverlay)
+    val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
-    return existing
+    return ColorContainer(r, g, b)
 
 }
 
@@ -132,18 +132,34 @@ fun colorFromPalette(pal: RGBPalette16, index: Int, brightness: Int, blendType: 
     return ColorContainer(red1, green1, blue1)
 }
 
-fun colorsFromPalette(palette: List<ColorContainer>, numLEDS: Int) : Map<Int, Map<Int, ColorContainer>> {
+fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
 
-    val spacing = numLEDS.toDouble() / palette.size.toDouble()
+    val returnMap = mutableMapOf<Int, ColorContainer>()
 
+    val spacing = numLEDs.toDouble() / palette.size.toDouble()
+    println(spacing)
     val pureColors = mutableListOf<Int>()
 
     for (i in 0 until palette.size) {
         pureColors.add((spacing * i).roundToInt())
     }
 
-    println(pureColors)
-    return mapOf(0 to mapOf())
+    for (i in 0 until numLEDs) {
+        for (j in pureColors) {
+            if ((i - j) < spacing) {
+                if ((i - j) == 0) returnMap[i] = palette[pureColors.indexOf(j)]
+                else {
+                    returnMap[i] = nblend(
+                        palette[pureColors.indexOf(j)],
+                        palette[(pureColors.indexOf(j) + 1) % pureColors.size],
+                        if (pureColors.indexOf(j) < pureColors.size - 1) (((i - j) / ((pureColors[pureColors.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                    )
+                }
+                break
+            }
+        }
+    }
+    return returnMap
 }
 
 class RGBPalette16(

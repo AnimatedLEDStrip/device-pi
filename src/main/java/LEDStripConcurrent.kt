@@ -2,7 +2,6 @@ import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.io.File
 
 open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
     var ledStrip = when (emulated) {
