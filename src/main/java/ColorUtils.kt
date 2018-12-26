@@ -20,8 +20,7 @@ fun nblend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: I
 
 fun blend(p1: ColorContainer, p2: ColorContainer, amountOfP2: Int) = nblend(p1, p2, amountOfP2)
 
-var doPrint = 0
-
+@Deprecated("Use colorsFromPalette(List<ColorContainer>, Int) instead")
 fun colorsFromPalette(
     leds: WS281x,
     numLEDs: Int,
@@ -70,6 +69,7 @@ fun colorsFromPalette(
 
 }
 
+@Deprecated("Use colorsFromPalette(List<ColorContainer>, Int) instead")
 fun colorFromPalette(pal: RGBPalette16, index: Int, brightness: Int, blendType: TBlendType): ColorContainer {
     val hi4 = index shr 4
     val lo4 = index and 0x0F
@@ -162,6 +162,7 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     return returnMap
 }
 
+@Deprecated("Use a list of ColorContainers")
 class RGBPalette16(
     c00: ColorContainer, c01: ColorContainer, c02: ColorContainer, c03: ColorContainer,
     c04: ColorContainer, c05: ColorContainer, c06: ColorContainer, c07: ColorContainer,
