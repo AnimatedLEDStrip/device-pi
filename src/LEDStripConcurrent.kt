@@ -159,11 +159,11 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         return CCBlack
     }
 
-    fun getPixelLong(pin: Int) : Long {
+    fun getPixelLong(pin: Int): Long {
         return getPixelColor(pin).hex
     }
 
-    fun getPixelHexString(pin: Int) : String {
+    fun getPixelHexString(pin: Int): String {
         return getPixelLong(pin).toString(16)
     }
 
@@ -174,7 +174,12 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
     }
 
     // Not thread safe!
-    fun setStripFromPalette(paletteType: RGBPalette16, startIndex: Int, blendType: TBlendType = TBlendType.LINEARBLEND, brightness: Int = 255) {
+    fun setStripFromPalette(
+        paletteType: RGBPalette16,
+        startIndex: Int,
+        blendType: TBlendType = TBlendType.LINEARBLEND,
+        brightness: Int = 255
+    ) {
 
         var index = startIndex
 

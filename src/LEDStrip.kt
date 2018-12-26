@@ -60,17 +60,23 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
         return ledStrip.getBlueComponent(pixel)
     }
 
-    fun getPixelColor(pixel: Int): ColorContainer = ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
+    fun getPixelColor(pixel: Int): ColorContainer =
+        ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
 
-    fun getPixelLong(pin: Int) : Long {
+    fun getPixelLong(pin: Int): Long {
         return getPixelColor(pin).hex
     }
 
-    fun getPixelHexString(pin: Int) : String {
+    fun getPixelHexString(pin: Int): String {
         return getPixelLong(pin).toString(16)
     }
 
-    fun setStripFromPalette(paletteType: RGBPalette16, startIndex: Int, blendType: TBlendType = TBlendType.LINEARBLEND, brightness: Int = 255) {
+    fun setStripFromPalette(
+        paletteType: RGBPalette16,
+        startIndex: Int,
+        blendType: TBlendType = TBlendType.LINEARBLEND,
+        brightness: Int = 255
+    ) {
 
         var index = startIndex
 
@@ -86,13 +92,18 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
     }
 
     fun setStripWithGradient(colorValues1: ColorContainer, colorValues2: ColorContainer) =
-            fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2)
+        fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2)
 
     fun setStripWithGradient(colorValues1: ColorContainer, colorValues2: ColorContainer, colorValues3: ColorContainer) =
-            fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2, colorValues3)
+        fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2, colorValues3)
 
-    fun setStripWithGradient(colorValues1: ColorContainer, colorValues2: ColorContainer, colorValues3: ColorContainer, colorValues4: ColorContainer) =
-            fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2, colorValues3, colorValues4)
+    fun setStripWithGradient(
+        colorValues1: ColorContainer,
+        colorValues2: ColorContainer,
+        colorValues3: ColorContainer,
+        colorValues4: ColorContainer
+    ) =
+        fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2, colorValues3, colorValues4)
 
 
     fun colorListFromPalette(pal: RGBPalette16, offset: Int) {

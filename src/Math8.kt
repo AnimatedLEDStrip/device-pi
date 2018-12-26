@@ -1,4 +1,4 @@
-fun blend8(a: Int, b: Int, amountOfB: Int) : Int {
+fun blend8(a: Int, b: Int, amountOfB: Int): Int {
     var partial: Int
     val amountOfA = 255 - amountOfB
     partial = a * amountOfA

@@ -52,10 +52,10 @@ open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixe
 
     private val SIZE_OF_INT = 4
 
-    private var ledArray: ByteBuffer = ByteBuffer.allocate(numPixels*SIZE_OF_INT)
+    private var ledArray: ByteBuffer = ByteBuffer.allocate(numPixels * SIZE_OF_INT)
 
     fun test() {
-        ledArray.getInt(5*SIZE_OF_INT)
+        ledArray.getInt(5 * SIZE_OF_INT)
     }
 
     private fun validatePixel(pixel: Int) {

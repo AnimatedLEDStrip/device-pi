@@ -21,7 +21,15 @@ fun blend(p1: ColorContainer, p2: ColorContainer, amountOfP2: Int) = nblend(p1, 
 
 var doPrint = 0
 
-fun colorsFromPalette(leds: WS281x, numLEDs: Int, startpos: Int, startcolor: ColorContainer, endpos: Int, endcolor: ColorContainer, offset: Int) {
+fun colorsFromPalette(
+    leds: WS281x,
+    numLEDs: Int,
+    startpos: Int,
+    startcolor: ColorContainer,
+    endpos: Int,
+    endcolor: ColorContainer,
+    offset: Int
+) {
     var endColor = endcolor
     var startColor = startcolor
     var endPos = endpos
@@ -125,22 +133,22 @@ fun colorFromPalette(pal: RGBPalette16, index: Int, brightness: Int, blendType: 
 
 
 class RGBPalette16(
-        c00: ColorContainer, c01: ColorContainer, c02: ColorContainer, c03: ColorContainer,
-        c04: ColorContainer, c05: ColorContainer, c06: ColorContainer, c07: ColorContainer,
-        c08: ColorContainer, c09: ColorContainer, c10: ColorContainer, c11: ColorContainer,
-        c12: ColorContainer, c13: ColorContainer, c14: ColorContainer, c15: ColorContainer
+    c00: ColorContainer, c01: ColorContainer, c02: ColorContainer, c03: ColorContainer,
+    c04: ColorContainer, c05: ColorContainer, c06: ColorContainer, c07: ColorContainer,
+    c08: ColorContainer, c09: ColorContainer, c10: ColorContainer, c11: ColorContainer,
+    c12: ColorContainer, c13: ColorContainer, c14: ColorContainer, c15: ColorContainer
 ) {
 
     constructor(
-            c00: Long, c01: Long, c02: Long, c03: Long,
-            c04: Long, c05: Long, c06: Long, c07: Long,
-            c08: Long, c09: Long, c10: Long, c11: Long,
-            c12: Long, c13: Long, c14: Long, c15: Long
+        c00: Long, c01: Long, c02: Long, c03: Long,
+        c04: Long, c05: Long, c06: Long, c07: Long,
+        c08: Long, c09: Long, c10: Long, c11: Long,
+        c12: Long, c13: Long, c14: Long, c15: Long
     ) : this(
-            ColorContainer(c00), ColorContainer(c01), ColorContainer(c02), ColorContainer(c03),
-            ColorContainer(c04), ColorContainer(c05), ColorContainer(c06), ColorContainer(c07),
-            ColorContainer(c08), ColorContainer(c09), ColorContainer(c10), ColorContainer(c11),
-            ColorContainer(c12), ColorContainer(c13), ColorContainer(c14), ColorContainer(c15)
+        ColorContainer(c00), ColorContainer(c01), ColorContainer(c02), ColorContainer(c03),
+        ColorContainer(c04), ColorContainer(c05), ColorContainer(c06), ColorContainer(c07),
+        ColorContainer(c08), ColorContainer(c09), ColorContainer(c10), ColorContainer(c11),
+        ColorContainer(c12), ColorContainer(c13), ColorContainer(c14), ColorContainer(c15)
     )
 
     private var entries = arrayOf(c00, c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15)
@@ -204,7 +212,14 @@ fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorCon
     leds.render()
 }
 
-fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorContainer, c3: ColorContainer, c4: ColorContainer) {
+fun fillGradientRGB(
+    leds: WS281x,
+    numLEDs: Int,
+    c1: ColorContainer,
+    c2: ColorContainer,
+    c3: ColorContainer,
+    c4: ColorContainer
+) {
     val onethird = (numLEDs / 3)
     val twothirds = ((numLEDs * 2) / 3)
     fillGradientRGB(leds, 0, c1, onethird, c2)
