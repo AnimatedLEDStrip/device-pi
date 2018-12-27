@@ -27,6 +27,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
         setRGB((hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
     }
 
+    @Deprecated("Use hex property instead", ReplaceWith("hex"))
     fun getColorHex() = hex
 
     fun toColor() = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)

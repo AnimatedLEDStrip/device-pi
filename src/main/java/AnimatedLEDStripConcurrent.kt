@@ -453,70 +453,88 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             }
     }
 
-    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0) {
-        var originalColor: ColorContainer
-        val myShuffleArray = runBlocking {
-            shuffleLock.withLock { shuffleArray.shuffle() }
-            return@runBlocking shuffleArray
-        }
-        myShuffleArray.shuffle()
-        for (i in 0 until ledStrip.numPixels) {
-            originalColor = getPixelColor(myShuffleArray[i])
-            setPixelColor(myShuffleArray[i], sparkleColor)
-            show()
-            delay(delay * delayMod.toInt())
-            setPixelColor(myShuffleArray[i], originalColor)
-        }
-    }
+    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true) {
 
-    fun sparkle(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) =
-        sparkle(ColorContainer(rIn, gIn, bIn), delay, delayMod)
-
-    fun sparkleCC(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0) {
-        val deferred = (0 until ledStrip.numPixels).map { n ->
-            GlobalScope.async {
-                val originalColor: ColorContainer = getPixelColor(n)
-                delay(random().toInt() % 4950)
-                setPixelColor(n, sparkleColor)
-                show()
-                delay(delay * delayMod.toInt())
-                setPixelColor(n, originalColor)
+        if (concurrent) {
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(newSingleThreadContext(random().toString())) {
+                    val originalColor: ColorContainer = getPixelColor(n)
+                    delay((random() * 5000).toInt() % 4950)
+                    setPixelColor(n, sparkleColor)
+                    show()
+                    delay(delay * delayMod.toInt())
+                    setPixelColor(n, originalColor)
+                }
             }
-        }
-        runBlocking {
-            deferred.awaitAll()
-        }
-    }
+            runBlocking {
+                deferred.awaitAll()
+            }
+        } else {
 
-    fun sparkleCC(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) =
-        sparkleCC(ColorContainer(rIn, gIn, bIn), delay, delayMod)
-
-    fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0) {
-        val myShuffleArray = runBlocking {
-            shuffleLock.withLock {
-                shuffleArray.shuffle()
+            var originalColor: ColorContainer
+            val myShuffleArray = runBlocking {
+                shuffleLock.withLock { shuffleArray.shuffle() }
                 return@runBlocking shuffleArray
             }
-
+            myShuffleArray.shuffle()
+            for (i in 0 until ledStrip.numPixels) {
+                originalColor = getPixelColor(myShuffleArray[i])
+                setPixelColor(myShuffleArray[i], sparkleColor)
+                show()
+                delay(delay * delayMod.toInt())
+                setPixelColor(myShuffleArray[i], originalColor)
+            }
         }
-        myShuffleArray.shuffle()
-//        println(System.identityHashCode(myShuffleArray))
-//        File("Log_${Thread.currentThread().name}-start").writeText(myShuffleArray.toString())
-//        val stringBuilder = StringBuilder()
-//        stringBuilder.append("[")
-        for (i in 0 until ledStrip.numPixels) {
-//            stringBuilder.append("${myShuffleArray[i]}")
-//            if (i < ledStrip.numPixels - 1) stringBuilder.append(", ")
-            setPixelColor(myShuffleArray[i], destinationColor)
-            show()
-            delay(delay * delayMod.toInt())
-        }
-//        stringBuilder.append("]")
-//        File("Log_${Thread.currentThread().name}-end").writeText(stringBuilder.toString())
     }
 
-    fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0) =
-        sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod)
+    fun sparkle(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true) =
+        sparkle(ColorContainer(rIn, gIn, bIn), delay, delayMod, concurrent)
+
+    fun sparkleToColor(
+        destinationColor: ColorContainer,
+        delay: Int = 50,
+        delayMod: Double = 1.0,
+        concurrent: Boolean = true
+    ) {
+
+        if (concurrent) {
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(newSingleThreadContext(random().toString())) {
+                    delay((random() * 5000).toInt() % 4950)
+                    setPixelColor(n, destinationColor)
+                    show()
+                    delay(delay * delayMod.toInt())
+                }
+            }
+            runBlocking {
+                deferred.awaitAll()
+            }
+        } else {
+            val myShuffleArray = runBlocking {
+                shuffleLock.withLock {
+                    shuffleArray.shuffle()
+                    return@runBlocking shuffleArray
+                }
+
+            }
+            myShuffleArray.shuffle()
+            for (i in 0 until ledStrip.numPixels) {
+                setPixelColor(myShuffleArray[i], destinationColor)
+                show()
+                delay(delay * delayMod.toInt())
+            }
+        }
+    }
+
+    fun sparkleToColor(
+        rIn: Int,
+        gIn: Int,
+        bIn: Int,
+        delay: Int = 50,
+        delayMod: Double = 1.0,
+        concurrent: Boolean = true
+    ) =
+        sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod, concurrent)
 
     fun multiSparkleToColor(
         point1: Int,
