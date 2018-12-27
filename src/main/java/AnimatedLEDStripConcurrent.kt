@@ -202,7 +202,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     colorValues1
                 )
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -216,7 +216,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     colorValues1
                 )
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -260,7 +260,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     colorValues1
                 )
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
 //                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         } else if (chaseDirection == Direction.FORWARD) {
@@ -271,7 +271,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     colorValues1
                 )
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
 //                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         }
@@ -301,7 +301,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
                         show()
-                        delay(delay * delayMod.toInt())
+                        delay((delay * delayMod).toInt())
                         setPixelColor(q, colorValues2)
                     }
                 }
@@ -312,7 +312,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
                         show()
-                        delay(delay * delayMod.toInt())
+                        delay((delay * delayMod).toInt())
                         setPixelColor(q, colorValues2)
                     }
                 }
@@ -345,7 +345,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in ledStrip.numPixels - 1 downTo 0) {
@@ -353,7 +353,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         }
     }
@@ -441,7 +441,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor((i + m) % numLEDs, j)
                 }
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         else
             for (m in numLEDs - 1 downTo 0) {
@@ -449,7 +449,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor((i + m) % numLEDs, j)
                 }
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
     }
 
@@ -462,7 +462,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     delay((random() * 5000).toInt() % 4950)
                     setPixelColor(n, sparkleColor)
                     show()
-                    delay(delay * delayMod.toInt())
+                    delay((delay * delayMod).toInt())
                     setPixelColor(n, originalColor)
                 }
             }
@@ -481,7 +481,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                 originalColor = getPixelColor(myShuffleArray[i])
                 setPixelColor(myShuffleArray[i], sparkleColor)
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
                 setPixelColor(myShuffleArray[i], originalColor)
             }
         }
@@ -503,7 +503,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     delay((random() * 5000).toInt() % 4950)
                     setPixelColor(n, destinationColor)
                     show()
-                    delay(delay * delayMod.toInt())
+                    delay((delay * delayMod).toInt())
                 }
             }
             runBlocking {
@@ -521,7 +521,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             for (i in 0 until ledStrip.numPixels) {
                 setPixelColor(myShuffleArray[i], destinationColor)
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         }
     }
@@ -591,7 +591,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                             originalColor = getPixelColor(i)
                             setPixelColor(i, colorValues1)
                             show()
-                            delay(delay * delayMod.toInt())
+                            delay((delay * delayMod).toInt())
                             setPixelColor(i, originalColor)
 //                    setPixelColor(i, colorValues2)
                         }
@@ -610,7 +610,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                             originalColor = getPixelColor(i)
                             setPixelColor(i, colorValues1)
                             show()
-                            delay(delay * delayMod.toInt())
+                            delay((delay * delayMod).toInt())
                             setPixelColor(i, originalColor)
 //                    setPixelColor(i, colorValues2)
                         }
@@ -636,19 +636,18 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             for (i in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         } else if (wipeDirection == Direction.FORWARD) {
             for (i in 0 until ledStrip.numPixels) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(delay * delayMod.toInt())
+                delay((delay * delayMod).toInt())
             }
         }
     }
 
     fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) =
         wipe(ColorContainer(rIn, gIn, bIn), wipeDirection, delay, delayMod)
-
 
 }
