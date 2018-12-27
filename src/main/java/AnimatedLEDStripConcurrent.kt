@@ -384,6 +384,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         pixelColor5: ColorContainer,
         delay: Int = 8
     ) {
+        // TODO: Modify thread names to be different
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             pixelRun(Direction.FORWARD, pixelColor5, delay = delay)
         }
