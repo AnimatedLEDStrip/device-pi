@@ -15,6 +15,8 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
             setRGBFromHex(hexIn)
         }
 
+    var hexString = hex.toString(16)
+
     fun setRGB(rIn: Int, gIn: Int, bIn: Int) {
         r = rIn
         g = gIn
@@ -27,8 +29,8 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
     fun getColorHex() = hex
 
-    fun getHexString() = hex.toString(16)
-
     fun toColor() = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
+
+    fun invert() = ColorContainer(255 - this.r, 255 - this.g, 255 - this.b)
 
 }

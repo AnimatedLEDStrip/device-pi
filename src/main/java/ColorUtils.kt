@@ -137,9 +137,8 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     val returnMap = mutableMapOf<Int, ColorContainer>()
 
     val spacing = numLEDs.toDouble() / palette.size.toDouble()
-    println(spacing)
-    val pureColors = mutableListOf<Int>()
 
+    val pureColors = mutableListOf<Int>()
     for (i in 0 until palette.size) {
         pureColors.add((spacing * i).roundToInt())
     }
