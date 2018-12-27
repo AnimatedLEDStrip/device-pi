@@ -341,7 +341,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
     ) {
         if (movementDirection == Direction.FORWARD) {
             for (q in 0 until ledStrip.numPixels) {
-                for (i in 0 until ledStrip.numPixels - 1) {
+                for (i in 0 until ledStrip.numPixels) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
@@ -349,7 +349,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in ledStrip.numPixels - 1 downTo 0) {
-                for (i in 0 until ledStrip.numPixels - 1) {
+                for (i in 0 until ledStrip.numPixels) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
