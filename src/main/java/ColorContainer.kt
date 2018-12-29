@@ -34,4 +34,6 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
     fun invert() = ColorContainer(255 - this.r, 255 - this.g, 255 - this.b)
 
+    fun grayscale() = ((r + g + b) / 3).toLong()
+
 }
