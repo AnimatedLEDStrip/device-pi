@@ -1,7 +1,4 @@
-import com.diozero.ws281xj.LedDriverInterface
-import java.nio.ByteBuffer
-
-/*-
+/*
  * Parts of this file were converted to Kotlin by IntelliJ from a file with this
  * copyright.
  *
@@ -33,7 +30,34 @@ import java.nio.ByteBuffer
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * #L%
+ *
+ *
+ *
+ *  Copyright (c) 2018 AnimatedLEDStrip
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
+
+
+import com.diozero.ws281xj.LedDriverInterface
+import java.nio.ByteBuffer
+
 
 open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixels: Int) : LedDriverInterface {
     override fun getNumPixels() = numPixels
