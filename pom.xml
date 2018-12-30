@@ -7,6 +7,11 @@
     <groupId>AnimatedLEDStrip</groupId>
     <artifactId>AnimatedLEDStripKotlinPi</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A port of the AnimatedLEDStrip Library to Kotlin for Raspberry Pis</description>
+    <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi</url>
 
     <licenses>
         <license>
@@ -14,6 +19,21 @@
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <name>Max Narvaez</name>
+            <email>mnmax.narvaez3@gmail.com</email>
+            <organization>AnimatedLEDStrip</organization>
+            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi.git</connection>
+        <developerConnection>scm:git:https://github.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi.git</developerConnection>
+        <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi</url>
+    </scm>
 
     <properties>
         <kotlin.version>1.3.11</kotlin.version>
