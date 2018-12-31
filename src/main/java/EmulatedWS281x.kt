@@ -1,4 +1,4 @@
-package leds
+package animatedledstrip.leds
 
 /*
  * Parts of this file were converted to Kotlin by IntelliJ from a file with this

@@ -1,4 +1,4 @@
-package leds
+package animatedledstrip.leds
 
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip

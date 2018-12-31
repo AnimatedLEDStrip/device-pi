@@ -6,7 +6,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-kotlin-pi</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -160,6 +160,14 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <perPackageOptions>
+                        <packageOptions>
+                            <prefix>leds</prefix>
+                            <includeNonPublic>true</includeNonPublic>
+                        </packageOptions>
+                    </perPackageOptions>
+                </configuration>
             </plugin>
         </plugins>
     </build>

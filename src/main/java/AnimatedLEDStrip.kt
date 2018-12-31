@@ -1,4 +1,4 @@
-package leds
+package animatedledstrip.leds
 
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
@@ -23,6 +23,7 @@ package leds
 */
 
 
+import animatedledstrip.ccpresets.*
 import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import java.lang.Math.random

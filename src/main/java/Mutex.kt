@@ -1,4 +1,4 @@
-package leds
+package animatedledstrip.leds
 
 /*
  *  Small modification on a method with this copyright:

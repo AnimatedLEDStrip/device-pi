@@ -1,4 +1,4 @@
-package leds
+package animatedledstrip.leds
 
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
@@ -23,6 +23,7 @@ package leds
  */
 
 
+import animatedledstrip.ccpresets.CCBlack
 import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex

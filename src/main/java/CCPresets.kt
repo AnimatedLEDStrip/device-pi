@@ -1,4 +1,6 @@
-package leds
+package animatedledstrip.ccpresets
+
+import animatedledstrip.leds.ColorContainer
 
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
