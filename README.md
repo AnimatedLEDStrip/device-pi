@@ -2,13 +2,36 @@
 
 A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) to Kotlin for Raspberry Pis
 
-## Dependencies (Maven coordinates):
+## Maven Coordinates/Dependency
+> io.github.animatedledstrip:animatedledstrip-kotlin-pi:0.1
 
-### diozero Core
-> com.diozero:diozero-core:0.11
+> ```
+> <dependency>
+>   <groupId>io.github.animatedledstrip</groupId>
+>   <artifactId>animatedledstrip-kotlin-pi</artifactId>
+>   <version>0.1</version>
+> </dependency>
+> ```
 
-### diozero WS281x Java
-> com.diozero:diozero-ws281x-java:0.11
 
-### Kotlinx Coroutines Core
-> org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0
+## Snapshots
+Development versions of the AnimatedLEDStrip library are available from the Sonatype snapshot repository:
+
+> ```
+> <repositories>
+>    <repository>
+>        <id>sonatype-snapshots</id>
+>        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+>        <snapshots>
+>            <enabled>true</enabled>
+>        </snapshots>
+>    </repository>
+> </repositories>
+> 
+> <dependencies>
+>   <dependency>
+>     <groupId>io.github.animatedledstrip</groupId>
+>     <artifactId>animatedledstrip-kotlin-pi</artifactId>
+>     <version>0.2-SNAPSHOT</version>
+>   </dependency>
+> </dependencies>
