@@ -33,9 +33,9 @@ import java.lang.Math.random
 /**
  * An animated LED strip with concurrency added
  *
- * @param numLEDs number of leds
- * @param pin pin strip is connected to
- * @param emulated is strip emulated
+ * @param numLEDs Number of leds in the strip
+ * @param pin GPIO pin connected for signal
+ * @param emulated Is this strip real or emulated?
  */
 open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     LEDStripConcurrent(numLEDs, pin, emulated) {
