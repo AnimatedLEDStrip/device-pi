@@ -20,7 +20,7 @@ Development versions of the AnimatedLEDStrip library are available from the Sona
 > ```
 > <repositories>
 >    <repository>
->        <id>sonotype-snapshots</id>
+>        <id>sonatype-snapshots</id>
 >        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 >        <snapshots>
 >            <enabled>true</enabled>
