@@ -1,3 +1,5 @@
+package leds
+
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
  *

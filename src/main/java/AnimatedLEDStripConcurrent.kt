@@ -1,3 +1,5 @@
+package leds
+
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
  *
@@ -27,7 +29,13 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.lang.Math.random
 
-
+/**
+ * Concurrent Animated LED strip
+ *
+ * @param numLEDs number of leds
+ * @param pin pin strip is connected to
+ * @param emulated is strip emulated
+ */
 open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     LEDStripConcurrent(numLEDs, pin, emulated) {
 
