@@ -22,7 +22,9 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
 */
 
-
+/**
+ * A list of animations used when communicating with the GUI.
+ */
 enum class Animations {
     COLOR1,
     COLOR2,
@@ -40,5 +42,5 @@ enum class Animations {
     STACK,
     STACKOVERFLOW,
     WIPE,
-    ENDANIMATION
+    ENDANIMATION    // Special 'animation' sent by the GUI to stop a continuous animation
 }

@@ -199,27 +199,28 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         return temp
     }
 
+    // TODO: Upgrade all of these to use List and colorsFromPalette()
     // Not thread safe!
-    fun setStripFromPalette(
-        paletteType: RGBPalette16,
-        startIndex: Int,
-        blendType: TBlendType = TBlendType.LINEARBLEND,
-        brightness: Int = 255
-    ) {
-
-        var index = startIndex
-        val stringBuilder = StringBuilder()
-        for (i in 0 until ledStrip.numPixels) {
-
-            val color = colorFromPalette(paletteType, index, brightness, blendType)
-            stringBuilder.append("$i: ${color.hex.toString(16)}")
-            ledStrip.setPixelColourRGB(i, color.r, color.g, color.b)
-            index += 3
-
-        }
-
-        println(stringBuilder)
-    }
+//    fun setStripFromPalette(
+//        paletteType: RGBPalette16,
+//        startIndex: Int,
+//        blendType: TBlendType = TBlendType.LINEARBLEND,
+//        brightness: Int = 255
+//    ) {
+//
+//        var index = startIndex
+//        val stringBuilder = StringBuilder()
+//        for (i in 0 until ledStrip.numPixels) {
+//
+//            val color = colorFromPalette(paletteType, index, brightness, blendType)
+//            stringBuilder.append("$i: ${color.hex.toString(16)}")
+//            ledStrip.setPixelColourRGB(i, color.r, color.g, color.b)
+//            index += 3
+//
+//        }
+//
+//        println(stringBuilder)
+//    }
     // TODO: Convert these to work with both emulated and real LEDStrips
 //    fun setStripWithGradient(colorValues1: ColorContainer, colorValues2: ColorContainer) =
 //            fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2)
@@ -268,6 +269,10 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 //        show()
 //    }
 
+
+    /**
+     * Attempt to lock renderLock and send data to the LEDs.
+     */
     fun show() {
         try {
             runBlocking {

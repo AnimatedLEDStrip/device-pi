@@ -27,11 +27,23 @@ package animatedledstrip.leds
 import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlin.math.roundToInt
 
+/**
+ * Enum class used to specify if colors should be blended or not.
+ */
 enum class TBlendType {
     LINEARBLEND, NOBLEND
 }
 
-fun nblend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: Int): ColorContainer {
+/**
+ * Blend two ColorContainers together and return a new ColorContainer.
+ *
+ * From the FastLED library.
+ *
+ * @param existing The starting ColorContainer
+ * @param overlay The ColorContainer to blend toward
+ * @param amountOfOverlay The proportion (0-255) of b to blend
+ */
+fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: Int): ColorContainer {
     if (amountOfOverlay == 0) return existing
 
     if (amountOfOverlay == 255) return overlay
@@ -44,27 +56,37 @@ fun nblend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: I
 
 }
 
-
+/**
+ * Create a collection of colors that blend between multiple colors along a 'strip'.
+ *
+ * The palette colors are spread out along the strip at approximately equal
+ * intervals. All pixels between these 'pure' pixels are a blend between the
+ * colors of the two nearest pure pixels. The blend ratio is determined by the
+ * location of the pixel relative to the nearest pure pixels.
+ *
+ * @param palette A list of ColorContainers used to create the collection's colors
+ * @param numLEDs The number of LEDs to create colors for
+ */
 fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
 
     val returnMap = mutableMapOf<Int, ColorContainer>()
 
     val spacing = numLEDs.toDouble() / palette.size.toDouble()
 
-    val pureColors = mutableListOf<Int>()
+    val purePixels = mutableListOf<Int>()
     for (i in 0 until palette.size) {
-        pureColors.add((spacing * i).roundToInt())
+        purePixels.add((spacing * i).roundToInt())
     }
 
     for (i in 0 until numLEDs) {
-        for (j in pureColors) {
+        for (j in purePixels) {
             if ((i - j) < spacing) {
-                if ((i - j) == 0) returnMap[i] = palette[pureColors.indexOf(j)]
+                if ((i - j) == 0) returnMap[i] = palette[purePixels.indexOf(j)]
                 else {
                     returnMap[i] = blend(
-                        palette[pureColors.indexOf(j)],
-                        palette[(pureColors.indexOf(j) + 1) % pureColors.size],
-                        if (pureColors.indexOf(j) < pureColors.size - 1) (((i - j) / ((pureColors[pureColors.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                        palette[purePixels.indexOf(j)],
+                        palette[(purePixels.indexOf(j) + 1) % purePixels.size],
+                        if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
                     )
                 }
                 break
@@ -74,7 +96,7 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     return returnMap
 }
 
-
+@Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(leds: WS281x, startpos: Int, startcolor: ColorContainer, endpos: Int, endcolor: ColorContainer) {
     var endColor = endcolor
     var startColor = startcolor
@@ -114,11 +136,13 @@ fun fillGradientRGB(leds: WS281x, startpos: Int, startcolor: ColorContainer, end
     }
 }
 
+@Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorContainer) {
     fillGradientRGB(leds, 0, c1, numLEDs, c2)
     leds.render()
 }
 
+@Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorContainer, c3: ColorContainer) {
     val half = (numLEDs / 2)
     fillGradientRGB(leds, 0, c1, half, c2)
@@ -126,6 +150,7 @@ fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorCon
     leds.render()
 }
 
+@Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(
     leds: WS281x,
     numLEDs: Int,

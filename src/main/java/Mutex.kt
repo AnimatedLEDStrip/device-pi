@@ -30,6 +30,17 @@ package animatedledstrip.leds
 
 import kotlinx.coroutines.sync.Mutex
 
+
+/**
+ * An extension function based on Mutex.withLock().
+ *
+ * If another thread has already locked the Mutex, return and print a message to the
+ * terminal. Else lock the Mutex and execute the action
+ *
+ * @param T
+ * @param owner
+ * @param action
+ */
 inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
     if (tryLock(owner)) {
         try {

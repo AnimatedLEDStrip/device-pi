@@ -260,27 +260,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
         b2In: Int
     ) = pixelRunWithTrail(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
 
-    fun smoothChase(palette: RGBPalette16, movementDirection: Direction, brightness: Int = 255) {
-        for (i in 0 until numLEDs) {
-            colorListFromPalette(palette, i)
-        }
-//        if (movementDirection == Direction.FORWARD) {
-//            for (startIndex in 255 downTo 1) {
-//                setStripFromPalette(palette, startIndex, TBlendType.LINEARBLEND, brightness)
-//                println(ledStrip.getPixelColour(0).toString(16))
-//                delay(50)
-
-        show()
-//            }
-//        } else if (movementDirection == Direction.BACKWARD) {
-//            for (startIndex in 0 until 256) {
-//                setStripFromPalette(palette, startIndex, TBlendType.LINEARBLEND, brightness)
-//                delay(50)
-        show()
-//            }
-//        }
-
-    }
 
     fun sparkle(sparkleColor: ColorContainer) {
         var originalColor: ColorContainer
