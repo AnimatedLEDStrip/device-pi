@@ -1,3 +1,5 @@
+[![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripKotlinPi/animatedledstrip-kotlin-pi/)
+
 # AnimatedLEDStripKotlinPi
 
 A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) to Kotlin for Raspberry Pis
