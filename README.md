@@ -2,6 +2,10 @@
 
 A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) to Kotlin for Raspberry Pis
 
+## Uses Java 9
+Because we use the dokka plugin to generate our documentation, we must use Java <=9
+> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
+
 ## Maven Coordinates/Dependency
 > io.github.animatedledstrip:animatedledstrip-kotlin-pi:0.1
 
