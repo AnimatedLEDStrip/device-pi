@@ -7,8 +7,7 @@ Because we use the dokka plugin to generate our documentation, we must use Java 
 > https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
 
 ## Maven Coordinates/Dependency
-> io.github.animatedledstrip:animatedledstrip-kotlin-pi:0.1
-
+Use the following dependency to use this library in your project
 > ```
 > <dependency>
 >   <groupId>io.github.animatedledstrip</groupId>
