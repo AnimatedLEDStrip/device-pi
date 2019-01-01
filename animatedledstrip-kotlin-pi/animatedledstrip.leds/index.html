@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>animatedledstrip.leds - animatedledstrip-kotlin-pi</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">animatedledstrip-kotlin-pi</a>&nbsp;/&nbsp;<a href="./index.html">animatedledstrip.leds</a><br/>
+<br/>
+<h2>Package animatedledstrip.leds</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-animated-l-e-d-strip/index.html">AnimatedLEDStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AnimatedLEDStrip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-animated-l-e-d-strip-concurrent/index.html">AnimatedLEDStripConcurrent</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-concurrent/index.html"><span class="identifier">LEDStripConcurrent</span></a></code>
+<p>An animated LED strip with concurrency added</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-animations/index.html">Animations</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Animations</span></code>
+<p>A list of animations used when communicating with the GUI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-color-container/index.html">ColorContainer</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span></code>
+<p>A class used to hold a color value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-direction/index.html">Direction</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Direction</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-emulated-w-s281x/index.html">EmulatedWS281x</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">EmulatedWS281x</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">LedDriverInterface</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-e-d-strip/index.html">LEDStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LEDStrip</span></code>
+<p>Class that represents a led strip.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-e-d-strip-concurrent/index.html">LEDStripConcurrent</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LEDStripConcurrent</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-blend-type/index.html">TBlendType</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">TBlendType</span></code>
+<p>Enum class used to specify if colors should be blended or not.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extensions for External Classes</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="kotlinx.coroutines.sync.-mutex/index.html">kotlinx.coroutines.sync.Mutex</a></p>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="blend.html">blend</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Blend two ColorContainers together and return a new ColorContainer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="blend8.html">blend8</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">blend8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/a">a</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfB">amountOfB</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Blend a variable proportion(0-255) of one byte to another.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="colors-from-palette.html">colorsFromPalette</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">colorsFromPalette</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/palette">palette</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span></code>
+<p>Create a collection of colors that blend between multiple colors along a 'strip'.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="fill-gradient-r-g-b.html">fillGradientRGB</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><s><span class="identifier">fillGradientRGB</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, animatedledstrip.leds.ColorContainer)/leds">leds</span><span class="symbol">:</span>&nbsp;<span class="identifier">WS281x</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, animatedledstrip.leds.ColorContainer)/startpos">startpos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, animatedledstrip.leds.ColorContainer)/startcolor">startcolor</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, animatedledstrip.leds.ColorContainer)/endpos">endpos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, animatedledstrip.leds.ColorContainer)/endcolor">endcolor</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><s><span class="identifier">fillGradientRGB</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/leds">leds</span><span class="symbol">:</span>&nbsp;<span class="identifier">WS281x</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c1">c1</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c2">c2</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><s><span class="identifier">fillGradientRGB</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/leds">leds</span><span class="symbol">:</span>&nbsp;<span class="identifier">WS281x</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c1">c1</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c2">c2</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c3">c3</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><s><span class="identifier">fillGradientRGB</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/leds">leds</span><span class="symbol">:</span>&nbsp;<span class="identifier">WS281x</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c1">c1</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c2">c2</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c3">c3</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$fillGradientRGB(com.diozero.ws281xj.rpiws281x.WS281x, kotlin.Int, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer)/c4">c4</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="scale8.html">scale8</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">scale8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$scale8(kotlin.Int, kotlin.Int)/i">i</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$scale8(kotlin.Int, kotlin.Int)/scale">scale</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

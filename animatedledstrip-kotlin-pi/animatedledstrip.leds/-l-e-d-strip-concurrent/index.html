@@ -1,0 +1,176 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LEDStripConcurrent - animatedledstrip-kotlin-pi</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-kotlin-pi</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">LEDStripConcurrent</a><br/>
+<br/>
+<h1>LEDStripConcurrent</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LEDStripConcurrent</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">LEDStripConcurrent</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/emulated">emulated</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="led-strip.html">ledStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">ledStrip</span><span class="symbol">: </span><span class="identifier">LedDriverInterface</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="num-l-e-ds.html">numLEDs</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">numLEDs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-pixel-blue.html">getPixelBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelBlue</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelBlue(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-color.html">getPixelColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-color-list.html">getPixelColorList</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelColorList</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-green.html">getPixelGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelGreen</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelGreen(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-hex-string.html">getPixelHexString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelHexString</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelHexString(kotlin.Int)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-long.html">getPixelLong</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelLong</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelLong(kotlin.Int)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-red.html">getPixelRed</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelRed</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$getPixelRed(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-emulated.html">isEmulated</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isEmulated</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-pixel-blue.html">setPixelBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setPixelBlue</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelBlue(kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelBlue(kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-pixel-color.html">setPixelColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelColor(kotlin.Int, kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-pixel-green.html">setPixelGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setPixelGreen</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelGreen(kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelGreen(kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-pixel-red.html">setPixelRed</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setPixelRed</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelRed(kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setPixelRed(kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-section-color.html">setSectionColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-strip-color.html">setStripColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setStripColor(animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setStripColor(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripConcurrent$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="show.html">show</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">show</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Attempt to lock renderLock and send data to the LEDs.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip-concurrent/index.html">AnimatedLEDStripConcurrent</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">LEDStripConcurrent</span></a></code>
+<p>An animated LED strip with concurrency added</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
