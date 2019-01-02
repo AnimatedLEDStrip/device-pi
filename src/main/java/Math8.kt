@@ -25,7 +25,7 @@ package animatedledstrip.leds
 
 
 /**
- * Blend a variable proportion(0-255) of one byte to another.
+ * Blend a variable proportion (0-255) of one byte to another.
  *
  * From the FastLED Library.
  *

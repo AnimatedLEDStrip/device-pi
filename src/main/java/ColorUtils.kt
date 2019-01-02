@@ -35,7 +35,7 @@ enum class TBlendType {
 }
 
 /**
- * Blend two ColorContainers together and return a new ColorContainer.
+ * Blend two [ColorContainer]s together and return a new ColorContainer.
  *
  * From the FastLED library.
  *
@@ -64,7 +64,7 @@ fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: In
  * colors of the two nearest pure pixels. The blend ratio is determined by the
  * location of the pixel relative to the nearest pure pixels.
  *
- * @param palette A list of ColorContainers used to create the collection's colors
+ * @param palette A list of [ColorContainer]s used to create the collection's colors
  * @param numLEDs The number of LEDs to create colors for
  */
 fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
