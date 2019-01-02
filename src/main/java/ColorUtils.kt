@@ -28,13 +28,6 @@ import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlin.math.roundToInt
 
 /**
- * Enum class used to specify if colors should be blended or not.
- */
-enum class TBlendType {
-    LINEARBLEND, NOBLEND
-}
-
-/**
  * Blend two [ColorContainer]s together and return a new ColorContainer.
  *
  * From the FastLED library.
