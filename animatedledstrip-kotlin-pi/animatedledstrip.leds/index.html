@@ -24,7 +24,7 @@
 </td>
 <td>
 <code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-concurrent/index.html"><span class="identifier">LEDStripConcurrent</span></a></code>
-<p>An animated LED strip with concurrency added</p>
+<p>A subclass of <a href="-l-e-d-strip/index.html">LEDStrip</a> adding animations</p>
 </td>
 </tr>
 <tr>
@@ -50,7 +50,10 @@
 <p><a href="-direction/index.html">Direction</a></p>
 </td>
 <td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Direction</span></code></td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Direction</span></code>
+<p>Helper enum that determines if an animation should appear to move 'Forward'
+or 'Backward'.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -73,15 +76,8 @@
 <p><a href="-l-e-d-strip-concurrent/index.html">LEDStripConcurrent</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LEDStripConcurrent</span></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="-t-blend-type/index.html">TBlendType</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">TBlendType</span></code>
-<p>Enum class used to specify if colors should be blended or not.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">LEDStripConcurrent</span></code>
+<p>A LED Strip with concurrency added. Bridge between the AnimatedLEDStripConcurrent class and the WS281x class</p>
 </td>
 </tr>
 </tbody>
@@ -107,7 +103,7 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Blend two ColorContainers together and return a new ColorContainer.</p>
+<p>Blend two <a href="-color-container/index.html">ColorContainer</a>s together and return a new ColorContainer.</p>
 </td>
 </tr>
 <tr>
@@ -116,7 +112,7 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">blend8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/a">a</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfB">amountOfB</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>Blend a variable proportion(0-255) of one byte to another.</p>
+<p>Blend a variable proportion (0-255) of one byte to another.</p>
 </td>
 </tr>
 <tr>
