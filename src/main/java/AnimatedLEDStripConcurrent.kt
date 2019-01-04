@@ -588,28 +588,28 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             pixelRun(Direction.FORWARD, pixelColor3, delay = delay)
         }
         delay(400)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-3")) {
             pixelRun(Direction.FORWARD, pixelColor1, delay = delay)
         }
         delay(500)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-4")) {
             pixelRun(Direction.FORWARD, pixelColor2, delay = delay)
         }
         delay(100)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-5")) {
             pixelRun(Direction.BACKWARD, pixelColor5, delay = delay)
         }
         delay(200)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-6")) {
             pixelRun(Direction.BACKWARD, pixelColor3, delay = delay)
         }
         delay(300)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-7")) {
             pixelRun(Direction.FORWARD, pixelColor4, delay = delay)
         }
-        delay(5000)
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            pixelRun(Direction.BACKWARD, pixelColor1, delay = delay / 4)
+        delay(200)
+        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-8")) {
+            pixelRun(Direction.BACKWARD, pixelColor1, delay = delay)
         }
     }
 
