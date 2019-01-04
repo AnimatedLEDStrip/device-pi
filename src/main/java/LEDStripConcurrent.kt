@@ -81,7 +81,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
         try {
             runBlocking {
-                locks[pixel]!!.tryWithLock {
+                locks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
                     ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
                 }
             }
@@ -408,7 +408,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
     fun show() {
         try {
             runBlocking {
-                renderLock.tryWithLock {
+                renderLock.tryWithLock(owner = "Render") {
                     ledStrip.render()
                 }
             }
