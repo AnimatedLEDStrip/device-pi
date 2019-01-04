@@ -513,7 +513,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         movementDirection: Direction,
         colorValues1: ColorContainer,
         colorValues2: ColorContainer = CCBlack,
-        delay: Int = 50,
+        delay: Int = 10,
         delayMod: Double = 1.0
     ) {
         if (movementDirection == Direction.FORWARD) {
@@ -522,6 +522,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
+                show()
                 delay((delay * delayMod).toInt())
             }
         } else if (movementDirection == Direction.BACKWARD) {
@@ -530,6 +531,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
+                show()
                 delay((delay * delayMod).toInt())
             }
         }
@@ -543,7 +545,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         r2In: Int,
         g2In: Int,
         b2In: Int,
-        delay: Int = 50,
+        delay: Int = 10,
         delayMod: Double = 1.0
     ) = pixelRunWithTrail(
         movementDirection,
