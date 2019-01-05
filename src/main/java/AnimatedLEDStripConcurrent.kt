@@ -31,7 +31,7 @@ import kotlinx.coroutines.sync.withLock
 import java.lang.Math.random
 
 /**
- * A subclass of [LEDStrip] adding animations
+ * A subclass of [LEDStripConcurrent] adding animations
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
@@ -628,10 +628,10 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
      *
      * The collection created, palette2, is a map of integers to ColorContainers
      * where each integer is a pixel index. Each pixel is set to palette2&#91;i&#93;,
-     * where i is the pixel index. Then, if the direction is [Direction.FORWARD],
+     * where i is the pixel index. Then, if the direction is [Direction].FORWARD,
      * each pixel is set to palette2&#91;i + 1&#93;, then palette&#91;i + 2&#93;, etc.
      * to create the illusion that the animation is 'moving'. If the direction is
-     * [Direction.BACKWARD], the same happens but with indices i, i-1, i-2, etc.
+     * [Direction].BACKWARD, the same happens but with indices i, i-1, i-2, etc.
      * The index is found with (i + a) mod s, where i is the pixel index, a is the
      * offset for this iteration and s is the number of pixels in the strip.
      *
