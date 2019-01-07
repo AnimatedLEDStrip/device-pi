@@ -33,11 +33,17 @@ import org.pmw.tinylog.Logger
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
  */
-open class LEDStrip(var numLEDs: Int, pin: Int) {
-    var ledStrip: WS281x
+open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
+
+    /**
+     * The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.
+     */
+    var ledStrip = when (emulated) {
+        true -> EmulatedWS281x(pin, 255, numLEDs)
+        false -> WS281x(pin, 255, numLEDs)
+    }
 
     init {
-        ledStrip = WS281x(pin, 255, numLEDs)
         Logger.info("using GPIO pin $pin")
     }
 
