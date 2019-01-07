@@ -175,27 +175,56 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
         show()
     }
 
+
+    @Deprecated("Use getPixelColor and r property of the resulting ColorContainer", ReplaceWith("getPixelColor().r"))
     fun getPixelRed(pixel: Int): Int {
         return ledStrip.getRedComponent(pixel)
     }
 
+
+    @Deprecated("Use getPixelColor and g property of the resulting ColorContainer", ReplaceWith("getPixelColor().g"))
     fun getPixelGreen(pixel: Int): Int {
         return ledStrip.getGreenComponent(pixel)
     }
 
+
+    @Deprecated("Use getPixelColor and b property of the resulting ColorContainer", ReplaceWith("getPixelColor().b"))
     fun getPixelBlue(pixel: Int): Int {
         return ledStrip.getBlueComponent(pixel)
     }
 
+
+    /**
+     * Get the color of a pixel. Waits until the pixel's Mutex is unlocked.
+     *
+     * @param pixel The pixel to find the color of
+     * @return The color of the pixel
+     */
     fun getPixelColor(pixel: Int): ColorContainer =
         ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
 
-    fun getPixelLong(pin: Int): Long {
-        return getPixelColor(pin).hex
+
+    /**
+     * Get the color of a pixel as a Long. Waits until the pixel's Mutex is
+     * unlocked.
+     *
+     * @param pixel The pixel to find the color of
+     * @return The color of the pixel as a Long
+     */
+    fun getPixelLong(pixel: Int): Long {
+        return getPixelColor(pixel).hex
     }
 
-    fun getPixelHexString(pin: Int): String {
-        return getPixelLong(pin).toString(16)
+
+    /**
+     * Get the color of a pixel as a hexadecimal string. Waits until the pixel's
+     * Mutex is unlocked.
+     *
+     * @param pixel The pixel to find the color of
+     * @return A string containing the color of the pixel in hexadecimal
+     */
+    fun getPixelHexString(pixel: Int): String {
+        return getPixelLong(pixel).toString(16)
     }
 
     // TODO: Upgrade all of these to use List and colorsFromPalette()
@@ -271,6 +300,10 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
 //        show()
 //    }
 
+
+    /**
+     * Send data to the LEDs.
+     */
     fun show() {
         ledStrip.render()
     }
