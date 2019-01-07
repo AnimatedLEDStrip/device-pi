@@ -355,6 +355,20 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 //
 //        println(stringBuilder)
 //    }
+
+
+    fun setStripColorWithPalette(palette: Map<Int, ColorContainer>, offset: Int = 0) =
+        palette.forEach { i, j ->
+            setPixelColor((i + offset) % numLEDs, j)
+        }
+
+
+    fun setStripColorWithGradient(colorList: List<ColorContainer>) {
+        val palette = colorsFromPalette(colorList, numLEDs)
+        setStripColorWithPalette(palette)
+    }
+
+
     // TODO: Convert these to work with both emulated and real LEDStrips
 //    fun setStripWithGradient(colorValues1: ColorContainer, colorValues2: ColorContainer) =
 //            fillGradientRGB(ledStrip, numLEDs, colorValues1, colorValues2)

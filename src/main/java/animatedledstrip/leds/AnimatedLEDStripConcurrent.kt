@@ -488,26 +488,22 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
      * @param delayMod Multiplier for delay
      */
     fun smoothChase(
-        palette: List<ColorContainer>,
+        colorList: List<ColorContainer>,
         movementDirection: Direction,
         delay: Int = 50,
         delayMod: Double = 1.0
     ) {
-        val palette2 = colorsFromPalette(palette, numLEDs)
+        val palette = colorsFromPalette(colorList, numLEDs)
 
         if (movementDirection == Direction.FORWARD)
             for (m in 0 until numLEDs) {
-                palette2.forEach { i, j ->
-                    setPixelColor((i + m) % numLEDs, j)
-                }
+                setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
             }
         else
             for (m in numLEDs - 1 downTo 0) {
-                palette2.forEach { i, j ->
-                    setPixelColor((i + m) % numLEDs, j)
-                }
+                setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
             }
