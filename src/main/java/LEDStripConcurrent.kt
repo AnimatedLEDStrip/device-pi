@@ -28,6 +28,7 @@ import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.pmw.tinylog.Logger
 
 
 /**
@@ -60,9 +61,8 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
-//        ledStrip = WS281x(pin, 255, numLEDs)
-        println("numLEDs: $numLEDs")
-        println("using GPIO pin: $pin")
+        Logger.info("numLEDs: $numLEDs")
+        Logger.info("using GPIO pin $pin")
     }
 
     /**
@@ -86,7 +86,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelColor: $e")
+            Logger.error("ERROR in setPixelColor: $e")
         }
     }
 
@@ -125,7 +125,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelRed: $e")
+            Logger.error("ERROR in setPixelRed: $e")
         }
     }
 
@@ -137,7 +137,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelGreen: $e")
+            Logger.error("ERROR in setPixelGreen: $e")
         }
     }
 
@@ -149,7 +149,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in setPixelBlue")
+            Logger.error("ERROR in setPixelBlue")
         }
     }
 
@@ -243,7 +243,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelRed: $e")
+            Logger.error("ERROR in getPixelRed: $e")
         }
         return 0
     }
@@ -256,7 +256,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelGreen: $e")
+            Logger.error("ERROR in getPixelGreen: $e")
         }
         return 0
     }
@@ -269,7 +269,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelBlue: $e")
+            Logger.error("ERROR in getPixelBlue: $e")
         }
         return 0
     }
@@ -289,9 +289,9 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in getPixelColor: $e")
+            Logger.error("ERROR in getPixelColor: $e")
         }
-        println("Color not retrieved")
+        Logger.warn("Color not retrieved")
         return CCBlack
     }
 
@@ -413,7 +413,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
                 }
             }
         } catch (e: Exception) {
-            println("ERROR in show: $e")
+            Logger.error("ERROR in show: $e")
         }
     }
 }

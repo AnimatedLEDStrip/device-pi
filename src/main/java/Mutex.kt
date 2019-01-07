@@ -29,6 +29,7 @@ package animatedledstrip.leds
 
 
 import kotlinx.coroutines.sync.Mutex
+import org.pmw.tinylog.Logger
 
 
 /**
@@ -51,7 +52,7 @@ inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
             unlock(owner)
         }
     } else {
-        println("Access Overlap: $owner")
+        Logger.warn("Access Overlap: $owner")
         return
     }
 }

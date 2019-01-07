@@ -24,6 +24,7 @@ package animatedledstrip.leds
 
 
 import com.diozero.ws281xj.rpiws281x.WS281x
+import org.pmw.tinylog.Logger
 
 
 /**
@@ -37,7 +38,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int) {
 
     init {
         ledStrip = WS281x(pin, 255, numLEDs)
-        println("using GPIO $pin")
+        Logger.info("using GPIO pin $pin")
     }
 
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
