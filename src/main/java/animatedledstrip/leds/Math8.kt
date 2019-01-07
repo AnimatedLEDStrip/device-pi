@@ -1,5 +1,7 @@
 package animatedledstrip.leds
 
+import org.pmw.tinylog.Logger
+
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
@@ -35,11 +37,25 @@ package animatedledstrip.leds
  * @return A byte value between a and b, inclusive
  */
 fun blend8(a: Int, b: Int, amountOfB: Int): Int {
+    Logger.trace("params: a = $a, b = $b, amountOfB = $amountOfB")
+
     var partial: Int
+
     val amountOfA = 255 - amountOfB
+    Logger.trace("amountOfA = $amountOfA")
+
     partial = a * amountOfA
+    Logger.trace("partial = a * amountOfA = $partial")
+
     partial += a
+    Logger.trace("partial += a = $partial")
+
     partial += (b * amountOfB)
+    Logger.trace("partial += b * amountOfB = $partial")
+
     partial += b
+    Logger.trace("partial += b = $partial")
+
+    Logger.trace("partial shr 8 = ${partial shr 8}")
     return partial shr 8
 }
