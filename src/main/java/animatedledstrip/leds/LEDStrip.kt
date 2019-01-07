@@ -252,7 +252,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
 
     /**
      * Sets the color of the strip with a list. The list is converted to a map
-     * before that map is set to [setStripColorWithPalette] with an offset of 0.
+     * before that map is sent to [setStripColorWithPalette] with an offset of 0.
      *
      * @param colorList The list of colors
      */
