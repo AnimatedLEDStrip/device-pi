@@ -235,6 +235,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         show()
     }
 
+    @Deprecated("Use getPixelColor and r property of the resulting ColorContainer", ReplaceWith("getPixelColor().r"))
     fun getPixelRed(pixel: Int): Int {
         try {
             return runBlocking {
@@ -248,6 +249,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         return 0
     }
 
+    @Deprecated("Use getPixelColor and g property of the resulting ColorContainer", ReplaceWith("getPixelColor().g"))
     fun getPixelGreen(pixel: Int): Int {
         try {
             return runBlocking {
@@ -261,6 +263,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         return 0
     }
 
+    @Deprecated("Use getPixelColor and b property of the resulting ColorContainer", ReplaceWith("getPixelColor().b"))
     fun getPixelBlue(pixel: Int): Int {
         try {
             return runBlocking {
