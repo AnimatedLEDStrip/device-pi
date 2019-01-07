@@ -195,7 +195,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
 
 
     /**
-     * Get the color of a pixel. Waits until the pixel's Mutex is unlocked.
+     * Get the color of a pixel.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
@@ -205,8 +205,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
 
 
     /**
-     * Get the color of a pixel as a Long. Waits until the pixel's Mutex is
-     * unlocked.
+     * Get the color of a pixel as a Long.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel as a Long
@@ -217,14 +216,23 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
 
 
     /**
-     * Get the color of a pixel as a hexadecimal string. Waits until the pixel's
-     * Mutex is unlocked.
+     * Get the color of a pixel as a hexadecimal string.
      *
      * @param pixel The pixel to find the color of
      * @return A string containing the color of the pixel in hexadecimal
      */
     fun getPixelHexString(pixel: Int): String {
         return getPixelLong(pixel).toString(16)
+    }
+
+
+    /**
+     * Get the colors of all pixels as a List of Longs.
+     */
+    fun getPixelColorList(): List<Long> {
+        val temp = mutableListOf<Long>()
+        for (i in 0 until numLEDs) temp.add(getPixelLong(i))
+        return temp
     }
 
     // TODO: Upgrade all of these to use List and colorsFromPalette()
