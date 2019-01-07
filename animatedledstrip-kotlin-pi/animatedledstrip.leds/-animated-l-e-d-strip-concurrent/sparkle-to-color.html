@@ -14,8 +14,7 @@
 <p>Very similar to the Sparkle animation, but the LEDs are not reverted to their
 original color after the sparkle.</p>
 <p>If concurrent = true (default), a separate thread will be created for each
-pixel. Each thread saves its pixel's original color, then waits for 0-5
-seconds before sparkling its pixel.</p>
+pixel. Each thread waits for 0-5 seconds before sparkling its pixel.</p>
 <p>If concurrent = false, shuffleArray is shuffled and used to determine the
 order in which the LEDs are sparkled. Unlike the concurrent version, only
 one pixel will sparkle at any given time.</p>
