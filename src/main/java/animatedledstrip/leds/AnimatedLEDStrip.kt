@@ -25,8 +25,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.ccpresets.*
 import com.diozero.ws281xj.PixelAnimations.delay
-import kotlinx.coroutines.*
-import java.lang.Math.random
 
 
 /**
@@ -66,20 +64,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         delay(delayTime)
     }
 
-    /**
-     * Overload for Alternate animation.
-     *
-     * @param r1In Red intensity for the first color
-     * @param g1In Green intensity for the first color
-     * @param b1In Blue intensity for the first color
-     * @param r2In Red intensity for the second color
-     * @param g2In Green intensity for the second color
-     * @param b2In Blue intensity for the second color
-     * @param delayTime Delay in milliseconds before color changes from first to
-     * second color and between second color and returning
-     */
-    fun alternate(r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delayTime: Int) =
-        alternate(ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delayTime)
 
     fun fadePixelRed(pixel: Int, startIntensity: Int, endIntensity: Int, revertAtCompletion: Boolean) {
         val fadeDirection: Int = if (startIntensity > endIntensity) -1 else if (startIntensity < endIntensity) 1 else 0
@@ -207,17 +191,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
-    fun multiPixelRun(
-        spacing: Int,
-        chaseDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int
-    ) = multiPixelRun(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
-
 
     /**
      * A non-repetitive function to run a Multi Pixel Run To Color animation.
@@ -250,9 +223,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
-    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int) =
-        multiPixelRunToColor(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In))
-
 
     /**
      * Function to run a Pixel Run animation.
@@ -283,8 +253,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
-    fun pixelRun(movementDirection: Direction, r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int) =
-        pixelRun(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
 
     fun pixelRunWithTrail(
         movementDirection: Direction,
@@ -312,16 +280,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
-    fun pixelRunWithTrail(
-        movementDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int
-    ) = pixelRunWithTrail(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
-
 
     fun sparkle(sparkleColor: ColorContainer) {
         var originalColor: ColorContainer
@@ -335,19 +293,16 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
-    fun sparkle(rIn: Int, gIn: Int, bIn: Int) = sparkle(ColorContainer(rIn, gIn, bIn))
 
     fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
             setPixelColor(shuffleArray[i], destinationColor)
-//            println("Test $i")
             show()
             delay(delay)
         }
     }
 
-    fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
 
     fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
         if (stackDirection == Direction.FORWARD) {
@@ -377,6 +332,7 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
         }
     }
 
+
     fun wipe(colorValues: ColorContainer, wipeDirection: Direction) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
@@ -392,9 +348,5 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
             }
         }
     }
-
-    fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction) =
-        wipe(ColorContainer(rIn, gIn, bIn), wipeDirection)
-
 
 }

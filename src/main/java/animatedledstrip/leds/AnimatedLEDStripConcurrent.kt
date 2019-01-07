@@ -89,30 +89,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         delay((delay * delayMod).toInt())
     }
 
-    /**
-     * Overload for Alternate animation.
-     *
-     * @param r1In Red intensity for the first color
-     * @param g1In Green intensity for the first color
-     * @param b1In Blue intensity for the first color
-     * @param r2In Red intensity for the second color
-     * @param g2In Green intensity for the second color
-     * @param b2In Blue intensity for the second color
-     * @param delay Delay in milliseconds before color changes from first to
-     * second color and between second color and returning
-     * @param delayMod Multiplier for delay
-     */
-    fun alternate(
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int,
-        delay: Int = 1000,
-        delayMod: Double = 1.0
-    ) = alternate(ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay, delayMod)
-
 
     /**
      * TODO (Will)
@@ -167,39 +143,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         }
     }
 
-
-    /**
-     * TODO (Will)
-     * @param point1
-     * @param point2
-     * @param r1In
-     * @param g1In
-     * @param b1In
-     * @param r2In
-     * @param g2In
-     * @param b2In
-     * @param delay
-     * @param delayMod
-     */
-    fun multiAlternate(
-        point1: Int,
-        point2: Int,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int,
-        delay: Int = 1000,
-        delayMod: Double = 1.0
-    ) = multiAlternate(
-        point1,
-        point2,
-        ColorContainer(r1In, g1In, b1In),
-        ColorContainer(r2In, g2In, b2In),
-        delay,
-        delayMod
-    )
 
     fun fadePixelRed(pixel: Int, startIntensity: Int, endIntensity: Int, revertAtCompletion: Boolean) {
         val fadeDirection: Int = if (startIntensity > endIntensity) -1 else if (startIntensity < endIntensity) 1 else 0
@@ -333,42 +276,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
 
 
     /**
-     * Overload function for the Multi Pixel Run animation.
-     *
-     * @param spacing Spacing between lit leds (for example, if spacing is 3
-     * and led 0 is lit, led 3 will also be lit)
-     * @param chaseDirection [Direction] of animation
-     * @param r1In Red intensity for the moving pixels' color
-     * @param g1In Green intensity for the moving pixels' color
-     * @param b1In Blue intensity for the moving pixels' color
-     * @param r2In Red intensity for the background color
-     * @param g2In Green intensity for the background color
-     * @param b2In Blue intensity for the background color
-     * @param delay Delay between moves
-     * @param delayMod Multiplier for delay
-     */
-    fun multiPixelRun(
-        spacing: Int,
-        chaseDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int,
-        delay: Int = 100,
-        delayMod: Double = 1.0
-    ) = multiPixelRun(
-        spacing,
-        chaseDirection,
-        ColorContainer(r1In, g1In, b1In),
-        ColorContainer(r2In, g2In, b2In),
-        delay,
-        delayMod
-    )
-
-
-    /**
      * A non-repetitive function to run a Multi Pixel Run To Color animation.
      *
      * @param spacing Spacing between lit leds (for example, if spacing is 3
@@ -388,54 +295,24 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
     ) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
-//                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
                 show()
                 delay((delay * delayMod).toInt())
-//                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         } else if (chaseDirection == Direction.FORWARD) {
             for (q in spacing - 1 downTo 0) {
-//                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
                 show()
                 delay((delay * delayMod).toInt())
-//                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         }
     }
-
-
-    /**
-     * Overload function for the Multi Pixel Run To Color animation.
-     *
-     * @param spacing Spacing between lit leds (for example, if spacing is 3
-     * and led 0 is lit, led 3 will also be lit)
-     * @param chaseDirection [Direction] of animation
-     * @param r1In Red intensity of moving pixels and color strip will
-     * be at end of animation
-     * @param g1In Green intensity of moving pixels and color strip will
-     * be at end of animation
-     * @param b1In Blue intensity of moving pixels and color strip will
-     * be at end of animation
-     * @param delay Delay between moves
-     * @param delayMod Multiplier for delay
-     */
-    fun multiPixelRunToColor(
-        spacing: Int,
-        chaseDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        delay: Int = 150,
-        delayMod: Double = 1.0
-    ) = multiPixelRunToColor(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), delay, delayMod)
 
 
     /**
@@ -484,19 +361,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
     }
 
 
-    fun pixelRun(
-        movementDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int,
-        delay: Int = 50,
-        delayMod: Double = 1.0
-    ) = pixelRun(movementDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delay, delayMod)
-
-
     /**
      * Function to run a Pixel Run With Trail animation.
      *
@@ -536,24 +400,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             }
         }
     }
-
-    fun pixelRunWithTrail(
-        movementDirection: Direction,
-        r1In: Int,
-        g1In: Int,
-        b1In: Int,
-        r2In: Int,
-        g2In: Int,
-        b2In: Int,
-        delay: Int = 10,
-        delayMod: Double = 1.0
-    ) = pixelRunWithTrail(
-        movementDirection,
-        ColorContainer(r1In, g1In, b1In),
-        ColorContainer(r2In, g2In, b2In),
-        delay,
-        delayMod
-    )
 
 
     /**
@@ -721,9 +567,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         }
     }
 
-    fun sparkle(rIn: Int, gIn: Int, bIn: Int, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true) =
-        sparkle(ColorContainer(rIn, gIn, bIn), delay, delayMod, concurrent)
-
 
     /**
      * A non-repetitive function to run a Sparkle To Color animation.
@@ -779,15 +622,6 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
         }
     }
 
-    fun sparkleToColor(
-        rIn: Int,
-        gIn: Int,
-        bIn: Int,
-        delay: Int = 50,
-        delayMod: Double = 1.0,
-        concurrent: Boolean = true
-    ) =
-        sparkleToColor(ColorContainer(rIn, gIn, bIn), delay, delayMod, concurrent)
 
     fun multiSparkleToColor(
         point1: Int,
@@ -925,8 +759,5 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
             }
         }
     }
-
-    fun wipe(rIn: Int, gIn: Int, bIn: Int, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) =
-        wipe(ColorContainer(rIn, gIn, bIn), wipeDirection, delay, delayMod)
 
 }
