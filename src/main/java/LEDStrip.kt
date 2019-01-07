@@ -201,7 +201,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
      * @return The color of the pixel
      */
     fun getPixelColor(pixel: Int): ColorContainer =
-        ColorContainer(getPixelRed(pixel), getPixelGreen(pixel), getPixelBlue(pixel))
+        ColorContainer(ledStrip.getPixelColour(pixel).toLong())
 
 
     /**
