@@ -297,6 +297,7 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
+                show()
                 delay(50)
             }
         } else if (movementDirection == Direction.BACKWARD) {
@@ -305,6 +306,7 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
+                show()
                 delay(50)
             }
         }
