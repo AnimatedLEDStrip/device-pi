@@ -44,17 +44,46 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
     }
 
     init {
+        Logger.info("numLEDs: $numLEDs")
         Logger.info("using GPIO pin $pin")
     }
 
+    /**
+     * Returns true if this is an emulated LED strip
+     */
+    fun isEmulated() = emulated
+
+
+    /**
+     * Sets a pixel's color with a ColorContainer.
+     *
+     * @param pixel The pixel to change
+     * @param colorValues The color to set the pixel to
+     */
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
         ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
     }
 
+
+    /**
+     * Set a pixel's color with r, g, b (ranges 0-255).
+     *
+     * @param pixel The pixel to change
+     * @param rIn Red intensity of the color
+     * @param gIn Green intensity of the color
+     * @param bIn Blue intensity of the color
+     */
     fun setPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
         setPixelColor(pixel, ColorContainer(rIn, gIn, bIn))
     }
 
+
+    /**
+     * Set a pixel's color with a Long, such as a 24-bit integer.
+     *
+     * @param pixel The pixel to change
+     * @param hexIn The color to set the pixel to
+     */
     fun setPixelColor(pixel: Int, hexIn: Long) {
         setPixelColor(pixel, ColorContainer(hexIn))
     }
@@ -71,17 +100,35 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
         ledStrip.setBlueComponent(pixel, bIn)
     }
 
+
+    /**
+     * Loops through all pixels and sets their color to colorValues.
+     *
+     * @param colorValues The color to set the strip to
+     */
     fun setStripColor(colorValues: ColorContainer) {
         for (i in 0 until numLEDs) setPixelColor(i, colorValues)
         show()
     }
 
+    /**
+     * Set the strip color with a Long, such as a 24-bit integer.
+     *
+     * @param hexIn The color to set the strip to
+     */
     fun setStripColor(hexIn: Long) {
         for (i in 0 until numLEDs) setPixelColor(i, hexIn)
-//        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, (hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
         show()
     }
 
+
+    /**
+     * Set the strip color with r, g, b (ranges 0-255).
+     *
+     * @param rIn Red intensity of the color
+     * @param gIn Green intensity of the color
+     * @param bIn Blue intensity of the color
+     */
     fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
         for (i in 0 until numLEDs) setPixelColor(i, rIn, gIn, bIn)
         show()
