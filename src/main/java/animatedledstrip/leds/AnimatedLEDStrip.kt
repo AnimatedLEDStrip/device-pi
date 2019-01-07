@@ -254,6 +254,16 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
 
+    /**
+     * Function to run a Pixel Run With Trail animation.
+     *
+     * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
+     * where the pixels fade from colorValues1 to colorValues2 over ~20 iterations.
+     *
+     * @param movementDirection [Direction] of animation
+     * @param colorValues1 Color of 'running' pixel
+     * @param colorValues2 Background color
+     */
     fun pixelRunWithTrail(
         movementDirection: Direction,
         colorValues1: ColorContainer,
@@ -281,6 +291,17 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
 
+    /**
+     * Function to run a Sparkle animation.
+     *
+     * Each LED is changed to sparkleColor for delay milliseconds before reverting
+     * to its original color.
+     *
+     * shuffleArray is shuffled and used to determine the order in which the LEDs
+     * are sparkled. Only one pixel will sparkle at any given time.
+     *
+     * @param sparkleColor The color the pixels will sparkle with
+     */
     fun sparkle(sparkleColor: ColorContainer) {
         var originalColor: ColorContainer
         shuffleArray.shuffle()
@@ -294,6 +315,18 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
 
+    /**
+     * A non-repetitive function to run a Sparkle To Color animation.
+     *
+     * Very similar to the Sparkle animation, but the LEDs are not reverted to their
+     * original color after the sparkle.
+     *
+     * shuffleArray is shuffled and used to determine the order in which the LEDs
+     * are sparkled. Only one pixel will sparkle at any given time.
+     *
+     * @param destinationColor The color the pixels will sparkle with
+     * @param delay Duration of each sparkle
+     */
     fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
@@ -304,6 +337,11 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
 
+    /**
+     * TODO(Katie)
+     * @param stackDirection
+     * @param colorValues1
+     */
     fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
         if (stackDirection == Direction.FORWARD) {
             setStripColor(colorValues2)
@@ -333,6 +371,16 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
 
+    /**
+     * A non-repetitive function to run a Wipe animation.
+     *
+     * Similar to a Pixel Run animation, but the pixels do not revert to their
+     * original color.
+     *
+     * @param colorValues Color of moving pixel and color strip will be at end
+     * of animation
+     * @param wipeDirection [Direction] of animation
+     */
     fun wipe(colorValues: ColorContainer, wipeDirection: Direction) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in ledStrip.numPixels - 1 downTo 0) {
