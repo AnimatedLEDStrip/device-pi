@@ -337,24 +337,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
 
     fun sparkle(rIn: Int, gIn: Int, bIn: Int) = sparkle(ColorContainer(rIn, gIn, bIn))
 
-    fun sparkleCC(sparkleColor: ColorContainer) {
-        val deferred = (0 until ledStrip.numPixels).map { n ->
-            GlobalScope.async {
-                val originalColor: ColorContainer = getPixelColor(n)
-                delay((random() * 100000 % 4950).toInt())
-                setPixelColor(n, sparkleColor)
-                show()
-                delay(50)
-                setPixelColor(n, originalColor)
-            }
-        }
-        runBlocking {
-            deferred.awaitAll()
-        }
-    }
-
-    fun sparkleCC(rIn: Int, gIn: Int, bIn: Int) = sparkleCC(ColorContainer(rIn, gIn, bIn))
-
     fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
@@ -366,24 +348,6 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = f
     }
 
     fun sparkleToColor(rIn: Int, gIn: Int, bIn: Int) = sparkleToColor(ColorContainer(rIn, gIn, bIn))
-
-    fun sparkleToColorCC(sparkleColor: ColorContainer) {
-        shuffleArray.shuffle()
-        shuffleArray.forEach { n ->
-            GlobalScope.launch {
-                Thread.sleep((random() * 100000 % 50).toLong())
-//                println(n)
-                setPixelColor(n, sparkleColor)
-                show()
-//                Thread.sleep(50)
-            }
-        }
-//        runBlocking {
-//            deferred.awaitAll()
-//        }
-    }
-
-    fun sparkleToColorCC(rIn: Int, gIn: Int, bIn: Int) = sparkleToColorCC(ColorContainer(rIn, gIn, bIn))
 
     fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
         if (stackDirection == Direction.FORWARD) {
