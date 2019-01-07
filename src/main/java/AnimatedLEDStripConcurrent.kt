@@ -732,8 +732,7 @@ open class AnimatedLEDStripConcurrent(numLEDs: Int, pin: Int, emulated: Boolean 
      * original color after the sparkle.
      *
      * If concurrent = true (default), a separate thread will be created for each
-     * pixel. Each thread saves its pixel's original color, then waits for 0-5
-     * seconds before sparkling its pixel.
+     * pixel. Each thread waits for 0-5 seconds before sparkling its pixel.
      *
      * If concurrent = false, shuffleArray is shuffled and used to determine the
      * order in which the LEDs are sparkled. Unlike the concurrent version, only

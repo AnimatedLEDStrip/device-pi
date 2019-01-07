@@ -30,7 +30,7 @@ import kotlin.math.roundToInt
 /**
  * Blend two [ColorContainer]s together and return a new ColorContainer.
  *
- * From the FastLED library.
+ * Adapted from the FastLED library.
  *
  * @param existing The starting ColorContainer
  * @param overlay The ColorContainer to blend toward
