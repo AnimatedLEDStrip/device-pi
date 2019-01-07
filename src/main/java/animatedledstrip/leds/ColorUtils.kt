@@ -59,6 +59,7 @@ fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: In
  *
  * @param palette A list of [ColorContainer]s used to create the collection's colors
  * @param numLEDs The number of LEDs to create colors for
+ * @return A map with each pixel index mapped to a ColorContainer
  */
 fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
 
