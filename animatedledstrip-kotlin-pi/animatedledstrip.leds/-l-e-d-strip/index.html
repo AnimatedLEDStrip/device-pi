@@ -23,7 +23,7 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">LEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Int)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
+<code><span class="identifier">LEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/emulated">emulated</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code>
 <p>Class that represents a led strip.</p>
 </td>
 </tr>
@@ -37,7 +37,9 @@
 <p><a href="led-strip.html">ledStrip</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">ledStrip</span><span class="symbol">: </span><span class="identifier">WS281x</span></code></td>
+<code><span class="keyword">var </span><span class="identifier">ledStrip</span><span class="symbol">: </span><span class="identifier">LedDriverInterface</span></code>
+<p>The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -58,42 +60,66 @@
 <p><a href="get-pixel-blue.html">getPixelBlue</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelBlue</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelBlue(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><s><span class="identifier">getPixelBlue</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelBlue(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="get-pixel-color.html">getPixelColor</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Get the color of a pixel.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-color-list.html">getPixelColorList</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelColorList</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
+<p>Get the colors of all pixels as a List of Longs.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-pixel-green.html">getPixelGreen</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelGreen</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelGreen(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><s><span class="identifier">getPixelGreen</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelGreen(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="get-pixel-hex-string.html">getPixelHexString</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelHexString</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelHexString(kotlin.Int)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelHexString</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelHexString(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Get the color of a pixel as a hexadecimal string.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-pixel-long.html">getPixelLong</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelLong</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelLong(kotlin.Int)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelLong</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelLong(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Get the color of a pixel as a Long.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-pixel-red.html">getPixelRed</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getPixelRed</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelRed(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">fun </span><s><span class="identifier">getPixelRed</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelRed(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-emulated.html">isEmulated</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isEmulated</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Returns true if this is an emulated LED strip</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -107,9 +133,13 @@
 <p><a href="set-pixel-color.html">setPixelColor</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets a pixel's color with a ColorContainer.</p>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a pixel's color with r, g, b (ranges 0-255).</p>
+<code><span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a pixel's color with a Long, such as a 24-bit integer.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -127,19 +157,39 @@
 </tr>
 <tr>
 <td>
+<p><a href="set-section-color.html">setSectionColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the color of a section of the strip. Loops through all leds between start
+and end (inclusive) and sets their color to colorValues.</p>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a section's color with a Long, such as a 24-bit integer.</p>
+<code><span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setSectionColor(kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a section's color with r, g, b (ranges 0-255).</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="set-strip-color.html">setStripColor</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(animatedledstrip.leds.ColorContainer)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Loops through all pixels and sets their color to colorValues.</p>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the strip color with a Long, such as a 24-bit integer.</p>
+<code><span class="keyword">fun </span><span class="identifier">setStripColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColor(kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the strip color with r, g, b (ranges 0-255).</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="show.html">show</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">show</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">show</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Send data to the LEDs.</p>
+</td>
 </tr>
 </tbody>
 </table>
