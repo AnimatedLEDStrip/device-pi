@@ -87,6 +87,47 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
         show()
     }
 
+    /**
+     * Set the color of a section of the strip. Loops through all leds between start
+     * and end (inclusive) and sets their color to colorValues.
+     *
+     * @param start First pixel in section
+     * @param end Last pixel in section
+     * @param colorValues The color to set the section to
+     */
+    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainer) {
+        for (i in start..end) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
+        show()
+    }
+
+
+    /**
+     * Set a section's color with a Long, such as a 24-bit integer.
+     *
+     * @param start First pixel in section
+     * @param end Last pixel in section
+     * @param hexIn The color to set the section to
+     */
+    fun setSectionColor(start: Int, end: Int, hexIn: Long) {
+        for (i in start..end) setPixelColor(i, hexIn)
+        show()
+    }
+
+
+    /**
+     * Set a section's color with r, g, b (ranges 0-255).
+     *
+     * @param start First pixel in section
+     * @param end Last pixel in section
+     * @param rIn Red intensity of the color
+     * @param gIn Green intensity of the color
+     * @param bIn Blue intensity of the color
+     */
+    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
+        for (i in start..end) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
+        show()
+    }
+
     fun getPixelRed(pixel: Int): Int {
         return ledStrip.getRedComponent(pixel)
     }
