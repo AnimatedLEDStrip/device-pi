@@ -28,14 +28,37 @@ import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import java.lang.Math.random
 
-class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
 
+/**
+ * A subclass of [LEDStrip] adding animations
+ *
+ * @param numLEDs Number of leds in the strip
+ * @param pin GPIO pin connected for signal
+ * @param emulated Is this strip real or emulated?
+ */
+class AnimatedLEDStrip(numLEDs: Int, pin: Int, private val emulated: Boolean = false) : LEDStrip(numLEDs, pin) {
+
+
+    /**
+     * Array used for shuffle animation
+     */
     private var shuffleArray = mutableListOf<Int>()
 
     init {
-        for (i in 0 until numLEDs) shuffleArray.add(i)
+        for (i in 0 until numLEDs) shuffleArray.add(i)      // Initialize shuffleArray
     }
 
+
+    /**
+     * Function to run an Alternate animation.
+     *
+     * Strip alternates between two colors at the specified rate (delay between changes).
+     *
+     * @param colorValues1 First color to be displayed
+     * @param colorValues2 Second color to be displayed
+     * @param delayTime Delay in milliseconds before color changes from first to
+     * second color and between second color and returning
+     */
     fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delayTime: Int) {
         setStripColor(colorValues1)
         delay(delayTime)
@@ -43,6 +66,18 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
         delay(delayTime)
     }
 
+    /**
+     * Overload for Alternate animation.
+     *
+     * @param r1In Red intensity for the first color
+     * @param g1In Green intensity for the first color
+     * @param b1In Blue intensity for the first color
+     * @param r2In Red intensity for the second color
+     * @param g2In Green intensity for the second color
+     * @param b2In Blue intensity for the second color
+     * @param delayTime Delay in milliseconds before color changes from first to
+     * second color and between second color and returning
+     */
     fun alternate(r1In: Int, g1In: Int, b1In: Int, r2In: Int, g2In: Int, b2In: Int, delayTime: Int) =
         alternate(ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In), delayTime)
 
@@ -123,6 +158,18 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
         //Todo: fill in function
     }
 
+
+    /**
+     * Function to run a Multi Pixel Run animation.
+     *
+     * Similar to Pixel Run but with multiple leds at a specified spacing.
+     *
+     * @param spacing Spacing between lit leds (for example, if spacing is 3
+     * and led 0 is lit, led 3 will also be lit)
+     * @param chaseDirection [Direction] of animation
+     * @param colorValues1 Color of moving pixels
+     * @param colorValues2 Color of background pixels
+     */
     fun multiPixelRun(
         spacing: Int,
         chaseDirection: Direction,
@@ -171,28 +218,34 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
         b2In: Int
     ) = multiPixelRun(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In), ColorContainer(r2In, g2In, b2In))
 
+
+    /**
+     * A non-repetitive function to run a Multi Pixel Run To Color animation.
+     *
+     * @param spacing Spacing between lit leds (for example, if spacing is 3
+     * and led 0 is lit, led 3 will also be lit)
+     * @param chaseDirection [Direction] of animation
+     * @param colorValues1 Color of moving pixels and color strip will
+     * be at end of animation
+     */
     fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
-//                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
                 delay(150)
-//                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         } else if (chaseDirection == Direction.FORWARD) {
             for (q in spacing - 1 downTo 0) {
-//                setStripColor(colorValues2)
                 for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
                 delay(150)
-//                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(i + (-(q - (spacing - 1))), colorValues2)
             }
         }
     }
@@ -200,6 +253,17 @@ class AnimatedLEDStrip(numLEDs: Int, pin: Int) : LEDStrip(numLEDs, pin) {
     fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, r1In: Int, g1In: Int, b1In: Int) =
         multiPixelRunToColor(spacing, chaseDirection, ColorContainer(r1In, g1In, b1In))
 
+
+    /**
+     * Function to run a Pixel Run animation.
+     *
+     * The strip is set to colorValues2, then a pixel 'runs' along the strip.
+     * Similar to Multi Pixel Run but with only one pixel.
+     *
+     * @param movementDirection [Direction] of animation
+     * @param colorValues1 Color of 'running' pixel
+     * @param colorValues2 Background color
+     */
     fun pixelRun(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
         setStripColor(colorValues2)
         if (movementDirection == Direction.FORWARD) {
