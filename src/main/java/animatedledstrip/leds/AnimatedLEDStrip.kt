@@ -56,6 +56,8 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      */
     private val shuffleLock = Mutex()
 
+    private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
+
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())        // Initialize locks map
         runBlocking {
@@ -529,20 +531,25 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delayMod Multiplier for delay
      * @param concurrent Use concurrent sparkle algorithm?
      */
-    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true, fade: Boolean = false) {
+    fun sparkle(
+        sparkleColor: ColorContainer,
+        delay: Int = 50,
+        delayMod: Double = 1.0,
+        concurrent: Boolean = true
+    ) {
 
         if (concurrent) {
-            runBlocking {
-                val deferred = (0 until ledStrip.numPixels).map { n ->
-                    async {
-                        val originalColor: ColorContainer = getPixelColor(n)
-                        delay((random() * 5000).toInt() % 4950)
-                        setPixelColor(n, sparkleColor)
-                        show()
-                        delay((delay * delayMod).toInt())
-                        setPixelColor(n, originalColor)
-                    }
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(sparkleThreadPool) {
+                    val originalColor: ColorContainer = getPixelColor(n)
+                    delay((random() * 5000).toInt() % 4950)
+                    setPixelColor(n, sparkleColor)
+                    show()
+                    delay((delay * delayMod).toInt())
+                    setPixelColor(n, originalColor)
                 }
+            }
+            runBlocking {
                 deferred.awaitAll()
             }
         } else {
@@ -551,25 +558,15 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 return@runBlocking shuffleArray
             }
             myShuffleArray.shuffle()
-            if (fade) {
-                for (i in 0 until ledStrip.numPixels) {
-                    for (j in 0 until ledStrip.numPixels) {
-                        setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
-                    }
-                    setPixelColor(myShuffleArray[i], sparkleColor)
-                    show()
-                    delay((delay * delayMod).toInt())
-                }
-            } else {
-                var originalColor: ColorContainer
-                for (i in 0 until ledStrip.numPixels) {
-                    originalColor = getPixelColor(myShuffleArray[i])
-                    setPixelColor(myShuffleArray[i], sparkleColor)
-                    show()
-                    delay((delay * delayMod).toInt())
-                    setPixelColor(myShuffleArray[i], originalColor)
-                }
+            var originalColor: ColorContainer
+            for (i in 0 until ledStrip.numPixels) {
+                originalColor = getPixelColor(myShuffleArray[i])
+                setPixelColor(myShuffleArray[i], sparkleColor)
+                show()
+                delay((delay * delayMod).toInt())
+                setPixelColor(myShuffleArray[i], originalColor)
             }
+
         }
     }
 
@@ -600,18 +597,16 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     ) {
 
         if (concurrent) {
-            runBlocking {
-                val deferred = (0 until ledStrip.numPixels).map { n ->
-                    async {
-                        delay((random() * 5000).toInt() % 4950)
-                        setPixelColor(n, destinationColor)
-                        show()
-                        delay((delay * delayMod).toInt())
-                    }
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(sparkleThreadPool) {
+                    delay((random() * 5000).toInt() % 4950)
+                    setPixelColor(n, destinationColor)
+                    show()
+                    delay((delay * delayMod).toInt())
                 }
-
+            }
+            runBlocking {
                 deferred.awaitAll()
-
             }
         } else {
             val myShuffleArray = runBlocking {
