@@ -52,7 +52,7 @@ inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
             unlock(owner)
         }
     } else {
-        Logger.warn("Access Overlap: $owner")
+        Logger.debug("Access Overlap: $owner")
         return
     }
 }
