@@ -571,6 +571,51 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     }
 
 
+    fun animation005(
+        sparkleColor: ColorContainer,
+        delay: Int = 50,
+        delayMod: Double = 1.0,
+        concurrent: Boolean = true
+    ) {
+        if (concurrent) {
+            var complete = false
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(sparkleThreadPool) {
+                    delay((random() * 5000).toInt())
+                    setPixelColor(n, sparkleColor)
+                    show()
+                    delay((delay * delayMod).toInt())
+                }
+            }
+            GlobalScope.launch(sparkleThreadPool) {
+                while (!complete) {
+                    for (j in 0 until ledStrip.numPixels) {
+                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 10))
+                    }
+                    delay(10)
+                }
+            }
+            runBlocking {
+                deferred.awaitAll()
+                complete = true
+            }
+        } else {
+            val myShuffleArray = runBlocking {
+                shuffleLock.withLock { shuffleArray.shuffle() }
+                return@runBlocking shuffleArray
+            }
+            myShuffleArray.shuffle()
+            for (i in 0 until ledStrip.numPixels) {
+                for (j in 0 until ledStrip.numPixels) {
+                    setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
+                }
+                setPixelColor(myShuffleArray[i], sparkleColor)
+                show()
+                delay((delay * delayMod).toInt())
+            }
+        }
+    }
+
     /**
      * A non-repetitive function to run a Sparkle To Color animation.
      *
