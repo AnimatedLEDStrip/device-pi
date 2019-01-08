@@ -23,22 +23,17 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
 import com.diozero.ws281xj.rpiws281x.WS281x
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.pmw.tinylog.Logger
 
 
 /**
- * A LED Strip with concurrency added. Bridge between the AnimatedLEDStripConcurrent class and the WS281x class
+ * Class that represents a led strip.
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
- * @param emulated Is this strip real or emulated?
  */
-open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
+open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
 
     /**
      * The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.
@@ -48,19 +43,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         false -> WS281x(pin, 255, numLEDs)
     }
 
-    /**
-     * Map containing Mutex instances for locking access to each led while it is
-     * being used
-     */
-    private val locks = mutableMapOf<Int, Mutex>()
-
-    /**
-     * Mutex that tracks if a thread is sending data to the LEDs
-     */
-    private val renderLock = Mutex()
-
     init {
-        for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
         Logger.info("using GPIO pin $pin")
     }
@@ -72,28 +55,18 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Sets a pixel's color. If another thread has locked the pixel's Mutex,
-     * this skips setting the pixel's color and returns.
+     * Sets a pixel's color with a ColorContainer.
      *
      * @param pixel The pixel to change
      * @param colorValues The color to set the pixel to
      */
     fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
-                    ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelColor: $e")
-        }
+        ledStrip.setPixelColourRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
     }
 
 
     /**
-     * Set a pixel's color with r, g, b (ranges 0-255). If another thread has
-     * locked the pixel's Mutex, this skips setting the pixel's color and returns.
+     * Set a pixel's color with r, g, b (ranges 0-255).
      *
      * @param pixel The pixel to change
      * @param rIn Red intensity of the color
@@ -106,9 +79,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Set a pixel's color with a Long, such as a 24-bit integer. If another
-     * thread has locked the pixel's Mutex, this skips setting the pixel's color
-     * and returns.
+     * Set a pixel's color with a Long, such as a 24-bit integer.
      *
      * @param pixel The pixel to change
      * @param hexIn The color to set the pixel to
@@ -118,57 +89,30 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
     }
 
     fun setPixelRed(pixel: Int, rIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setRedComponent(pixel, rIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelRed: $e")
-        }
+        ledStrip.setRedComponent(pixel, rIn)
     }
 
     fun setPixelGreen(pixel: Int, gIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setGreenComponent(pixel, gIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelGreen: $e")
-        }
+        ledStrip.setGreenComponent(pixel, gIn)
     }
 
     fun setPixelBlue(pixel: Int, bIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setBlueComponent(pixel, bIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelBlue")
-        }
+        ledStrip.setBlueComponent(pixel, bIn)
     }
 
 
     /**
-     * Loops through all pixels and sets their color to colorValues. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Loops through all pixels and sets their color to colorValues.
      *
      * @param colorValues The color to set the strip to
      */
     fun setStripColor(colorValues: ColorContainer) {
-        for (i in 0 until numLEDs) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
+        for (i in 0 until numLEDs) setPixelColor(i, colorValues)
         show()
     }
 
-
     /**
-     * Set the strip color with a Long, such as a 24-bit integer. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Set the strip color with a Long, such as a 24-bit integer.
      *
      * @param hexIn The color to set the strip to
      */
@@ -179,22 +123,20 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Set the strip color with r, g, b (ranges 0-255). If a pixel's Mutex is
-     * locked by another thread, it is skipped.
+     * Set the strip color with r, g, b (ranges 0-255).
      *
      * @param rIn Red intensity of the color
      * @param gIn Green intensity of the color
      * @param bIn Blue intensity of the color
      */
     fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
-        for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
+        for (i in 0 until numLEDs) setPixelColor(i, rIn, gIn, bIn)
         show()
     }
 
     /**
      * Set the color of a section of the strip. Loops through all leds between start
-     * and end (inclusive) and sets their color to colorValues. If a pixel's Mutex
-     * is locked by another thread, it is skipped.
+     * and end (inclusive) and sets their color to colorValues.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -207,8 +149,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Set a section's color with a Long, such as a 24-bit integer. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Set a section's color with a Long, such as a 24-bit integer.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -221,8 +162,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Set a section's color with r, g, b (ranges 0-255). If a pixel's Mutex is
-     * locked by another thread, it is skipped.
+     * Set a section's color with r, g, b (ranges 0-255).
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -235,73 +175,37 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
         show()
     }
 
+
     @Deprecated("Use getPixelColor and r property of the resulting ColorContainer", ReplaceWith("getPixelColor().r"))
     fun getPixelRed(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getRedComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelRed: $e")
-        }
-        return 0
+        return ledStrip.getRedComponent(pixel)
     }
+
 
     @Deprecated("Use getPixelColor and g property of the resulting ColorContainer", ReplaceWith("getPixelColor().g"))
     fun getPixelGreen(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getGreenComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelGreen: $e")
-        }
-        return 0
+        return ledStrip.getGreenComponent(pixel)
     }
+
 
     @Deprecated("Use getPixelColor and b property of the resulting ColorContainer", ReplaceWith("getPixelColor().b"))
     fun getPixelBlue(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getBlueComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelBlue: $e")
-        }
-        return 0
+        return ledStrip.getBlueComponent(pixel)
     }
 
 
     /**
-     * Get the color of a pixel. Waits until the pixel's Mutex is unlocked.
+     * Get the color of a pixel.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
      */
-    fun getPixelColor(pixel: Int): ColorContainer {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ColorContainer(ledStrip.getPixelColour(pixel).toLong())
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColor: $e")
-        }
-        Logger.warn("Color not retrieved")
-        return CCBlack
-    }
+    fun getPixelColor(pixel: Int): ColorContainer =
+        ColorContainer(ledStrip.getPixelColour(pixel).toLong())
 
 
     /**
-     * Get the color of a pixel as a Long. Waits until the pixel's Mutex is
-     * unlocked.
+     * Get the color of a pixel as a Long.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel as a Long
@@ -312,8 +216,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Get the color of a pixel as a hexadecimal string. Waits until the pixel's
-     * Mutex is unlocked.
+     * Get the color of a pixel as a hexadecimal string.
      *
      * @param pixel The pixel to find the color of
      * @return A string containing the color of the pixel in hexadecimal
@@ -324,8 +227,7 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Get the colors of all pixels as a List of Longs. Waits until each pixel's
-     * Mutex is unlocked.
+     * Get the colors of all pixels as a List of Longs.
      */
     fun getPixelColorList(): List<Long> {
         val temp = mutableListOf<Long>()
@@ -361,18 +263,9 @@ open class LEDStripConcurrent(var numLEDs: Int, pin: Int, private val emulated: 
 
 
     /**
-     * Attempt to lock renderLock and send data to the LEDs. Returns if another
-     * thread has locked renderLock.
+     * Send data to the LEDs.
      */
     fun show() {
-        try {
-            runBlocking {
-                renderLock.tryWithLock(owner = "Render") {
-                    ledStrip.render()
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in show: $e")
-        }
+        ledStrip.render()
     }
 }
