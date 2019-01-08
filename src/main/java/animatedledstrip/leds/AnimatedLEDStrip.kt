@@ -481,7 +481,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * The index is found with (i + a) mod s, where i is the pixel index, a is the
      * offset for this iteration and s is the number of pixels in the strip.
      *
-     * @param palette A list of [ColorContainer]s to be used as pure colors when
+     * @param colorList A list of [ColorContainer]s to be used as pure colors when
      * creating the palette
      * @param movementDirection [Direction] of the animation
      * @param delay Time between moves
@@ -529,7 +529,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delayMod Multiplier for delay
      * @param concurrent Use concurrent sparkle algorithm?
      */
-    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true) {
+    fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true, fade: Boolean = false) {
 
         if (concurrent) {
             runBlocking {
@@ -546,19 +546,29 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 deferred.awaitAll()
             }
         } else {
-
-            var originalColor: ColorContainer
             val myShuffleArray = runBlocking {
                 shuffleLock.withLock { shuffleArray.shuffle() }
                 return@runBlocking shuffleArray
             }
             myShuffleArray.shuffle()
-            for (i in 0 until ledStrip.numPixels) {
-                originalColor = getPixelColor(myShuffleArray[i])
-                setPixelColor(myShuffleArray[i], sparkleColor)
-                show()
-                delay((delay * delayMod).toInt())
-                setPixelColor(myShuffleArray[i], originalColor)
+            if (fade) {
+                for (i in 0 until ledStrip.numPixels) {
+                    for (j in 0 until ledStrip.numPixels) {
+                        setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
+                    }
+                    setPixelColor(myShuffleArray[i], sparkleColor)
+                    show()
+                    delay((delay * delayMod).toInt())
+                }
+            } else {
+                var originalColor: ColorContainer
+                for (i in 0 until ledStrip.numPixels) {
+                    originalColor = getPixelColor(myShuffleArray[i])
+                    setPixelColor(myShuffleArray[i], sparkleColor)
+                    show()
+                    delay((delay * delayMod).toInt())
+                    setPixelColor(myShuffleArray[i], originalColor)
+                }
             }
         }
     }
