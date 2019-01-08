@@ -138,6 +138,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
             endptC = (numLEDs * 2 / 3) - 1
         }
 
+        // TODO: Change to use threads from animationThreadPool
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             setSectionColor(endptA, endptB, color1)
             delay((delay * delayMod).toInt())
@@ -434,7 +435,8 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         pixelColor5: ColorContainer,
         delay: Int = 8
     ) {
-        // TODO: Modify thread names to be different. Maybe create a runBlocking block to launch these in rather than GlobalScope.
+        // TODO: Change to use threads from animationThreadPool
+
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             pixelRun(Direction.FORWARD, pixelColor5, delay = delay)
         }
@@ -784,7 +786,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param stackColor2
      */
     fun stackOverflow(stackColor1: ColorContainer, stackColor2: ColorContainer) {
-        // TODO: Maybe put these in a runBlocking block instead of GlobalScope
+        // TODO: Change to use threads from animationThreadPool
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.FORWARD, stackColor1, delay = 2)
         }
