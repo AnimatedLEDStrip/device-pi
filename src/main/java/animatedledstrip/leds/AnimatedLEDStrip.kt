@@ -56,6 +56,19 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      */
     private val shuffleLock = Mutex()
 
+
+    /**
+     * A pool of threads to be used for animations that spawn new sub-threads
+     * (with the exception of sparkle-type animations, those use the
+     * [sparkleThreadPool]).
+     */
+    private val animationThreadPool = newFixedThreadPoolContext(50, "Animation Pool")
+
+    /**
+     * A pool of threads to be used for sparkle animations due to the
+     * number of threads a concurrent sparkle animation uses. This prevents
+     * memory leaks caused by the overhead associated with creating new threads.
+     */
     private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
     init {
