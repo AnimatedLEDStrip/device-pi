@@ -65,7 +65,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     private val animationThreadPool = newFixedThreadPoolContext(50, "Animation Pool")
 
     /**
-     * A pool of threads to be used for sparkle animations due to the
+     * A pool of threads to be used for sparkle-type animations due to the
      * number of threads a concurrent sparkle animation uses. This prevents
      * memory leaks caused by the overhead associated with creating new threads.
      */
@@ -347,7 +347,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         movementDirection: Direction,
         colorValues1: ColorContainer,
         colorValues2: ColorContainer = CCBlack,
-        delay: Int = 50,
+        delay: Int = 10,
         delayMod: Double = 1.0
     ) {
         setStripColor(colorValues2)
@@ -586,51 +586,6 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     }
 
 
-    fun animation005(
-        sparkleColor: ColorContainer,
-        delay: Int = 50,
-        delayMod: Double = 1.0,
-        concurrent: Boolean = true
-    ) {
-        if (concurrent) {
-            var complete = false
-            val deferred = (0 until ledStrip.numPixels).map { n ->
-                GlobalScope.async(sparkleThreadPool) {
-                    delay((random() * 5000).toInt())
-                    setPixelColor(n, sparkleColor)
-                    show()
-                    delay((delay * delayMod).toInt())
-                }
-            }
-            GlobalScope.launch(sparkleThreadPool) {
-                while (!complete) {
-                    for (j in 0 until ledStrip.numPixels) {
-                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 10))
-                    }
-                    delay(10)
-                }
-            }
-            runBlocking {
-                deferred.awaitAll()
-                complete = true
-            }
-        } else {
-            val myShuffleArray = runBlocking {
-                shuffleLock.withLock { shuffleArray.shuffle() }
-                return@runBlocking shuffleArray
-            }
-            myShuffleArray.shuffle()
-            for (i in 0 until ledStrip.numPixels) {
-                for (j in 0 until ledStrip.numPixels) {
-                    setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
-                }
-                setPixelColor(myShuffleArray[i], sparkleColor)
-                show()
-                delay((delay * delayMod).toInt())
-            }
-        }
-    }
-
     /**
      * A non-repetitive function to run a Sparkle To Color animation.
      *
@@ -824,4 +779,72 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         }
     }
 
+
+    /* Experimental animations */
+
+    fun animation004(colorValues1: ColorContainer) {
+        for (i in 0 until ledStrip.numPixels / 2) {
+            for (j in i until ledStrip.numPixels - i) {
+                setPixelColor(j, colorValues1)
+                show()
+                delay(5)
+                setPixelColor(j, CCBlack)
+            }
+            setPixelColor(ledStrip.numPixels - i - 1, colorValues1)
+            for (j in ledStrip.numPixels - i - 2 downTo i) {
+                setPixelColor(j, colorValues1)
+                show()
+                delay(5)
+                setPixelColor(j, CCBlack)
+            }
+            setPixelColor(i, colorValues1)
+        }
+        if (ledStrip.numPixels % 2 == 1) setPixelColor(ledStrip.numPixels / 2, colorValues1)
+    }
+
+
+    fun animation005(
+        sparkleColor: ColorContainer,
+        delay: Int = 50,
+        delayMod: Double = 1.0,
+        concurrent: Boolean = true
+    ) {
+        if (concurrent) {
+            var complete = false
+            val deferred = (0 until ledStrip.numPixels).map { n ->
+                GlobalScope.async(sparkleThreadPool) {
+                    delay((random() * 5000).toInt())
+                    setPixelColor(n, sparkleColor)
+                    show()
+                    delay((delay * delayMod).toInt())
+                }
+            }
+            GlobalScope.launch(sparkleThreadPool) {
+                while (!complete) {
+                    for (j in 0 until ledStrip.numPixels) {
+                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 10))
+                    }
+                    delay(10)
+                }
+            }
+            runBlocking {
+                deferred.awaitAll()
+                complete = true
+            }
+        } else {
+            val myShuffleArray = runBlocking {
+                shuffleLock.withLock { shuffleArray.shuffle() }
+                return@runBlocking shuffleArray
+            }
+            myShuffleArray.shuffle()
+            for (i in 0 until ledStrip.numPixels) {
+                for (j in 0 until ledStrip.numPixels) {
+                    setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
+                }
+                setPixelColor(myShuffleArray[i], sparkleColor)
+                show()
+                delay((delay * delayMod).toInt())
+            }
+        }
+    }
 }
