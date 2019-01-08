@@ -419,7 +419,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         pixelColor5: ColorContainer,
         delay: Int = 8
     ) {
-        // TODO: Modify thread names to be different
+        // TODO: Modify thread names to be different. Maybe create a runBlocking block to launch these in rather than GlobalScope.
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             pixelRun(Direction.FORWARD, pixelColor5, delay = delay)
         }
@@ -532,17 +532,17 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     fun sparkle(sparkleColor: ColorContainer, delay: Int = 50, delayMod: Double = 1.0, concurrent: Boolean = true) {
 
         if (concurrent) {
-            val deferred = (0 until ledStrip.numPixels).map { n ->
-                GlobalScope.async(newSingleThreadContext(random().toString())) {
-                    val originalColor: ColorContainer = getPixelColor(n)
-                    delay((random() * 5000).toInt() % 4950)
-                    setPixelColor(n, sparkleColor)
-                    show()
-                    delay((delay * delayMod).toInt())
-                    setPixelColor(n, originalColor)
-                }
-            }
             runBlocking {
+                val deferred = (0 until ledStrip.numPixels).map { n ->
+                    async {
+                        val originalColor: ColorContainer = getPixelColor(n)
+                        delay((random() * 5000).toInt() % 4950)
+                        setPixelColor(n, sparkleColor)
+                        show()
+                        delay((delay * delayMod).toInt())
+                        setPixelColor(n, originalColor)
+                    }
+                }
                 deferred.awaitAll()
             }
         } else {
@@ -590,16 +590,18 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     ) {
 
         if (concurrent) {
-            val deferred = (0 until ledStrip.numPixels).map { n ->
-                GlobalScope.async(newSingleThreadContext(random().toString())) {
-                    delay((random() * 5000).toInt() % 4950)
-                    setPixelColor(n, destinationColor)
-                    show()
-                    delay((delay * delayMod).toInt())
-                }
-            }
             runBlocking {
+                val deferred = (0 until ledStrip.numPixels).map { n ->
+                    async {
+                        delay((random() * 5000).toInt() % 4950)
+                        setPixelColor(n, destinationColor)
+                        show()
+                        delay((delay * delayMod).toInt())
+                    }
+                }
+
                 deferred.awaitAll()
+
             }
         } else {
             val myShuffleArray = runBlocking {
@@ -719,6 +721,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param stackColor2
      */
     fun stackOverflow(stackColor1: ColorContainer, stackColor2: ColorContainer) {
+        // TODO: Maybe put these in a runBlocking block instead of GlobalScope
         GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
             stack(Direction.FORWARD, stackColor1, delay = 2)
         }
