@@ -300,6 +300,26 @@ and end (inclusive) and sets their color to colorValues.</p>
 </tr>
 <tr>
 <td>
+<p><a href="../-l-e-d-strip/set-strip-color-with-gradient.html">setStripColorWithGradient</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setStripColorWithGradient</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColorWithGradient(kotlin.collections.List((animatedledstrip.leds.ColorContainer)))/colorList">colorList</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the color of the strip with a list. The list is converted to a map
+before that map is sent to <a href="../-l-e-d-strip/set-strip-color-with-palette.html">setStripColorWithPalette</a> with an offset of 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-l-e-d-strip/set-strip-color-with-palette.html">setStripColorWithPalette</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setStripColorWithPalette</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColorWithPalette(kotlin.collections.Map((kotlin.Int, animatedledstrip.leds.ColorContainer)), kotlin.Int)/palette">palette</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setStripColorWithPalette(kotlin.collections.Map((kotlin.Int, animatedledstrip.leds.ColorContainer)), kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the color of the strip using a map with each pixel index mapped to a
+ColorContainer.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="../-l-e-d-strip/show.html">show</a></p>
 </td>
 <td>
