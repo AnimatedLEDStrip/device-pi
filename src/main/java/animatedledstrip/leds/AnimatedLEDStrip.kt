@@ -798,6 +798,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 setPixelColor(j, CCBlack)
             }
             setPixelColor(i, colorValues1)
+            show()
         }
         if (ledStrip.numPixels % 2 == 1) setPixelColor(ledStrip.numPixels / 2, colorValues1)
     }
