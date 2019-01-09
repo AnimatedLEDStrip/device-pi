@@ -815,16 +815,15 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 GlobalScope.async(sparkleThreadPool) {
                     delay((random() * 5000).toInt())
                     setPixelColor(n, sparkleColor)
-                    show()
                     delay((delay * delayMod).toInt())
                 }
             }
             GlobalScope.launch(sparkleThreadPool) {
                 while (!complete) {
                     for (j in 0 until ledStrip.numPixels) {
-                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 10))
+                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 5))
                     }
-                    delay(10)
+                    show()
                 }
             }
             runBlocking {
