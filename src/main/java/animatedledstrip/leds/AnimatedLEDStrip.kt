@@ -96,11 +96,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         colorValues1: ColorContainer,
         colorValues2: ColorContainer,
         delay: Int = 1000,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
-        setStripColor(colorValues1)
+        setSectionColor(startPixel, endPixel, colorValues1)
         delay((delay * delayMod).toInt())
-        setStripColor(colorValues2)
+        setSectionColor(startPixel, endPixel, colorValues2)
         delay((delay * delayMod).toInt())
     }
 
@@ -179,18 +181,20 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         colorValues1: ColorContainer,
         colorValues2: ColorContainer = CCBlack,
         delay: Int = 100,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
                 setStripColor(colorValues2)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
                 delay((delay * delayMod).toInt())
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
                 )
@@ -198,13 +202,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         } else if (chaseDirection == Direction.FORWARD) {
             for (q in spacing - 1 downTo 0) {
                 setStripColor(colorValues2)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
                 delay((delay * delayMod).toInt())
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
                 )
@@ -229,11 +233,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         chaseDirection: Direction,
         destinationColor: ColorContainer,
         delay: Int = 150,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         if (chaseDirection == Direction.BACKWARD) {
             for (q in 0 until spacing) {
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
@@ -242,7 +248,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
             }
         } else if (chaseDirection == Direction.FORWARD) {
             for (q in spacing - 1 downTo 0) {
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
@@ -331,7 +337,9 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         colorValues1: ColorContainer,
         colorValues2: ColorContainer = CCBlack,
         delay: Int = 10,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         setStripColor(colorValues2)
         if (movementDirection == Direction.FORWARD) {
@@ -377,11 +385,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         colorValues1: ColorContainer,
         colorValues2: ColorContainer = CCBlack,
         delay: Int = 10,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         if (movementDirection == Direction.FORWARD) {
-            for (q in 0 until ledStrip.numPixels) {
-                for (i in 0 until ledStrip.numPixels) {
+            for (q in startPixel..endPixel) {
+                for (i in startPixel..endPixel) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
@@ -389,8 +399,8 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 delay((delay * delayMod).toInt())
             }
         } else if (movementDirection == Direction.BACKWARD) {
-            for (q in ledStrip.numPixels - 1 downTo 0) {
-                for (i in 0 until ledStrip.numPixels) {
+            for (q in endPixel downTo startPixel) {
+                for (i in startPixel..endPixel) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
@@ -430,18 +440,20 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         colorList: List<ColorContainer>,
         movementDirection: Direction,
         delay: Int = 50,
-        delayMod: Double = 1.0
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         val palette = colorsFromPalette(colorList, numLEDs)
 
         if (movementDirection == Direction.FORWARD)
-            for (m in 0 until numLEDs) {
+            for (m in startPixel..endPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
             }
         else
-            for (m in numLEDs - 1 downTo 0) {
+            for (m in endPixel downTo startPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
@@ -472,11 +484,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         sparkleColor: ColorContainer,
         delay: Int = 50,
         delayMod: Double = 1.0,
-        concurrent: Boolean = true
+        concurrent: Boolean = true,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
 
         if (concurrent) {
-            val deferred = (0 until ledStrip.numPixels).map { n ->
+            val deferred = (startPixel..endPixel).map { n ->
                 GlobalScope.async(sparkleThreadPool) {
                     val originalColor: ColorContainer = getPixelColor(n)
                     delay((random() * 5000).toInt() % 4950)
@@ -496,7 +510,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
             }
             myShuffleArray.shuffle()
             var originalColor: ColorContainer
-            for (i in 0 until ledStrip.numPixels) {
+            for (i in startPixel..endPixel) {
                 originalColor = getPixelColor(myShuffleArray[i])
                 setPixelColor(myShuffleArray[i], sparkleColor)
                 show()
@@ -530,11 +544,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
         destinationColor: ColorContainer,
         delay: Int = 50,
         delayMod: Double = 1.0,
-        concurrent: Boolean = true
+        concurrent: Boolean = true,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
 
         if (concurrent) {
-            val deferred = (0 until ledStrip.numPixels).map { n ->
+            val deferred = (startPixel..endPixel).map { n ->
                 GlobalScope.async(sparkleThreadPool) {
                     delay((random() * 5000).toInt() % 4950)
                     setPixelColor(n, destinationColor)
@@ -554,7 +570,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
 
             }
             myShuffleArray.shuffle()
-            for (i in 0 until ledStrip.numPixels) {
+            for (i in startPixel..endPixel) {
                 setPixelColor(myShuffleArray[i], destinationColor)
                 show()
                 delay((delay * delayMod).toInt())
@@ -570,12 +586,17 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delay
      * @param delayMod
      */
-    fun stack(stackDirection: Direction, colorValues1: ColorContainer, delay: Int = 10, delayMod: Double = 1.0) {
+    fun stack(stackDirection: Direction,
+              colorValues1: ColorContainer,
+              delay: Int = 10,
+              delayMod: Double = 1.0,
+              startPixel: Int = 0,
+              endPixel: Int = numLEDs - 1
+    ) {
         if (stackDirection == Direction.FORWARD) {
-//            setStripColor(colorValues2)
-            for (q in ledStrip.numPixels - 1 downTo 0) {
+            for (q in endPixel downTo startPixel) {
                 var originalColor: ColorContainer
-                for (i in 0 until q) {
+                for (i in startPixel until q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
@@ -583,7 +604,6 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                             show()
                             delay((delay * delayMod).toInt())
                             setPixelColor(i, originalColor)
-//                    setPixelColor(i, colorValues2)
                         }
                     }
                 }
@@ -591,10 +611,9 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                 show()
             }
         } else if (stackDirection == Direction.BACKWARD) {
-//            setStripColor(colorValues2)
-            for (q in 0 until ledStrip.numPixels) {
+            for (q in startPixel..endPixel) {
                 var originalColor: ColorContainer
-                for (i in numLEDs - 1 downTo q) {
+                for (i in endPixel downTo q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
@@ -602,7 +621,6 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
                             show()
                             delay((delay * delayMod).toInt())
                             setPixelColor(i, originalColor)
-//                    setPixelColor(i, colorValues2)
                         }
                     }
                 }
@@ -641,15 +659,21 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delay Delay between moves
      * @param delayMod Multiplier for delay
      */
-    fun wipe(colorValues: ColorContainer, wipeDirection: Direction, delay: Int = 10, delayMod: Double = 1.0) {
+    fun wipe(colorValues: ColorContainer,
+             wipeDirection: Direction,
+             delay: Int = 10,
+             delayMod: Double = 1.0,
+             startPixel: Int = 0,
+             endPixel: Int = numLEDs - 1
+    ) {
         if (wipeDirection == Direction.BACKWARD) {
-            for (i in ledStrip.numPixels - 1 downTo 0) {
+            for (i in endPixel downTo startPixel) {
                 setPixelColor(i, colorValues)
                 show()
                 delay((delay * delayMod).toInt())
             }
         } else if (wipeDirection == Direction.FORWARD) {
-            for (i in 0 until ledStrip.numPixels) {
+            for (i in startPixel..endPixel) {
                 setPixelColor(i, colorValues)
                 show()
                 delay((delay * delayMod).toInt())
