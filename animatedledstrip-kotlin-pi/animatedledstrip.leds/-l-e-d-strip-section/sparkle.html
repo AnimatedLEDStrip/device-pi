@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LEDStripSection.sparkle - animatedledstrip-kotlin-pi</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-kotlin-pi</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="index.html">LEDStripSection</a>&nbsp;/&nbsp;<a href="./sparkle.html">sparkle</a><br/>
+<br/>
+<h1>sparkle</h1>
+<a name="animatedledstrip.leds.LEDStripSection$sparkle(animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Double, kotlin.Boolean)"></a>
+<code><span class="keyword">fun </span><span class="identifier">sparkle</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$sparkle(animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Double, kotlin.Boolean)/sparkleColor">sparkleColor</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$sparkle(animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Double, kotlin.Boolean)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;50<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$sparkle(animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Double, kotlin.Boolean)/delayMod">delayMod</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1.0<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$sparkle(animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Double, kotlin.Boolean)/concurrent">concurrent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function to run a Sparkle animation.</p>
+<p>Each LED is changed to sparkleColor for delay milliseconds before reverting
+to its original color.</p>
+<p>If concurrent = true (default), a separate thread will be created for each
+pixel. Each thread saves its pixel's original color, then waits for 0-5
+seconds before sparkling its pixel.</p>
+<p>If concurrent = false, shuffleArray is shuffled and used to determine the
+order in which the LEDs are sparkled. Unlike the concurrent version, only
+one pixel will sparkle at any given time.</p>
+<h3>Parameters</h3>
+<p><a name="sparkleColor"></a>
+<code>sparkleColor</code> - The color the pixels will sparkle with</p>
+<p><a name="delay"></a>
+<code>delay</code> - Duration of each sparkle</p>
+<p><a name="delayMod"></a>
+<code>delayMod</code> - Multiplier for delay</p>
+<p><a name="concurrent"></a>
+<code>concurrent</code> - Use concurrent sparkle algorithm?</p>
+</BODY>
+</HTML>
