@@ -22,25 +22,36 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
 */
 
+
 /**
  * A list of animations used when communicating with the GUI.
  */
 enum class Animations {
+    COLOR,
+    @Deprecated("Use COLOR")
     COLOR1,
+    @Deprecated("Use MULTICOLOR")
     COLOR2,
+    @Deprecated("Use MULTICOLOR")
     COLOR3,
+    @Deprecated("Use MULTICOLOR")
     COLOR4,
+    MULTICOLOR,
     ALTERNATE,
     MULTIPIXELRUN,
     MULTIPIXELRUNTOCOLOR,
+    PIXELMARATHON,
     PIXELRUN,
     PIXELRUNWITHTRAIL,
-    PIXELMARATHON,
     SMOOTHCHASE,
     SPARKLE,
     SPARKLETOCOLOR,
     STACK,
     STACKOVERFLOW,
     WIPE,
+    @Experimental
+    ANIMATION004,
+    @Experimental
+    ANIMATION005,
     ENDANIMATION    // Special 'animation' sent by the GUI to stop a continuous animation
 }
