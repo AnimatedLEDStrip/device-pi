@@ -739,7 +739,10 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, c
             setPixelColor(i, colorValues1)
             show()
         }
-        if (ledStrip.numPixels % 2 == 1) setPixelColor(ledStrip.numPixels / 2, colorValues1)
+        if (ledStrip.numPixels % 2 == 1) {
+            setPixelColor(ledStrip.numPixels / 2, colorValues1)
+            show()
+        }
     }
 
 
@@ -795,15 +798,10 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, c
                 GlobalScope.async(sparkleThreadPool) {
                     delay((random() * 5000).toInt())
                     setPixelColor(n, sparkleColor)
-                    delay((delay * delayMod).toInt())
-                }
-            }
-            GlobalScope.launch(sparkleThreadPool) {
-                while (!complete) {
-                    for (j in 0 until ledStrip.numPixels) {
-                        setPixelColor(j, blend(getPixelColor(j), CCBlack, 5))
+                    GlobalScope.launch(sparkleThreadPool) {
+                        fadePixel(n, CCBlack, 25)
                     }
-                    show()
+                    delay((delay * delayMod).toInt())
                 }
             }
             runBlocking {
