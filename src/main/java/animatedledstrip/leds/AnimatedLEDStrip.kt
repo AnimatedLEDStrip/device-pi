@@ -110,6 +110,11 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, c
     }
 
 
+    companion object SectionCreator {
+        fun newSection(startPixel: Int, endPixel: Int) = 0
+    }
+
+
     /**
      * Function to run an Alternate animation.
      *
@@ -716,7 +721,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, c
     /* Experimental animations */
 
     @Experimental
-    fun animation004(colorValues1: ColorContainer) {
+    fun animation004(colorValues1: ColorContainer) {    // "bounce to color"
         for (i in 0 until ledStrip.numPixels / 2) {
             for (j in i until ledStrip.numPixels - i) {
                 setPixelColor(j, colorValues1)
@@ -739,7 +744,46 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, c
 
 
     @Experimental
-    fun animation005(
+    fun animation004_2(colorValues1: ColorContainer) {    // "bounce"
+        for (i in 0 until ledStrip.numPixels / 2) {
+            for (j in i until ledStrip.numPixels - i) {
+                val originalColor: ColorContainer = getPixelColor(j)
+                setPixelColor(j, colorValues1)
+                show()
+                delay(10)
+                setPixelColor(j, originalColor)
+            }
+            setPixelColor(ledStrip.numPixels - i - 1, colorValues1)
+            GlobalScope.launch(animationThreadPool) {
+                val p = ledStrip.numPixels - i - 1
+                fadePixel(p, CCBlack, 25, 50)
+            }
+            for (j in ledStrip.numPixels - i - 2 downTo i) {
+                val originalColor: ColorContainer = getPixelColor(j)
+                setPixelColor(j, colorValues1)
+                show()
+                delay(10)
+                setPixelColor(j, originalColor)
+            }
+            setPixelColor(i, colorValues1)
+            show()
+            GlobalScope.launch(animationThreadPool) {
+                fadePixel(i, CCBlack, 25, 50)
+            }
+        }
+        if (ledStrip.numPixels % 2 == 1) {
+            setPixelColor(ledStrip.numPixels / 2, colorValues1)
+            show()
+            GlobalScope.launch(animationThreadPool) {
+                val p = ledStrip.numPixels / 2
+                fadeMap[p]?.fade(CCBlack)
+            }
+        }
+    }
+
+
+    @Experimental
+    fun animation005(   // "sparkle fade"
         sparkleColor: ColorContainer,
         delay: Int = 50,
         delayMod: Double = 1.0,
