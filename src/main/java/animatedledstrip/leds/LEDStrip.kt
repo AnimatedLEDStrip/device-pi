@@ -25,10 +25,14 @@ package animatedledstrip.leds
 
 import animatedledstrip.ccpresets.CCBlack
 import com.diozero.ws281xj.rpiws281x.WS281x
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.pmw.tinylog.Logger
+import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.text.StringBuilder
 
 
 /**
@@ -38,7 +42,12 @@ import org.pmw.tinylog.Logger
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
+open class LEDStrip(
+    var numLEDs: Int,
+    pin: Int,
+    private val emulated: Boolean = false,
+    private val constantRender: Boolean = true
+) {
 
     /**
      * The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.
@@ -59,10 +68,28 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
      */
     private val renderLock = Mutex()
 
+    var stopRender = false
+
     init {
+        val historyFile = FileWriter("colors_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv", true)
+        val buffer = StringBuilder()
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
         Logger.info("using GPIO pin $pin")
+        var a = 0
+        if (constantRender) GlobalScope.launch(newSingleThreadContext("Render Loop")) {
+            while (!stopRender) {
+                ledStrip.render()
+                getPixelColorList().forEach { buffer.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+                buffer.append("0,0,0\n")
+                if (a++ >= 1000) {
+                    historyFile.append(buffer)
+                    buffer.clear()
+                    a = 0
+                }
+            }
+            historyFile.append(buffer)
+        }
     }
 
     /**
@@ -86,7 +113,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
                 }
             }
         } catch (e: Exception) {
-            Logger.error("ERROR in setPixelColor: $e")
+            Logger.error("ERROR in setPixelColor: $e\npixel: $pixel to color ${colorValues.hexString}")
         }
     }
 
@@ -365,6 +392,7 @@ open class LEDStrip(var numLEDs: Int, pin: Int, private val emulated: Boolean = 
      * thread has locked renderLock.
      */
     fun show() {
+        if (constantRender) return
         try {
             runBlocking {
                 renderLock.tryWithLock(owner = "Render") {

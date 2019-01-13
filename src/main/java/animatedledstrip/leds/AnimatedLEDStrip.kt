@@ -28,6 +28,7 @@ import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.pmw.tinylog.Logger
 import java.lang.Math.random
 
 /**
@@ -37,8 +38,8 @@ import java.lang.Math.random
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
-    LEDStrip(numLEDs, pin, emulated) {
+open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, constantRender: Boolean = true) :
+    LEDStrip(numLEDs, pin, emulated, constantRender) {
 
     /**
      * Array used for shuffle animation
@@ -62,7 +63,7 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * (with the exception of sparkle-type animations, those use the
      * [sparkleThreadPool]).
      */
-    private val animationThreadPool = newFixedThreadPoolContext(50, "Animation Pool")
+    private val animationThreadPool = newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
@@ -71,8 +72,36 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      */
     private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
+
+    private val fadeMap = mutableMapOf<Int, FadePixel>()
+
+    inner class FadePixel(val pixel: Int) {
+        var owner = ""
+        fun fade(destinationColor: ColorContainer, amountOfOverlay: Int = 25, delay: Int = 30) {
+            val myName = Thread.currentThread().name
+            owner = myName
+            var i = 0
+            while (getPixelColor(pixel).hex != destinationColor.hex && i <= 40) {
+                if (owner != myName) break
+                setPixelColor(pixel, blend(getPixelColor(pixel), destinationColor, amountOfOverlay))
+                delay(delay)
+                i++
+            }
+        }
+    }
+
+    fun fadePixel(pixel: Int, destinationColor: ColorContainer, amountOfOverlay: Int = 25, delay: Int = 30) {
+        Logger.trace("Fading pixel $pixel to ${destinationColor.hexString}")
+        fadeMap[pixel]?.fade(destinationColor, amountOfOverlay, delay)
+        Logger.trace("Fade of pixel $pixel complete")
+    }
+
     init {
-        for (i in 0 until numLEDs) locks += Pair(i, Mutex())        // Initialize locks map
+
+        for (i in 0 until numLEDs) {
+            locks += Pair(i, Mutex())        // Initialize locks map
+            fadeMap += Pair(i, FadePixel(i))
+        }
         runBlocking {
             shuffleLock.withLock {
                 for (i in 0 until numLEDs) shuffleArray.add(i)      // Initialize shuffleArray
@@ -391,20 +420,20 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
     ) {
         if (movementDirection == Direction.FORWARD) {
             for (q in startPixel..endPixel) {
-                for (i in startPixel..endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
-                }
                 setPixelColor(q, colorValues1)
                 show()
+                GlobalScope.launch(animationThreadPool) {
+                    fadePixel(q, colorValues2, 60, 25)
+                }
                 delay((delay * delayMod).toInt())
             }
         } else if (movementDirection == Direction.BACKWARD) {
             for (q in endPixel downTo startPixel) {
-                for (i in startPixel..endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
-                }
                 setPixelColor(q, colorValues1)
                 show()
+                GlobalScope.launch(animationThreadPool) {
+                    fadePixel(q, colorValues2, 60, 25)
+                }
                 delay((delay * delayMod).toInt())
             }
         }
@@ -586,12 +615,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delay
      * @param delayMod
      */
-    fun stack(stackDirection: Direction,
-              colorValues1: ColorContainer,
-              delay: Int = 10,
-              delayMod: Double = 1.0,
-              startPixel: Int = 0,
-              endPixel: Int = numLEDs - 1
+    fun stack(
+        stackDirection: Direction,
+        colorValues1: ColorContainer,
+        delay: Int = 10,
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         if (stackDirection == Direction.FORWARD) {
             for (q in endPixel downTo startPixel) {
@@ -659,12 +689,13 @@ open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false) :
      * @param delay Delay between moves
      * @param delayMod Multiplier for delay
      */
-    fun wipe(colorValues: ColorContainer,
-             wipeDirection: Direction,
-             delay: Int = 10,
-             delayMod: Double = 1.0,
-             startPixel: Int = 0,
-             endPixel: Int = numLEDs - 1
+    fun wipe(
+        colorValues: ColorContainer,
+        wipeDirection: Direction,
+        delay: Int = 10,
+        delayMod: Double = 1.0,
+        startPixel: Int = 0,
+        endPixel: Int = numLEDs - 1
     ) {
         if (wipeDirection == Direction.BACKWARD) {
             for (i in endPixel downTo startPixel) {
