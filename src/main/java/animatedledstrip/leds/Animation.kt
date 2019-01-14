@@ -24,9 +24,9 @@ package animatedledstrip.leds
 
 
 /**
- * A list of animations used when communicating with the GUI.
+ * A list of animations used when communicating between clients and servers.
  */
-enum class Animations {
+enum class Animation {
     COLOR,
     @Deprecated("Use COLOR")
     COLOR1,
