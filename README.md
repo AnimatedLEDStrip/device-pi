@@ -14,7 +14,7 @@ Use the following dependency to use this library in your project
 > <dependency>
 >   <groupId>io.github.animatedledstrip</groupId>
 >   <artifactId>animatedledstrip-kotlin-pi</artifactId>
->   <version>0.1</version>
+>   <version>0.1.1</version>
 > </dependency>
 > ```
 
