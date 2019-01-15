@@ -6,11 +6,11 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-kotlin-pi</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>A port of the AnimatedLEDStrip Library to Kotlin for Raspberry Pis.</description>
+    <description>A library designed to simplify running animations on WS281x strips from a Raspberry Pi.</description>
     <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi</url>
 
     <licenses>
