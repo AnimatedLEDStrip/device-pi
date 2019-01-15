@@ -90,6 +90,8 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     return returnMap
 }
 
+fun parseHex(string: String): Long = java.lang.Long.parseLong(string, 16)
+
 @Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(leds: WS281x, startpos: Int, startcolor: ColorContainer, endpos: Int, endcolor: ColorContainer) {
     var endColor = endcolor

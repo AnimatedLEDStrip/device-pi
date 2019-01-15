@@ -120,7 +120,6 @@ open class AnimatedLEDStrip(
         fun newSection(startPixel: Int, endPixel: Int) = 0
     }
 
-
     /**
      * Function to run an Alternate animation.
      *
@@ -135,7 +134,7 @@ open class AnimatedLEDStrip(
     fun alternate(
         colorValues1: ColorContainer,
         colorValues2: ColorContainer,
-        delay: Int = 1000,
+        delay: Int = Alternate.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -219,8 +218,8 @@ open class AnimatedLEDStrip(
         spacing: Int,
         chaseDirection: Direction,
         colorValues1: ColorContainer,
-        colorValues2: ColorContainer = CCBlack,
-        delay: Int = 100,
+        colorValues2: ColorContainer = MultiPixelRun.color2Default,
+        delay: Int = MultiPixelRun.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -272,7 +271,7 @@ open class AnimatedLEDStrip(
         spacing: Int,
         chaseDirection: Direction,
         destinationColor: ColorContainer,
-        delay: Int = 150,
+        delay: Int = MultiPixelRunToColor.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -314,7 +313,7 @@ open class AnimatedLEDStrip(
         pixelColor3: ColorContainer,
         pixelColor4: ColorContainer,
         pixelColor5: ColorContainer,
-        delay: Int = 8
+        delay: Int = PixelMarathon.delayDefault
     ) {
         // TODO: Change to use threads from animationThreadPool
 
@@ -375,8 +374,8 @@ open class AnimatedLEDStrip(
     fun pixelRun(
         movementDirection: Direction,
         colorValues1: ColorContainer,
-        colorValues2: ColorContainer = CCBlack,
-        delay: Int = 10,
+        colorValues2: ColorContainer = PixelRun.color2Default,
+        delay: Int = PixelRun.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -423,8 +422,8 @@ open class AnimatedLEDStrip(
     fun pixelRunWithTrail(
         movementDirection: Direction,
         colorValues1: ColorContainer,
-        colorValues2: ColorContainer = CCBlack,
-        delay: Int = 10,
+        colorValues2: ColorContainer = PixelRunWithTrail.color2Default,
+        delay: Int = PixelRunWithTrail.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -479,7 +478,7 @@ open class AnimatedLEDStrip(
     fun smoothChase(
         colorList: List<ColorContainer>,
         movementDirection: Direction,
-        delay: Int = 50,
+        delay: Int = SmoothChase.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -522,7 +521,7 @@ open class AnimatedLEDStrip(
      */
     fun sparkle(
         sparkleColor: ColorContainer,
-        delay: Int = 50,
+        delay: Int = Sparkle.delayDefault,
         delayMod: Double = 1.0,
         concurrent: Boolean = true,
         startPixel: Int = 0,
@@ -582,7 +581,7 @@ open class AnimatedLEDStrip(
      */
     fun sparkleToColor(
         destinationColor: ColorContainer,
-        delay: Int = 50,
+        delay: Int = SparkleToColor.delayDefault,
         delayMod: Double = 1.0,
         concurrent: Boolean = true,
         startPixel: Int = 0,
@@ -629,7 +628,7 @@ open class AnimatedLEDStrip(
     fun stack(
         stackDirection: Direction,
         colorValues1: ColorContainer,
-        delay: Int = 10,
+        delay: Int = Stack.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
@@ -703,7 +702,7 @@ open class AnimatedLEDStrip(
     fun wipe(
         colorValues: ColorContainer,
         wipeDirection: Direction,
-        delay: Int = 10,
+        delay: Int = Wipe.delayDefault,
         delayMod: Double = 1.0,
         startPixel: Int = 0,
         endPixel: Int = numLEDs - 1
