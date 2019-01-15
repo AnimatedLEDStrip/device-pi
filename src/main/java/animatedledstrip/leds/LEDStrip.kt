@@ -46,7 +46,8 @@ open class LEDStrip(
     var numLEDs: Int,
     pin: Int,
     private val emulated: Boolean = false,
-    private val constantRender: Boolean = true
+    private val constantRender: Boolean = true,
+    private val imageDebugging: Boolean = false
 ) {
 
     /**
@@ -71,8 +72,11 @@ open class LEDStrip(
     var stopRender = false
 
     init {
-        val historyFile = FileWriter("colors_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv", true)
-        val buffer = StringBuilder()
+        val historyFile = if (imageDebugging) FileWriter(
+            "colors_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
+            true
+        ) else null
+        val buffer = if (imageDebugging) StringBuilder() else null
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
         Logger.info("using GPIO pin $pin")
@@ -80,15 +84,19 @@ open class LEDStrip(
         if (constantRender) GlobalScope.launch(newSingleThreadContext("Render Loop")) {
             while (!stopRender) {
                 ledStrip.render()
-                getPixelColorList().forEach { buffer.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
-                buffer.append("0,0,0\n")
-                if (a++ >= 1000) {
-                    historyFile.append(buffer)
-                    buffer.clear()
-                    a = 0
+                if (imageDebugging) {
+                    getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+
+                    buffer!!.append("0,0,0\n")
+                    if (a++ >= 1000) {
+                        historyFile!!.append(buffer)
+                        buffer.clear()
+                        a = 0
+                    }
+
+                    historyFile!!.append(buffer)
                 }
             }
-            historyFile.append(buffer)
         }
     }
 

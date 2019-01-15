@@ -38,8 +38,14 @@ import java.lang.Math.random
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-open class AnimatedLEDStrip(numLEDs: Int, pin: Int, emulated: Boolean = false, constantRender: Boolean = true) :
-    LEDStrip(numLEDs, pin, emulated, constantRender) {
+open class AnimatedLEDStrip(
+    numLEDs: Int,
+    pin: Int,
+    emulated: Boolean = false,
+    constantRender: Boolean = true,
+    imageDebugging: Boolean = false
+) :
+    LEDStrip(numLEDs, pin, emulated, constantRender, imageDebugging) {
 
     /**
      * Array used for shuffle animation
