@@ -1,0 +1,174 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AnimationData - animatedledstrip-kotlin-pi</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-kotlin-pi</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">AnimationData</a><br/>
+<br/>
+<h1>AnimationData</h1>
+<code><span class="keyword">class </span><span class="identifier">AnimationData</span></code>
+<p>Class for processing a map received by a server to start an animation.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AnimationData</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$<init>(kotlin.collections.Map((kotlin.Any, )))/params">params</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<p>Class for processing a map received by a server to start an animation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="animation.html">animation</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">animation</span><span class="symbol">: </span><a href="../-animation/index.html"><span class="identifier">Animation</span></a></code>
+<p>The animation specified by the map</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color1.html">color1</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color1</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The first color as specified by the map. Defaults to 0x0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color2.html">color2</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color2</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The second color as specified by the map. Defaults to animation's default
+or 0x0 if no default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color3.html">color3</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color3</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The third color as specified by the map.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color4.html">color4</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color4</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The fourth color as specified by the map.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color5.html">color5</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color5</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The fifth color as specified by the map.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color-list.html">colorList</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">colorList</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span></code>
+<p>A list of colors as specified by the map.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="continuous.html">continuous</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">continuous</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Should the animation run continuously or not as specified by the map.
+Defaults to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delay.html">delay</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">delay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Delay as specified by the map. Defaults to animation's default or 0 if no
+default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="direction.html">direction</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">direction</span><span class="symbol">: </span><a href="../-direction/index.html"><span class="identifier">Direction</span></a></code>
+<p>Direction as specified by the map. Defaults to Direction.Forward.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="id.html">id</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>ID of the animation as specified by the map. Defaults to an empty string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="params.html">params</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">params</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="spacing.html">spacing</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">spacing</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Spacing as specified by the map. Defaults to 3.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="to-map.html">toMap</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toMap</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span></code>
+<p>Returns the params map.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Create a string out of the values of this instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
