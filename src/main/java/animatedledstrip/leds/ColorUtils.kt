@@ -1,7 +1,7 @@
 package animatedledstrip.leds
 
 /*
- *  Copyright (c) 2018 AnimatedLEDStrip
+ *  Copyright (c) 2019 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
