@@ -90,6 +90,12 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     return returnMap
 }
 
+
+/**
+ * Returns a Long from a hexadecimal String.
+ *
+ * @param string The hex String to decode
+ */
 fun parseHex(string: String): Long = java.lang.Long.parseLong(string, 16)
 
 @Deprecated("Use colorsFromPalette()")

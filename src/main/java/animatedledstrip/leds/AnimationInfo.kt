@@ -25,6 +25,22 @@ package animatedledstrip.leds
 
 import animatedledstrip.ccpresets.CCBlack
 
+/**
+ * Helper data class for specifying what parameters are required, optional and
+ * not used for an animation.
+ *
+ * @property color1 First color
+ * @property color2 Second color
+ * @property color2Default Default if color2 is missing
+ * @property color3 Third color
+ * @property color4 Fourth color
+ * @property color5 Fifth color
+ * @property colorList List of colors
+ * @property delay Delay in animation
+ * @property delayDefault Default if delay is missing
+ * @property direction Direction of animation
+ * @property spacing Spacing for animation
+ */
 data class AnimationInfo(
     val color1: ReqLevel = ReqLevel.NOTUSED,
     val color2: ReqLevel = ReqLevel.NOTUSED,
@@ -39,12 +55,19 @@ data class AnimationInfo(
     val spacing: ReqLevel = ReqLevel.NOTUSED
 )
 
+/**
+ * Helper enum for specifying the requirement level of an animation parameter.
+ *
+ */
 enum class ReqLevel {
     REQUIRED,
     OPTIONAL,
     NOTUSED
 }
 
+/**
+ * Info about the Alternate animation.
+ */
 val Alternate = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED,
@@ -52,6 +75,9 @@ val Alternate = AnimationInfo(
     delayDefault = 1000
 )
 
+/**
+ * Info about the Multi Pixel Run animation.
+ */
 val MultiPixelRun = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
@@ -61,6 +87,9 @@ val MultiPixelRun = AnimationInfo(
     spacing = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Multi Pixel Run wo Color animation.
+ */
 val MultiPixelRunToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
@@ -69,6 +98,9 @@ val MultiPixelRunToColor = AnimationInfo(
     spacing = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Pixel Marathon animation.
+ */
 val PixelMarathon = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED,
@@ -79,6 +111,9 @@ val PixelMarathon = AnimationInfo(
     delayDefault = 8
 )
 
+/**
+ * Info about the Pixel Run animation.
+ */
 val PixelRun = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
@@ -87,6 +122,9 @@ val PixelRun = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Pixel Run with Trail animation.
+ */
 val PixelRunWithTrail = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
@@ -95,6 +133,9 @@ val PixelRunWithTrail = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Smooth Chase animation.
+ */
 val SmoothChase = AnimationInfo(
     colorList = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
@@ -102,18 +143,27 @@ val SmoothChase = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Sparkle animation.
+ */
 val Sparkle = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
 )
 
+/**
+ * Info about the Sparkle to Color animation.
+ */
 val SparkleToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
 )
 
+/**
+ * Info about the Stack animation.
+ */
 val Stack = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
@@ -121,11 +171,17 @@ val Stack = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Stack Overflow animation.
+ */
 val StackOverflow = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED
 )
 
+/**
+ * Info about the Wipe animation.
+ */
 val Wipe = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
@@ -133,6 +189,9 @@ val Wipe = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+/**
+ * Map of animations to their AnimationInfo instances.
+ */
 val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,
     Animation.MULTIPIXELRUN to MultiPixelRun,

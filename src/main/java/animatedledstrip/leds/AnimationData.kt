@@ -23,8 +23,10 @@ package animatedledstrip.leds
  */
 
 
+import org.pmw.tinylog.Logger
+
 /**
- * Class for creating and sending a map to the server to start an animation.
+ * Class for processing a map received by a server to start an animation.
  *
  */
 class AnimationData(val params: Map<*, *>) {
@@ -34,14 +36,24 @@ class AnimationData(val params: Map<*, *>) {
         try {
             params["Animation"]!!
         } catch (e: Exception) {
-            println("Animation not defined $e")
+            Logger.warn("Animation not defined $e")
         }
     }
 
+    /**
+     * The animation specified by the map
+     */
     var animation: Animation = params["Animation"] as Animation
 
+    /**
+     * The first color as specified by the map. Defaults to 0x0.
+     */
     var color1: Long = params["Color1"] as Long? ?: 0x0
 
+    /**
+     * The second color as specified by the map. Defaults to animation's default
+     * or 0x0 if no default.
+     */
     var color2: Long = params["Color2"] as Long? ?: when (animationInfoMap[animation]?.color2) {
         ReqLevel.OPTIONAL -> animationInfoMap[animation]?.color2Default!!.hex
         ReqLevel.REQUIRED -> throw Exception()
@@ -49,12 +61,24 @@ class AnimationData(val params: Map<*, *>) {
         null -> 0x0
     }
 
+    /**
+     * The third color as specified by the map.
+     */
     var color3: Long = params["Color3"] as Long? ?: 0x0
 
+    /**
+     * The fourth color as specified by the map.
+     */
     var color4: Long = params["Color4"] as Long? ?: 0x0
 
+    /**
+     * The fifth color as specified by the map.
+     */
     var color5: Long = params["Color5"] as Long? ?: 0x0
 
+    /**
+     * A list of colors as specified by the map.
+     */
     var colorList = mutableListOf<ColorContainer>()
 
     init {
@@ -64,8 +88,16 @@ class AnimationData(val params: Map<*, *>) {
         }
     }
 
+    /**
+     * Should the animation run continuously or not as specified by the map.
+     * Defaults to false.
+     */
     var continuous: Boolean = params["Continuous"] as Boolean? ?: false
 
+    /**
+     * Delay as specified by the map. Defaults to animation's default or 0 if no
+     * default.
+     */
     var delay: Int = params["Delay"] as Int? ?: when(animationInfoMap[animation]?.delay) {
         ReqLevel.REQUIRED -> throw Exception()
         ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault!!
@@ -73,6 +105,9 @@ class AnimationData(val params: Map<*, *>) {
         null -> 0
     }
 
+    /**
+     * Direction as specified by the map. Defaults to Direction.Forward.
+     */
     var direction: Direction = if (params["Direction"] as Char? != null) {
         when (params["Direction"] as Char) {
             'F', 'f' -> Direction.FORWARD
@@ -81,11 +116,25 @@ class AnimationData(val params: Map<*, *>) {
         }
     } else Direction.FORWARD
 
+    /**
+     * ID of the animation as specified by the map. Defaults to an empty string.
+     */
     var id: String = params["ID"] as String? ?: ""
 
+    /**
+     * Spacing as specified by the map. Defaults to 3.
+     */
     var spacing: Int = params["Spacing"] as Int? ?: 3
 
+    /**
+     * Create a string out of the values of this instance.
+     *
+     */
     override fun toString() = "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
 
+    /**
+     * Returns the params map.
+     *
+     */
     fun toMap() = params
 }
