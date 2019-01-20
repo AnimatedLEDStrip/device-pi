@@ -25,7 +25,8 @@ package animatedledstrip.leds
 
 /**
  * Helper data class for specifying what parameters are required, optional and
- * not used for an animation.
+ * not used for an animation along with default values for delay and spacing,
+ * when applicable.
  *
  * @property color1 First color
  * @property color2 Second color
@@ -37,6 +38,7 @@ package animatedledstrip.leds
  * @property delayDefault Default if delay is missing
  * @property direction Direction of animation
  * @property spacing Spacing for animation
+ * @property spacingDefault Default if spacing is missing
  */
 data class AnimationInfo(
     val color1: ReqLevel = ReqLevel.NOTUSED,
@@ -48,7 +50,8 @@ data class AnimationInfo(
     val delay: ReqLevel = ReqLevel.NOTUSED,
     val delayDefault: Int = 0,
     val direction: ReqLevel = ReqLevel.NOTUSED,
-    val spacing: ReqLevel = ReqLevel.NOTUSED
+    val spacing: ReqLevel = ReqLevel.NOTUSED,
+    val spacingDefault: Int = 0
 )
 
 /**
@@ -80,7 +83,8 @@ val MultiPixelRun = AnimationInfo(
     delay = ReqLevel.OPTIONAL,
     delayDefault = 100,
     direction = ReqLevel.REQUIRED,
-    spacing = ReqLevel.REQUIRED
+    spacing = ReqLevel.OPTIONAL,
+    spacingDefault = 3
 )
 
 /**
@@ -91,7 +95,8 @@ val MultiPixelRunToColor = AnimationInfo(
     delay = ReqLevel.OPTIONAL,
     delayDefault = 150,
     direction = ReqLevel.REQUIRED,
-    spacing = ReqLevel.REQUIRED
+    spacing = ReqLevel.OPTIONAL,
+    spacingDefault = 3
 )
 
 /**
