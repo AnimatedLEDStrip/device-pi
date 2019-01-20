@@ -23,15 +23,12 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
-
 /**
  * Helper data class for specifying what parameters are required, optional and
  * not used for an animation.
  *
  * @property color1 First color
  * @property color2 Second color
- * @property color2Default Default if color2 is missing
  * @property color3 Third color
  * @property color4 Fourth color
  * @property color5 Fifth color
@@ -44,7 +41,6 @@ import animatedledstrip.ccpresets.CCBlack
 data class AnimationInfo(
     val color1: ReqLevel = ReqLevel.NOTUSED,
     val color2: ReqLevel = ReqLevel.NOTUSED,
-    val color2Default: ColorContainer = CCBlack,
     val color3: ReqLevel = ReqLevel.NOTUSED,
     val color4: ReqLevel = ReqLevel.NOTUSED,
     val color5: ReqLevel = ReqLevel.NOTUSED,
@@ -88,7 +84,7 @@ val MultiPixelRun = AnimationInfo(
 )
 
 /**
- * Info about the Multi Pixel Run wo Color animation.
+ * Info about the Multi Pixel Run to Color animation.
  */
 val MultiPixelRunToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
