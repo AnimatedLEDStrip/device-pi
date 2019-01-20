@@ -66,6 +66,8 @@ enum class ReqLevel {
 
 /**
  * Info about the Alternate animation.
+ *
+ * @see AnimatedLEDStrip.alternate
  */
 val Alternate = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -75,6 +77,11 @@ val Alternate = AnimationInfo(
 )
 
 
+/**
+ * Info about the Bounce animation.
+ *
+ * @see AnimatedLEDStrip.bounce
+ */
 val Bounce = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
@@ -82,6 +89,12 @@ val Bounce = AnimationInfo(
     delayDefault = 10
 )
 
+
+/**
+ * Info about the Bounce to Color animation.
+ *
+ * @see AnimatedLEDStrip.bounceToColor
+ */
 val BounceToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
@@ -89,8 +102,11 @@ val BounceToColor = AnimationInfo(
     delayDefault = 5
 )
 
+
 /**
  * Info about the Multi Pixel Run animation.
+ *
+ * @see AnimatedLEDStrip.multiPixelRun
  */
 val MultiPixelRun = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -102,8 +118,11 @@ val MultiPixelRun = AnimationInfo(
     spacingDefault = 3
 )
 
+
 /**
  * Info about the Multi Pixel Run to Color animation.
+ *
+ * @see AnimatedLEDStrip.multiPixelRunToColor
  */
 val MultiPixelRunToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -114,8 +133,11 @@ val MultiPixelRunToColor = AnimationInfo(
     spacingDefault = 3
 )
 
+
 /**
  * Info about the Pixel Marathon animation.
+ *
+ *
  */
 val PixelMarathon = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -127,8 +149,11 @@ val PixelMarathon = AnimationInfo(
     delayDefault = 8
 )
 
+
 /**
  * Info about the Pixel Run animation.
+ *
+ * @see AnimatedLEDStrip.pixelRun
  */
 val PixelRun = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -138,8 +163,11 @@ val PixelRun = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+
 /**
  * Info about the Pixel Run with Trail animation.
+ *
+ * @see AnimatedLEDStrip.pixelRunWithTrail
  */
 val PixelRunWithTrail = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -149,8 +177,11 @@ val PixelRunWithTrail = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+
 /**
  * Info about the Smooth Chase animation.
+ *
+ * @see AnimatedLEDStrip.smoothChase
  */
 val SmoothChase = AnimationInfo(
     colorList = ReqLevel.REQUIRED,
@@ -159,8 +190,11 @@ val SmoothChase = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+
 /**
  * Info about the Sparkle animation.
+ *
+ * @see AnimatedLEDStrip.sparkle
  */
 val Sparkle = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -168,8 +202,11 @@ val Sparkle = AnimationInfo(
     delayDefault = 50
 )
 
+
 /**
  * Info about the Sparkle Fade animation.
+ *
+ * @see AnimatedLEDStrip.sparkleFade
  */
 val SparkleFade = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -181,6 +218,8 @@ val SparkleFade = AnimationInfo(
 
 /**
  * Info about the Sparkle to Color animation.
+ *
+ * @see AnimatedLEDStrip.sparkleToColor
  */
 val SparkleToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -188,8 +227,11 @@ val SparkleToColor = AnimationInfo(
     delayDefault = 50
 )
 
+
 /**
  * Info about the Stack animation.
+ *
+ * @see AnimatedLEDStrip.stack
  */
 val Stack = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
@@ -198,16 +240,22 @@ val Stack = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+
 /**
  * Info about the Stack Overflow animation.
+ *
+ *
  */
 val StackOverflow = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED
 )
 
+
 /**
  * Info about the Wipe animation.
+ *
+ * @see AnimatedLEDStrip.wipe
  */
 val Wipe = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
