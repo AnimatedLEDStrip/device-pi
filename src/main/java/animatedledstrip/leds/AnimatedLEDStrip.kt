@@ -606,7 +606,7 @@ open class AnimatedLEDStrip(
      * @see Wipe
      */
     @NonRepetitive
-    val wipe = { animation: AnimationData ->
+    private val wipe = { animation: AnimationData ->
         val colorValues = animation.color1
         val wipeDirection = animation.direction
         val delay = animation.delay
