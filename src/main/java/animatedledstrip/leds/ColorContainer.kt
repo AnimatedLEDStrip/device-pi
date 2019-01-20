@@ -92,7 +92,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
     /**
      * Returns the color held by this ColorContainer as a JavaFX Color
      */
-    fun toColor() = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
+    fun toColor(): Color = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
 
     /**
      * Returns a ColorContainer with the inverse of the color held by this ColorContainer
