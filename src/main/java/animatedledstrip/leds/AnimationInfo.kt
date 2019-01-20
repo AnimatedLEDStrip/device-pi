@@ -264,6 +264,7 @@ val Wipe = AnimationInfo(
     direction = ReqLevel.REQUIRED
 )
 
+
 /**
  * Map of animations to their AnimationInfo instances.
  */

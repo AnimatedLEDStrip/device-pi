@@ -118,7 +118,7 @@ open class AnimatedLEDStrip(
             Animation.BOUNCE -> bounce(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
             Animation.COLOR -> setStripColor(animation.color1)
-            Animation.MULTICOLOR -> TODO()
+            Animation.MULTICOLOR -> setStripColorWithGradient(animation.colorList)
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELMARATHON -> TODO()
