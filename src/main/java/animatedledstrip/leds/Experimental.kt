@@ -26,6 +26,8 @@ package animatedledstrip.leds
 /**
  * An experimental animation is annotated with this tag.
  *
+ * Experimental animations will likely change and may be renamed.
+ *
  */
 @MustBeDocumented
 annotation class Experimental
