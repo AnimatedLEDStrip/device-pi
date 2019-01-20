@@ -27,29 +27,98 @@ package animatedledstrip.leds
  * A list of animations used when communicating between clients and servers.
  */
 enum class Animation {
+    /**
+     * @see LEDStrip.setStripColor
+     */
     @NonRepetitive
     COLOR,
+    /**
+     * @see LEDStrip.setStripColorWithGradient
+     */
     @NonRepetitive
     MULTICOLOR,
+    /**
+     * @see AnimatedLEDStrip.alternate
+     * @see Alternate
+     */
     ALTERNATE,
+    /**
+     * @see AnimatedLEDStrip.bounce
+     * @see Bounce
+     */
     BOUNCE,
+    /**
+     * @see AnimatedLEDStrip.bounceToColor
+     * @see BounceToColor
+     */
     @NonRepetitive
     BOUNCETOCOLOR,
+    /**
+     * @see AnimatedLEDStrip.multiPixelRun
+     * @see MultiPixelRun
+     */
     MULTIPIXELRUN,
+    /**
+     * @see AnimatedLEDStrip.multiPixelRunToColor
+     * @see MultiPixelRunToColor
+     */
     @NonRepetitive
     MULTIPIXELRUNTOCOLOR,
+    /**
+     *
+     * @see PixelMarathon
+     */
     PIXELMARATHON,
+    /**
+     * @see AnimatedLEDStrip.pixelRun
+     * @see PixelRun
+     */
     PIXELRUN,
+    /**
+     * @see AnimatedLEDStrip.pixelRunWithTrail
+     * @see PixelRunWithTrail
+     */
     PIXELRUNWITHTRAIL,
+    /**
+     * @see AnimatedLEDStrip.smoothChase
+     * @see SmoothChase
+     */
     SMOOTHCHASE,
+    /**
+     * @see AnimatedLEDStrip.sparkle
+     * @see Sparkle
+     */
     SPARKLE,
+    /**
+     * @see AnimatedLEDStrip.sparkleFade
+     * @see SparkleFade
+     */
     SPARKLEFADE,
+    /**
+     * @see AnimatedLEDStrip.sparkleToColor
+     * @see SparkleToColor
+     */
     @NonRepetitive
     SPARKLETOCOLOR,
+    /**
+     * @see AnimatedLEDStrip.stack
+     * @see Stack
+     */
     @NonRepetitive
     STACK,
+    /**
+     *
+     * @see StackOverflow
+     */
     STACKOVERFLOW,
+    /**
+     * @see AnimatedLEDStrip.wipe
+     * @see Wipe
+     */
     @NonRepetitive
     WIPE,
-    ENDANIMATION    // Special 'animation' sent by the GUI to stop a continuous animation
+    /**
+     * Special 'animation' sent by the GUI to stop a continuous animation
+     */
+    ENDANIMATION
 }

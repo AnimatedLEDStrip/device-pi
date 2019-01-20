@@ -131,6 +131,7 @@ open class AnimatedLEDStrip(
             Animation.STACK -> stack(animation)
             Animation.STACKOVERFLOW -> TODO()
             Animation.WIPE -> wipe(animation)
+            else -> Logger.warn("Animation ${animation.animation} not supported")
         }
     }
 
