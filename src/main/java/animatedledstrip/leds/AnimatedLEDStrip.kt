@@ -48,20 +48,10 @@ open class AnimatedLEDStrip(
     LEDStrip(numLEDs, pin, emulated, constantRender, imageDebugging) {
 
     /**
-     * Array used for shuffle animation
-     */
-    private var shuffleArray = mutableListOf<Int>()
-
-    /**
      * Map containing Mutex instances for locking access to each led while it is
      * being used
      */
     private val locks = mutableMapOf<Int, Mutex>()
-
-    /**
-     * Mutex that tracks if a thread is using the shuffleArray
-     */
-    private val shuffleLock = Mutex()
 
 
     /**
@@ -108,11 +98,6 @@ open class AnimatedLEDStrip(
         for (i in 0 until numLEDs) {
             locks += Pair(i, Mutex())        // Initialize locks map
             fadeMap += Pair(i, FadePixel(i))
-        }
-        runBlocking {
-            shuffleLock.withLock {
-                for (i in 0 until numLEDs) shuffleArray.add(i)      // Initialize shuffleArray
-            }
         }
     }
 
