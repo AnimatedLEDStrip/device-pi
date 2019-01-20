@@ -74,6 +74,21 @@ val Alternate = AnimationInfo(
     delayDefault = 1000
 )
 
+
+val Bounce = AnimationInfo(
+    color1 = ReqLevel.REQUIRED,
+    color2 = ReqLevel.OPTIONAL,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 10
+)
+
+val BounceToColor = AnimationInfo(
+    color1 = ReqLevel.REQUIRED,
+    color2 = ReqLevel.OPTIONAL,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 5
+)
+
 /**
  * Info about the Multi Pixel Run animation.
  */
@@ -195,6 +210,8 @@ val Wipe = AnimationInfo(
  */
 val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,
+    Animation.BOUNCE to Bounce,
+    Animation.BOUNCETOCOLOR to BounceToColor,
     Animation.MULTIPIXELRUN to MultiPixelRun,
     Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
     Animation.PIXELMARATHON to PixelMarathon,
