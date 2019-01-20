@@ -44,7 +44,8 @@
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">AnimationData</span></code>
-<p>Class for processing a map received by a server to start an animation.</p>
+<p>Class used when calling animations to specify colors, parameters, etc.
+for the animation.</p>
 </td>
 </tr>
 <tr>
@@ -54,7 +55,8 @@
 <td>
 <code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">AnimationInfo</span></code>
 <p>Helper data class for specifying what parameters are required, optional and
-not used for an animation.</p>
+not used for an animation along with default values for delay and spacing,
+when applicable.</p>
 </td>
 </tr>
 <tr>
@@ -131,6 +133,15 @@ or 'Backward'.</p>
 <p>An experimental animation is annotated with this tag.</p>
 </td>
 </tr>
+<tr>
+<td>
+<p><a href="-non-repetitive/index.html">NonRepetitive</a></p>
+</td>
+<td>
+<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">NonRepetitive</span></code>
+<p>A non-repetitive animation is annotated with this tag.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3>Extensions for External Classes</h3>
@@ -159,6 +170,24 @@ or 'Backward'.</p>
 </tr>
 <tr>
 <td>
+<p><a href="-bounce.html">Bounce</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Bounce</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Bounce animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-bounce-to-color.html">BounceToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">BounceToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Bounce to Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-multi-pixel-run.html">MultiPixelRun</a></p>
 </td>
 <td>
@@ -172,7 +201,7 @@ or 'Backward'.</p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">MultiPixelRunToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Multi Pixel Run wo Color animation.</p>
+<p>Info about the Multi Pixel Run to Color animation.</p>
 </td>
 </tr>
 <tr>
@@ -218,6 +247,15 @@ or 'Backward'.</p>
 <td>
 <code><span class="keyword">val </span><span class="identifier">Sparkle</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
 <p>Info about the Sparkle animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sparkle-fade.html">SparkleFade</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">SparkleFade</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Sparkle Fade animation.</p>
 </td>
 </tr>
 <tr>
@@ -315,13 +353,6 @@ or 'Backward'.</p>
 <code><span class="keyword">fun </span><span class="identifier">parseHex</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$parseHex(kotlin.String)/string">string</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
 <p>Returns a Long from a hexadecimal String.</p>
 </td>
-</tr>
-<tr>
-<td>
-<p><a href="scale8.html">scale8</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">scale8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$scale8(kotlin.Int, kotlin.Int)/i">i</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$scale8(kotlin.Int, kotlin.Int)/scale">scale</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 </tbody>
 </table>

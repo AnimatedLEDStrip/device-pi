@@ -17,6 +17,20 @@
 <code>pin</code> - GPIO pin connected for signal</p>
 <p><a name="emulated"></a>
 <code>emulated</code> - Is this strip real or emulated?</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-section-creator/index.html">SectionCreator</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">SectionCreator</span></code>
+<p>Helper object for creating <a href="../-l-e-d-strip-section/index.html">LEDStripSection</a>s</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -36,6 +50,29 @@
 <tbody>
 <tr>
 <td>
+<p><a href="constant-render.html">constantRender</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">constantRender</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="emulated.html">emulated</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">emulated</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Is this strip real or emulated?</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="image-debugging.html">imageDebugging</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">imageDebugging</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="led-strip.html">ledStrip</a></p>
 </td>
 <td>
@@ -45,11 +82,30 @@
 </tr>
 <tr>
 <td>
+<p><a href="locks.html">locks</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">locks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">Mutex</span><span class="symbol">&gt;</span></code>
+<p>Map containing Mutex instances for locking access to each led while it is
+being used</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="num-l-e-ds.html">numLEDs</a></p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">numLEDs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
 <p>Number of leds in the strip</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="render-lock.html">renderLock</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">renderLock</span><span class="symbol">: </span><span class="identifier">Mutex</span></code>
+<p>Mutex that tracks if a thread is sending data to the LEDs</p>
 </td>
 </tr>
 <tr>
