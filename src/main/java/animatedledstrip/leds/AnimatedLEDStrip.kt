@@ -116,8 +116,9 @@ open class AnimatedLEDStrip(
     }
 
 
-    companion object SectionCreator {
-        fun newSection(startPixel: Int, endPixel: Int) = 0
+    object SectionCreator {
+        operator fun invoke(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) = new(startPixel, endPixel, ledStrip)
+        fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) = LEDStripSection(startPixel, endPixel, ledStrip)
     }
 
 
