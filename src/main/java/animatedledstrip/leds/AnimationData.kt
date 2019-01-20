@@ -24,10 +24,10 @@ package animatedledstrip.leds
 
 
 import animatedledstrip.ccpresets.CCBlack
-import org.pmw.tinylog.Logger
 
 /**
- * Class for processing a map received by a server to start an animation.
+ * Class used when calling animations to specify colors, parameters, etc.
+ * for the animation.
  *
  */
 class AnimationData() {
@@ -255,6 +255,7 @@ class AnimationData() {
         return this
     }
 
+    /* Constructor used by the server when receiving a map from a client */
 
     constructor(params: Map<*, *>) : this() {
         animation = params["Animation"] as Animation? ?: throw Exception("Animation not defined")
@@ -291,7 +292,12 @@ class AnimationData() {
     override fun toString() =
         "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
 
-    fun toMap() = mutableMapOf<String, Any?>(
+
+    /**
+     * Create a map that can be sent over a socket.
+     *
+     */
+    fun toMap() = mapOf<String, Any?>(
         "Animation" to animation,
         "Color1" to color1.hex,
         "Color2" to color2.hex,
@@ -317,117 +323,3 @@ class AnimationData() {
     )
 
 }
-
-/*init {
-    try {
-        params["Animation"]!!
-    } catch (e: Exception) {
-        Logger.warn("Animation not defined $e")
-    }
-}
-
-/**
- * The animation specified by the map
- */
-var animation: Animation = params["Animation"] as Animation
-
-/**
- * The first color as specified by the map. Defaults to 0x0.
- */
-var color1 = ColorContainer(params["Color1"] as Long? ?: 0x0)
-
-/**
- * The second color as specified by the map. Defaults to animation's default
- * or 0x0 if no default.
- */
-var color2 = ColorContainer(
-    params["Color2"] as Long? ?: when (animationInfoMap[animation]?.color2) {
-        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.color2Default!!.hex
-        ReqLevel.REQUIRED -> throw Exception()
-        ReqLevel.NOTUSED -> 0x0
-        null -> 0x0
-    }
-)
-
-/**
- * The third color as specified by the map.
- */
-var color3 = ColorContainer(params["Color3"] as Long? ?: 0x0)
-
-/**
- * The fourth color as specified by the map.
- */
-var color4 = ColorContainer(params["Color4"] as Long? ?: 0x0)
-
-/**
- * The fifth color as specified by the map.
- */
-var color5 = ColorContainer(params["Color5"] as Long? ?: 0x0)
-
-/**
- * A list of colors as specified by the map.
- */
-var colorList = mutableListOf<ColorContainer>()
-
-init {
-    if (params["ColorList"] as List<*>? != null) {
-        val tempList = params["ColorList"] as List<*>
-        tempList.forEach { c -> colorList.add(ColorContainer(c as Long)) }
-    }
-}
-
-/**
- * Should the animation run continuously or not as specified by the map.
- * Defaults to false.
- */
-var continuous: Boolean = params["Continuous"] as Boolean? ?: false
-
-/**
- * Delay as specified by the map. Defaults to animation's default or 0 if no
- * default.
- */
-var delay: Int = params["Delay"] as Int? ?: when (animationInfoMap[animation]?.delay) {
-    ReqLevel.REQUIRED -> throw Exception()
-    ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault!!
-    ReqLevel.NOTUSED -> 0
-    null -> 0
-}
-
-/**
- * Direction as specified by the map. Defaults to Direction.Forward.
- */
-var direction: Direction = if (params["Direction"] as Char? != null) {
-    when (params["Direction"] as Char) {
-        'F', 'f' -> Direction.FORWARD
-        'B', 'b' -> Direction.BACKWARD
-        else -> Direction.FORWARD
-    }
-} else Direction.FORWARD
-
-/**
- * ID of the animation as specified by the map. Defaults to an empty string.
- */
-var id: String = params["ID"] as String? ?: ""
-
-/**
- * Spacing as specified by the map. Defaults to 3.
- */
-var spacing: Int? = params["Spacing"] as Int? ?: 3
-
-var startPixel: Int? = null
-var endPixel: Int? = null
-
-var delayMod = 1.0
-
-/**
- * Create a string out of the values of this instance.
- *
- */
-override fun toString() =
-    "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
-
-/**
- * Returns the params map.
- *
- */
-fun toMap() = params*/
