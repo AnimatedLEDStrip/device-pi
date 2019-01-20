@@ -169,6 +169,17 @@ val Sparkle = AnimationInfo(
 )
 
 /**
+ * Info about the Sparkle Fade animation.
+ */
+val SparkleFade = AnimationInfo(
+    color1 = ReqLevel.REQUIRED,
+    color2 = ReqLevel.OPTIONAL,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 50
+)
+
+
+/**
  * Info about the Sparkle to Color animation.
  */
 val SparkleToColor = AnimationInfo(
@@ -219,6 +230,7 @@ val animationInfoMap = mapOf(
     Animation.PIXELRUNWITHTRAIL to PixelRunWithTrail,
     Animation.SMOOTHCHASE to SmoothChase,
     Animation.SPARKLE to Sparkle,
+    Animation.SPARKLEFADE to SparkleFade,
     Animation.SPARKLETOCOLOR to SparkleToColor,
     Animation.STACK to Stack,
     Animation.STACKOVERFLOW to StackOverflow,

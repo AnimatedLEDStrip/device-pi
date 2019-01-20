@@ -141,7 +141,7 @@ open class AnimatedLEDStrip(
             Animation.PIXELRUNWITHTRAIL -> pixelRunWithTrail(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SPARKLE -> sparkle(animation)
-            Animation.SPARKLEFADE -> TODO()
+            Animation.SPARKLEFADE -> sparkleFade(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
             Animation.STACK -> stack(animation)
             Animation.STACKOVERFLOW -> TODO()
@@ -174,6 +174,14 @@ open class AnimatedLEDStrip(
     }
 
 
+    /**
+     * Runs a Bounce animation.
+     *
+     * Similar to Bounce to Color but the ends fade to color2 after being set
+     * to color1.
+     *
+     * @see Bounce
+     */
     private val bounce = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (i + animation.startPixel)..(animation.endPixel - i)) {
@@ -208,6 +216,15 @@ open class AnimatedLEDStrip(
     }
 
 
+    /**
+     * Runs a Bounce to Color animation.
+     *
+     * Pixel 'bounces' back and forth, leaving behind a pixel set to color1
+     * at each end like stack, eventually ending in the middle.
+     *
+     * @see BounceToColor
+     */
+    @NonRepetitive
     private val bounceToColor = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
@@ -474,6 +491,22 @@ open class AnimatedLEDStrip(
     }
 
 
+    private val sparkleFade = { animation: AnimationData ->
+        val deferred = (animation.startPixel..animation.endPixel).map { n ->
+            GlobalScope.async(sparkleThreadPool) {
+                delay((random() * 5000).toInt())
+                setPixelColor(n, animation.color1)
+                GlobalScope.launch(sparkleThreadPool) {
+                    fadePixel(n, animation.color2, 25)
+                }
+                delay(animation.delay)
+            }
+        }
+        runBlocking {
+            deferred.awaitAll()
+        }
+    }
+
     /**
      * Runs a Sparkle To Color animation.
      *
@@ -509,6 +542,7 @@ open class AnimatedLEDStrip(
      *
      * @see Stack
      */
+    @NonRepetitive
     private val stack = { animation: AnimationData ->
         val colorValues1 = animation.color1
         val stackDirection = animation.direction
@@ -586,8 +620,7 @@ open class AnimatedLEDStrip(
             }
         }
     }
-
-
+}
 //    /**
 //     * TODO (Will)
 //     * @param point1
@@ -771,158 +804,3 @@ open class AnimatedLEDStrip(
 //            stack(Direction.BACKWARD, stackColor2, delay = 2)
 //        }
 //    }
-
-
-    /* Experimental animations */
-
-//    @Experimental
-//    fun animation004(colorValues1: ColorContainer) {    // "bounce to color"
-//        for (i in 0 until ledStrip.numPixels / 2) {
-//            for (j in i until ledStrip.numPixels - i) {
-//                setPixelColor(j, colorValues1)
-//                show()
-//                delay(5)
-//                setPixelColor(j, CCBlack)
-//            }
-//            setPixelColor(ledStrip.numPixels - i - 1, colorValues1)
-//            for (j in ledStrip.numPixels - i - 2 downTo i) {
-//                setPixelColor(j, colorValues1)
-//                show()
-//                delay(5)
-//                setPixelColor(j, CCBlack)
-//            }
-//            setPixelColor(i, colorValues1)
-//            show()
-//        }
-//        if (ledStrip.numPixels % 2 == 1) {
-//            setPixelColor(ledStrip.numPixels / 2, colorValues1)
-//            show()
-//        }
-//    }
-//
-//
-//    @Experimental
-//    fun animation004_2(colorValues1: ColorContainer) {    // "bounce"
-//        for (i in 0 until ledStrip.numPixels / 2) {
-//            for (j in i until ledStrip.numPixels - i) {
-//                val originalColor: ColorContainer = getPixelColor(j)
-//                setPixelColor(j, colorValues1)
-//                show()
-//                delay(10)
-//                setPixelColor(j, originalColor)
-//            }
-//            setPixelColor(ledStrip.numPixels - i - 1, colorValues1)
-//            GlobalScope.launch(animationThreadPool) {
-//                val p = ledStrip.numPixels - i - 1
-//                fadePixel(p, CCBlack, 25, 50)
-//            }
-//            for (j in ledStrip.numPixels - i - 2 downTo i) {
-//                val originalColor: ColorContainer = getPixelColor(j)
-//                setPixelColor(j, colorValues1)
-//                show()
-//                delay(10)
-//                setPixelColor(j, originalColor)
-//            }
-//            setPixelColor(i, colorValues1)
-//            show()
-//            GlobalScope.launch(animationThreadPool) {
-//                fadePixel(i, CCBlack, 25, 50)
-//            }
-//        }
-//        if (ledStrip.numPixels % 2 == 1) {
-//            setPixelColor(ledStrip.numPixels / 2, colorValues1)
-//            show()
-//            GlobalScope.launch(animationThreadPool) {
-//                val p = ledStrip.numPixels / 2
-//                fadeMap[p]?.fade(CCBlack)
-//            }
-//        }
-//    }
-
-
-    @Experimental
-    fun animation005(   // "sparkle fade"
-        sparkleColor: ColorContainer,
-        delay: Int = 50,
-        delayMod: Double = 1.0,
-        concurrent: Boolean = true
-    ) {
-        if (concurrent) {
-            var complete = false
-            val deferred = (0 until ledStrip.numPixels).map { n ->
-                GlobalScope.async(sparkleThreadPool) {
-                    delay((random() * 5000).toInt())
-                    setPixelColor(n, sparkleColor)
-                    GlobalScope.launch(sparkleThreadPool) {
-                        fadePixel(n, CCBlack, 25)
-                    }
-                    delay((delay * delayMod).toInt())
-                }
-            }
-            runBlocking {
-                deferred.awaitAll()
-                complete = true
-            }
-        } else {
-            val myShuffleArray = runBlocking {
-                shuffleLock.withLock { shuffleArray.shuffle() }
-                return@runBlocking shuffleArray
-            }
-            myShuffleArray.shuffle()
-            for (i in 0 until ledStrip.numPixels) {
-                for (j in 0 until ledStrip.numPixels) {
-                    setPixelColor(myShuffleArray[j], blend(getPixelColor(myShuffleArray[j]), CCBlack, 10))
-                }
-                setPixelColor(myShuffleArray[i], sparkleColor)
-                show()
-                delay((delay * delayMod).toInt())
-            }
-        }
-    }
-
-
-    @Experimental
-    fun multiSparkleToColor(
-        point1: Int,
-        point2: Int,
-        color1: ColorContainer,
-        color2: ColorContainer,
-        delay: Int = 1000,
-        delayMod: Double = 1.0
-    ) {
-        val endptA = 0
-        val endptB: Int
-        val endptC: Int
-        val endptD = numLEDs - 1
-
-        if (point1 <= point2 && point1 > endptA && point2 < endptD) {
-            endptB = point1
-            endptC = point2
-        } else if (point2 > endptA && point1 < endptD) {
-            endptB = point2
-            endptC = point1
-        } else {
-            endptB = numLEDs / 3
-            endptC = (numLEDs * 2 / 3) - 1
-        }
-
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
-            setSectionColor(endptA, endptB, color1)
-            delay((delay * delayMod).toInt())
-            setSectionColor(endptA, endptB, color2)
-            delay((delay * delayMod).toInt())
-        }
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-2")) {
-            setSectionColor(endptC, endptD, color1)
-            delay((delay * delayMod).toInt())
-            setSectionColor(endptC, endptD, color2)
-            delay((delay * delayMod).toInt())
-        }
-        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-3")) {
-            setSectionColor(endptB, endptC, color2)
-            delay((delay * delayMod).toInt())
-            setSectionColor(endptB, endptC, color1)
-            delay((delay * delayMod).toInt())
-        }
-    }
-}
