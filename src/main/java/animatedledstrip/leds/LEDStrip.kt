@@ -100,6 +100,19 @@ open class LEDStrip(
         }
     }
 
+
+    /**
+     * Helper object for creating [LEDStripSection]s
+     */
+    object SectionCreator {
+        operator fun invoke(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
+            new(startPixel, endPixel, ledStrip)
+
+        fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
+            LEDStripSection(startPixel, endPixel, ledStrip)
+    }
+
+
     /**
      * Returns true if this is an emulated LED strip
      */
