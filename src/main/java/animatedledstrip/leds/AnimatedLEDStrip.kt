@@ -491,6 +491,13 @@ open class AnimatedLEDStrip(
     }
 
 
+    /**
+     * Runs a Sparkle Fade animation.
+     *
+     * Similar to Sparkle but pixels fade back to color2.
+     *
+     * @see SparkleFade
+     */
     private val sparkleFade = { animation: AnimationData ->
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
