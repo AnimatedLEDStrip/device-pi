@@ -42,6 +42,8 @@ import kotlin.text.StringBuilder
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
+ * @param imageDebugging Should a csv file be created containing all renders of
+ * the strip?
  */
 open class LEDStrip(
     var numLEDs: Int,
@@ -148,6 +150,13 @@ open class LEDStrip(
      * Helper object for creating [LEDStripSection]s
      */
     object SectionCreator {
+        /**
+         * Create a new [LEDStripSection]
+         *
+         * @param startPixel First pixel in the section
+         * @param endPixel Last pixel in the section
+         * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
+         */
         fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
             LEDStripSection(startPixel, endPixel, ledStrip)
     }
@@ -203,42 +212,6 @@ open class LEDStrip(
      */
     fun setPixelColor(pixel: Int, hexIn: Long) {
         setPixelColor(pixel, ColorContainer(hexIn))
-    }
-
-    fun setPixelRed(pixel: Int, rIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setRedComponent(pixel, rIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelRed: $e")
-        }
-    }
-
-    fun setPixelGreen(pixel: Int, gIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setGreenComponent(pixel, gIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelGreen: $e")
-        }
-    }
-
-    fun setPixelBlue(pixel: Int, bIn: Int) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock {
-                    ledStrip.setBlueComponent(pixel, bIn)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelBlue")
-        }
     }
 
 
