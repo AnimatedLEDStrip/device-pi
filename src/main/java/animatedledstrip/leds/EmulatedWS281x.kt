@@ -61,28 +61,26 @@ import com.diozero.ws281xj.LedDriverInterface
 import java.nio.ByteBuffer
 
 
+/**
+ * Modification on the WS281x class from the diozero-ws281x-java library that
+ * doesn't attempt to send data to any LEDs.
+ *
+ * @property pin Pin the strip is connected to
+ * @property brightness Brightness of the strip
+ * @property numPixels Number of pixels in the strip
+ */
 open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixels: Int) : LedDriverInterface {
     override fun getNumPixels() = numPixels
 
-    override fun render() {
-        // TODO("not implemented")
-    }
+    override fun render() {}
 
-    override fun allOff() {
-        // TODO("not implemented")
-    }
+    override fun allOff() {}
 
-    override fun close() {
-        // TODO("not implemented")
-    }
+    override fun close() {}
 
     private val SIZE_OF_INT = 4
 
     private var ledArray: ByteBuffer = ByteBuffer.allocate(numPixels * SIZE_OF_INT)
-
-    fun test() {
-        ledArray.getInt(5 * SIZE_OF_INT)
-    }
 
     private fun validatePixel(pixel: Int) {
         if (pixel < 0 || pixel >= numPixels) {
