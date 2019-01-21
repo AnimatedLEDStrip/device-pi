@@ -67,10 +67,35 @@ open class AnimatedLEDStrip(
     private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 
+    /**
+     * Map of pixel indices to FadePixel instances
+     */
     private val fadeMap = mutableMapOf<Int, FadePixel>()
 
-    inner class FadePixel(val pixel: Int) {
+    /**
+     * Helper class for fading a pixel from one color to another.
+     *
+     * @property pixel The pixel associated with this instance
+     */
+    inner class FadePixel(private val pixel: Int) {
+        /**
+         * Which thread is currently fading a pixel?
+         * Used so another thread can take over mid-fade if necessary.
+         */
         var owner = ""
+
+
+        /**
+         * Fade a pixel from its current color to destinationColor.
+         *
+         * Blends the current color with destinationColor using [blend] every
+         * delay milliseconds until the pixel reaches destinationColor or 40
+         * iterations have passed, whichever comes first.
+         *
+         * @param destinationColor The color to end with
+         * @param amountOfOverlay How much the pixel should fade in each iteration
+         * @param delay Time in milliseconds between iterations
+         */
         fun fade(destinationColor: ColorContainer, amountOfOverlay: Int = 25, delay: Int = 30) {
             val myName = Thread.currentThread().name
             owner = myName
@@ -84,6 +109,15 @@ open class AnimatedLEDStrip(
         }
     }
 
+    /**
+     * Helper function for fading a pixel from its current color to destinationColor.
+     *
+     * @param pixel The pixel to be faded
+     * @param destinationColor The color to fade to
+     * @param amountOfOverlay How much the pixel should fade in each iteration
+     * @param delay Time in milliseconds between iterations
+     * @see FadePixel
+     */
     fun fadePixel(pixel: Int, destinationColor: ColorContainer, amountOfOverlay: Int = 25, delay: Int = 30) {
         Logger.trace("Fading pixel $pixel to ${destinationColor.hexString}")
         fadeMap[pixel]?.fade(destinationColor, amountOfOverlay, delay)
