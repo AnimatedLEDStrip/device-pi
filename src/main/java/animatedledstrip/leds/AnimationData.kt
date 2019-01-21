@@ -80,9 +80,9 @@ class AnimationData() {
                 0 -> {
                     when (animationInfoMap[animation]?.delay) {
                         ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
-                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 3
-                        ReqLevel.NOTUSED -> 3
-                        null -> 3
+                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 50
+                        ReqLevel.NOTUSED -> 50
+                        null -> 50
                     }
                 }
                 else -> field
@@ -113,7 +113,20 @@ class AnimationData() {
     /**
      * Spacing used in the animation.
      */
-    var spacing = 3 // TODO: Check for default spacing option
+    var spacing = 0
+        get() {
+            return (when (field) {
+                0 -> {
+                    when (animationInfoMap[animation]?.spacing) {
+                        ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
+                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.spacingDefault ?: 3
+                        ReqLevel.NOTUSED -> 3
+                        null -> 3
+                    }
+                }
+                else -> field
+            })
+        }
 
     /**
      * First pixel on the strip will show the animation.
