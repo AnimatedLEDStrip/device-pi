@@ -88,6 +88,18 @@ open class LEDStrip(
         true
     ) else null
 
+    /**
+     * Buffer that stores renders until renderNum in toggleRender reaches 1000,
+     * at which point buffer is appended to outFile and cleared.
+     */
+    private val buffer = if (imageDebugging) StringBuilder() else null
+
+    /**
+     * Mutex tracking if a thread is saving to outFile in order to prevent
+     * overlaps.
+     */
+    private val outLock = Mutex()
+
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
@@ -98,18 +110,30 @@ open class LEDStrip(
     /**
      * Toggle strip rendering. If strip is not rendering, this will launch a new
      * thread that renders the strip constantly until this is called again.
+     *
+     * NOTE: If image debugging is enabled, then any renders waiting to lock
+     * outLock when the program is terminated will be lost.
      */
     fun toggleRender() {
         rendering = when (rendering) {
             true -> false
             false -> {
                 GlobalScope.launch(renderThread) {
+                    var renderNum = 0
                     while (rendering) {
                         ledStrip.render()
                         if (imageDebugging) {
-                            GlobalScope.launch(outThread) {
-                                getPixelColorList().forEach { outFile!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
-                                outFile!!.append("0,0,0\n")
+                            getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+                            buffer!!.append("0,0,0\n")
+
+                            if (renderNum++ >= 1000) {
+                                GlobalScope.launch(outThread) {
+                                    outLock.withLock {
+                                        outFile!!.append(buffer)
+                                        buffer.clear()
+                                        renderNum = 0
+                                    }
+                                }
                             }
                         }
                     }
