@@ -24,7 +24,6 @@ package animatedledstrip.leds
  */
 
 
-import com.diozero.ws281xj.rpiws281x.WS281x
 import org.pmw.tinylog.Logger
 import java.lang.NumberFormatException
 import kotlin.math.roundToInt
@@ -105,74 +104,4 @@ fun parseHex(string: String): Long {
         Logger.warn("Format of string \"$string\" is malformed: $e")
         0x0
     }
-}
-@Deprecated("Use colorsFromPalette()")
-fun fillGradientRGB(leds: WS281x, startpos: Int, startcolor: ColorContainer, endpos: Int, endcolor: ColorContainer) {
-    var endColor = endcolor
-    var startColor = startcolor
-    var endPos = endpos
-    var startPos = startpos
-
-    if (endpos < startpos) {
-        val t = endPos
-        val tc = endColor
-        endColor = startColor
-        endPos = startPos
-        startPos = t
-        startColor = tc
-    }
-
-    val rdistance87 = (endColor.r - startColor.r) shl 7
-    val gdistance87 = (endColor.g - startColor.g) shl 7
-    val bdistance87 = (endColor.b - startColor.b) shl 7
-
-    val pixeldistance = endPos - startPos
-    val divisor = if (pixeldistance != 0) pixeldistance else 1
-
-    val rdelta87 = (rdistance87 / divisor) * 2
-    val gdelta87 = (gdistance87 / divisor) * 2
-    val bdelta87 = (bdistance87 / divisor) * 2
-
-    var r88 = startColor.r shl 8
-    var g88 = startColor.g shl 8
-    var b88 = startColor.b shl 8
-
-    for (i in startPos until endPos) {
-        leds.setPixelColourRGB(i, r88 shr 8, g88 shr 8, b88 shr 8)
-        r88 += rdelta87
-        g88 += gdelta87
-        b88 += bdelta87
-
-    }
-}
-
-@Deprecated("Use colorsFromPalette()")
-fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorContainer) {
-    fillGradientRGB(leds, 0, c1, numLEDs, c2)
-    leds.render()
-}
-
-@Deprecated("Use colorsFromPalette()")
-fun fillGradientRGB(leds: WS281x, numLEDs: Int, c1: ColorContainer, c2: ColorContainer, c3: ColorContainer) {
-    val half = (numLEDs / 2)
-    fillGradientRGB(leds, 0, c1, half, c2)
-    fillGradientRGB(leds, half, c2, numLEDs, c3)
-    leds.render()
-}
-
-@Deprecated("Use colorsFromPalette()")
-fun fillGradientRGB(
-    leds: WS281x,
-    numLEDs: Int,
-    c1: ColorContainer,
-    c2: ColorContainer,
-    c3: ColorContainer,
-    c4: ColorContainer
-) {
-    val onethird = (numLEDs / 3)
-    val twothirds = ((numLEDs * 2) / 3)
-    fillGradientRGB(leds, 0, c1, onethird, c2)
-    fillGradientRGB(leds, onethird, c2, twothirds, c3)
-    fillGradientRGB(leds, twothirds, c3, numLEDs, c4)
-    leds.render()
 }

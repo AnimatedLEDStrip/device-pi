@@ -283,48 +283,6 @@ open class LEDStrip(
         show()
     }
 
-    @Deprecated("Use getPixelColor and r property of the resulting ColorContainer", ReplaceWith("getPixelColor().r"))
-    fun getPixelRed(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getRedComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelRed: $e")
-        }
-        return 0
-    }
-
-    @Deprecated("Use getPixelColor and g property of the resulting ColorContainer", ReplaceWith("getPixelColor().g"))
-    fun getPixelGreen(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getGreenComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelGreen: $e")
-        }
-        return 0
-    }
-
-    @Deprecated("Use getPixelColor and b property of the resulting ColorContainer", ReplaceWith("getPixelColor().b"))
-    fun getPixelBlue(pixel: Int): Int {
-        try {
-            return runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking ledStrip.getBlueComponent(pixel)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelBlue: $e")
-        }
-        return 0
-    }
-
 
     /**
      * Get the color of a pixel. Waits until the pixel's Mutex is unlocked.

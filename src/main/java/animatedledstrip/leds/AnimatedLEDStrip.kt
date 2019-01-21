@@ -27,7 +27,6 @@ import animatedledstrip.ccpresets.*
 import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
 
