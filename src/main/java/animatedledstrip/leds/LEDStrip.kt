@@ -73,7 +73,7 @@ open class LEDStrip(
 
     init {
         val historyFile = if (imageDebugging) FileWriter(
-            "colors_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
+            "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
             true
         ) else null
         val buffer = if (imageDebugging) StringBuilder() else null
