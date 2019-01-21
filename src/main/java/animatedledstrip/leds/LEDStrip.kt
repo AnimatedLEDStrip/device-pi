@@ -82,6 +82,11 @@ open class LEDStrip(
         toggleRender()
     }
 
+    /**
+     * Toggle strip rendering. If strip is not rendering, this will launch a new
+     * thread that renders the strip constantly until this is called again.
+     *
+     */
     fun toggleRender() {
         rendering = when (rendering) {
             true -> false
