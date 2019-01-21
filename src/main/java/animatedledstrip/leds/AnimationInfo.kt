@@ -59,8 +59,18 @@ data class AnimationInfo(
  *
  */
 enum class ReqLevel {
+    /**
+     * Animation parameter must be set by the user
+     */
     REQUIRED,
+    /**
+     * Animation parameter may be set by the user, otherwise will be set to a
+     * default as specified (color# will default to [animatedledstrip.ccpresets.CCBlack])
+     */
     OPTIONAL,
+    /**
+     * Animation does not use parameter
+     */
     NOTUSED
 }
 
