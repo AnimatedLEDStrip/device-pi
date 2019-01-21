@@ -98,8 +98,9 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
  * @param string The hex String to decode
  */
 fun parseHex(string: String): Long {
+    val s = string.removePrefix("0x")     // remove leading 0x if present
     return try {
-        java.lang.Long.parseLong(string, 16)
+        java.lang.Long.parseLong(s, 16)
     } catch (e: NumberFormatException) {
         Logger.warn("Format of string \"$string\" is malformed: $e")
         0x0
