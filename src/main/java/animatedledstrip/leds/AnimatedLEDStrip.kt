@@ -41,10 +41,9 @@ open class AnimatedLEDStrip(
     numLEDs: Int,
     pin: Int,
     emulated: Boolean = false,
-    constantRender: Boolean = true,
     imageDebugging: Boolean = false
 ) :
-    LEDStrip(numLEDs, pin, emulated, constantRender, imageDebugging) {
+    LEDStrip(numLEDs, pin, emulated, imageDebugging) {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is

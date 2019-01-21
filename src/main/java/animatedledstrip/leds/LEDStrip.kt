@@ -36,7 +36,8 @@ import kotlin.text.StringBuilder
 
 
 /**
- * A LED Strip with concurrency added. Bridge between the AnimatedLEDStrip class and the WS281x class
+ * A LED Strip with concurrency added. Bridge between the AnimatedLEDStrip
+ * class and the WS281x class
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
@@ -46,7 +47,6 @@ open class LEDStrip(
     var numLEDs: Int,
     pin: Int,
     private val emulated: Boolean = false,
-    private val constantRender: Boolean = true,
     private val imageDebugging: Boolean = false
 ) {
 
@@ -64,38 +64,45 @@ open class LEDStrip(
      */
     private val locks = mutableMapOf<Int, Mutex>()
 
-    /**
-     * Mutex that tracks if a thread is sending data to the LEDs
-     */
-    private val renderLock = Mutex()
+    private val renderThread = newSingleThreadContext("Render Loop")
 
-    var stopRender = false
+    private var rendering = false
+
+    private val outFile = if (imageDebugging) FileWriter(
+        "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
+        true
+    ) else null
+
+    private val buffer = if (imageDebugging) StringBuilder() else null
 
     init {
-        val historyFile = if (imageDebugging) FileWriter(
-            "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
-            true
-        ) else null
-        val buffer = if (imageDebugging) StringBuilder() else null
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
         Logger.info("using GPIO pin $pin")
-        var a = 0
-        if (constantRender) GlobalScope.launch(newSingleThreadContext("Render Loop")) {
-            while (!stopRender) {
-                ledStrip.render()
-                if (imageDebugging) {
-                    getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+        toggleRender()
+    }
 
-                    buffer!!.append("0,0,0\n")
-                    if (a++ >= 1000) {
-                        historyFile!!.append(buffer)
-                        buffer.clear()
-                        a = 0
+    fun toggleRender() {
+        rendering = when (rendering) {
+            true -> false
+            false -> {
+                GlobalScope.launch(renderThread) {
+                    var renderNum = 0
+                    while (rendering) {
+                        ledStrip.render()
+                        if (imageDebugging) {
+                            getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+                            buffer!!.append("0,0,0\n")
+                            if (renderNum++ >= 1000) {
+                                outFile!!.append(buffer)
+                                buffer.clear()
+                                renderNum = 0
+                            }
+                            outFile!!.append(buffer)
+                        }
                     }
-
-                    historyFile!!.append(buffer)
                 }
+                true
             }
         }
     }
@@ -367,19 +374,19 @@ open class LEDStrip(
 
 
     /**
-     * Attempt to lock renderLock and send data to the LEDs. Returns if another
-     * thread has locked renderLock.
+     * Method that used to be used to render the led strip. Now handled by a
+     * thread created during an init block above.
      */
+    @Deprecated("Strip is now constantly rendered, thus show() is useless")
     fun show() {
-        if (constantRender) return
-        try {
-            runBlocking {
-                renderLock.tryWithLock(owner = "Render") {
-                    ledStrip.render()
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in show: $e")
-        }
+//        try {
+//            runBlocking {
+//                renderLock.tryWithLock(owner = "Render") {
+//                    ledStrip.render()
+//                }
+//            }
+//        } catch (e: Exception) {
+//            Logger.error("ERROR in show: $e")
+//        }
     }
 }
