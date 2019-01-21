@@ -32,6 +32,7 @@ import org.pmw.tinylog.Logger
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
+ * @param emulated Is this strip real or emulated?
  */
 open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
 
@@ -86,18 +87,6 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
      */
     fun setPixelColor(pixel: Int, hexIn: Long) {
         setPixelColor(pixel, ColorContainer(hexIn))
-    }
-
-    fun setPixelRed(pixel: Int, rIn: Int) {
-        ledStrip.setRedComponent(pixel, rIn)
-    }
-
-    fun setPixelGreen(pixel: Int, gIn: Int) {
-        ledStrip.setGreenComponent(pixel, gIn)
-    }
-
-    fun setPixelBlue(pixel: Int, bIn: Int) {
-        ledStrip.setBlueComponent(pixel, bIn)
     }
 
 
