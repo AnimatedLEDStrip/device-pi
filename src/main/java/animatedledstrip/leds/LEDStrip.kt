@@ -64,16 +64,29 @@ open class LEDStrip(
      */
     private val locks = mutableMapOf<Int, Mutex>()
 
+    /**
+     * The thread in which the rendering loop will run.
+     */
     private val renderThread = newSingleThreadContext("Render Loop")
 
+    /**
+     * The thread used to save values to outFile so the program doesn't
+     * experience slowdowns because of I/O.
+     */
+    private val outThread = newSingleThreadContext("Image Debug Save Thread")
+
+    /**
+     * Tracks if the strip is rendering. Starts false and is set to true in init.
+     */
     private var rendering = false
 
+    /**
+     * The file that the csv output will be saved to if imageDebugging is enabled.
+     */
     private val outFile = if (imageDebugging) FileWriter(
         "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
         true
     ) else null
-
-    private val buffer = if (imageDebugging) StringBuilder() else null
 
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
@@ -85,29 +98,23 @@ open class LEDStrip(
     /**
      * Toggle strip rendering. If strip is not rendering, this will launch a new
      * thread that renders the strip constantly until this is called again.
-     *
      */
     fun toggleRender() {
         rendering = when (rendering) {
             true -> false
             false -> {
                 GlobalScope.launch(renderThread) {
-                    var renderNum = 0
                     while (rendering) {
                         ledStrip.render()
                         if (imageDebugging) {
-                            getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
-                            buffer!!.append("0,0,0\n")
-                            if (renderNum++ >= 1000) {
-                                outFile!!.append(buffer)
-                                buffer.clear()
-                                renderNum = 0
+                            GlobalScope.launch(outThread) {
+                                getPixelColorList().forEach { outFile!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+                                outFile!!.append("0,0,0\n")
                             }
-                            outFile!!.append(buffer)
                         }
                     }
                 }
-                true
+                true        // Set rendering to true
             }
         }
     }
