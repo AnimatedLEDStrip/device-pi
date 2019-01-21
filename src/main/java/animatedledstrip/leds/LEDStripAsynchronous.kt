@@ -176,24 +176,6 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
     }
 
 
-    @Deprecated("Use getPixelColor and r property of the resulting ColorContainer", ReplaceWith("getPixelColor().r"))
-    fun getPixelRed(pixel: Int): Int {
-        return ledStrip.getRedComponent(pixel)
-    }
-
-
-    @Deprecated("Use getPixelColor and g property of the resulting ColorContainer", ReplaceWith("getPixelColor().g"))
-    fun getPixelGreen(pixel: Int): Int {
-        return ledStrip.getGreenComponent(pixel)
-    }
-
-
-    @Deprecated("Use getPixelColor and b property of the resulting ColorContainer", ReplaceWith("getPixelColor().b"))
-    fun getPixelBlue(pixel: Int): Int {
-        return ledStrip.getBlueComponent(pixel)
-    }
-
-
     /**
      * Get the color of a pixel.
      *
