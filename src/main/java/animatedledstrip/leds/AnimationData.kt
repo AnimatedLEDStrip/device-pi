@@ -201,8 +201,44 @@ class AnimationData() {
         return this
     }
 
-    fun colorList(colorList: List<ColorContainer>): AnimationData {
-        this.colorList = colorList.toMutableList()
+    fun colorList(colorList: List<*>): AnimationData {
+        this.colorList = mutableListOf<ColorContainer>().apply {
+            colorList.forEach {
+                when (it) {
+                    is ColorContainer -> this.add(it)
+                    is Long -> this.add(ColorContainer(it))
+                    is String -> this.add(ColorContainer(parseHex(it)))
+                }
+            }
+        }
+        return this
+    }
+
+    fun addToColorList(color: ColorContainer): AnimationData {
+        this.colorList.add(color)
+        return this
+    }
+
+    fun addToColorList(color: Long): AnimationData {
+        this.colorList.add(ColorContainer(color))
+        return this
+    }
+
+    fun addToColorList(color: String): AnimationData {
+        this.colorList.add(ColorContainer(parseHex(color)))
+        return this
+    }
+
+    fun addToColorList(colorList: List<*>): AnimationData {
+        this.colorList.apply {
+            colorList.forEach {
+                when (it) {
+                    is ColorContainer -> this.add(it)
+                    is Long -> this.add(ColorContainer(it))
+                    is String -> this.add(ColorContainer(parseHex(it)))
+                }
+            }
+        }
         return this
     }
 

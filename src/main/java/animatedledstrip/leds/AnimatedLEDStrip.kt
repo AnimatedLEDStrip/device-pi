@@ -143,8 +143,6 @@ open class AnimatedLEDStrip(
      * Runs an Alternate animation.
      *
      * Strip alternates between color1 and color2 at the specified rate (delay between changes).
-     *
-     * @see Alternate
      */
     private val alternate = { animation: AnimationData ->
         val startPixel = animation.startPixel
@@ -165,8 +163,6 @@ open class AnimatedLEDStrip(
      *
      * Similar to Bounce to Color but the ends fade to color2 after being set
      * to color1.
-     *
-     * @see Bounce
      */
     private val bounce = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
@@ -206,9 +202,7 @@ open class AnimatedLEDStrip(
      * Runs a Bounce to Color animation.
      *
      * Pixel 'bounces' back and forth, leaving behind a pixel set to color1
-     * at each end like stack, eventually ending in the middle.
-     *
-     * @see BounceToColor
+     * at each end like Stack, eventually ending in the middle.
      */
     @NonRepetitive
     private val bounceToColor = { animation: AnimationData ->
@@ -235,11 +229,9 @@ open class AnimatedLEDStrip(
 
 
     /**
-     * Runs a Multi Pixel Run animation.
+     * Runs a Multi-Pixel Run animation.
      *
      * Similar to Pixel Run but with multiple leds at a specified spacing.
-     *
-     * @see MultiPixelRun
      */
     private val multiPixelRun = { animation: AnimationData ->
         val chaseDirection = animation.direction
@@ -283,9 +275,10 @@ open class AnimatedLEDStrip(
 
 
     /**
-     * Runs a Multi Pixel Run To Color animation.
+     * Runs a Multi-Pixel Run To Color animation.
      *
-     * @see MultiPixelRunToColor
+     * Similar to Multi-Pixel Run but leds do not revert back to their original
+     * color.
      */
     @NonRepetitive
     private val multiPixelRunToColor = { animation: AnimationData ->
@@ -324,9 +317,7 @@ open class AnimatedLEDStrip(
      * Runs a Pixel Run animation.
      *
      * The strip is set to color2, then a pixel 'runs' along the strip.
-     * Similar to Multi Pixel Run but with only one pixel.
-     *
-     * @see PixelRun
+     * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
         val colorValues1 = animation.color1
@@ -362,12 +353,10 @@ open class AnimatedLEDStrip(
 
 
     /**
-     * Runs a Pixel Run With Trail animation.
+     * Runs a Pixel Run with Trail animation.
      *
      * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
      * where the pixels fade from color1 to color2 over ~20 iterations.
-     *
-     * @see PixelRunWithTrail
      */
     private val pixelRunWithTrail = { animation: AnimationData ->
         val colorValues1 = animation.color1
@@ -405,7 +394,7 @@ open class AnimatedLEDStrip(
      * The [colorsFromPalette] function is used to create a collection of colors
      * for the strip:
      * *The palette colors are spread out along the strip at approximately equal
-     * intervals. All pixels between these 'pure' pixels are a blend between the
+     * intervals. All pixels between these 'pure' pixels are a blend of the
      * colors of the two nearest pure pixels. The blend ratio is determined by the
      * location of the pixel relative to the nearest pure pixels.*
      *
@@ -417,8 +406,6 @@ open class AnimatedLEDStrip(
      * [Direction].BACKWARD, the same happens but with indices i, i-1, i-2, etc.
      * The index is found with (i + a) mod s, where i is the pixel index, a is the
      * offset for this iteration and s is the number of pixels in the strip.
-     *
-     * @see SmoothChase
      */
     private val smoothChase = { animation: AnimationData ->
         val colorList = animation.colorList
@@ -449,10 +436,8 @@ open class AnimatedLEDStrip(
      *
      * Each LED is changed to color1 for delay milliseconds before reverting
      * to its original color. A separate thread is created for each pixel. Each
-     * thread saves its pixel's  original color, then waits for 0-5 seconds
+     * thread saves its pixel's original color, then waits for 0-5 seconds
      * before sparkling its pixel.
-     *
-     * @see Sparkle
      */
     private val sparkle = { animation: AnimationData ->
         val sparkleColor = animation.color1
@@ -473,7 +458,7 @@ open class AnimatedLEDStrip(
         runBlocking {
             deferred.awaitAll()
         }
-
+        Unit        // Ensure sparkle is of type (AnimationData) -> Unit
     }
 
 
@@ -481,8 +466,6 @@ open class AnimatedLEDStrip(
      * Runs a Sparkle Fade animation.
      *
      * Similar to Sparkle but pixels fade back to color2.
-     *
-     * @see SparkleFade
      */
     private val sparkleFade = { animation: AnimationData ->
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
@@ -498,6 +481,7 @@ open class AnimatedLEDStrip(
         runBlocking {
             deferred.awaitAll()
         }
+        Unit        // Ensure sparkleFade is of type (AnimationData) -> Unit
     }
 
     /**
@@ -506,8 +490,6 @@ open class AnimatedLEDStrip(
      * Very similar to the Sparkle animation, but the LEDs are not reverted to their
      * original color after the sparkle. A separate thread is created for each
      * pixel. Each thread waits for 0-5 seconds before sparkling its pixel.
-     *
-     * @see SparkleToColor
      */
     @NonRepetitive
     private val sparkleToColor = { animation: AnimationData ->
@@ -527,13 +509,12 @@ open class AnimatedLEDStrip(
         runBlocking {
             deferred.awaitAll()
         }
+        Unit        // Ensure sparkleToColor is of type (AnimationData) -> Unit
     }
 
 
     /**
      * TODO (Katie)
-     *
-     * @see Stack
      */
     @NonRepetitive
     private val stack = { animation: AnimationData ->
@@ -588,8 +569,6 @@ open class AnimatedLEDStrip(
      *
      * Similar to a Pixel Run animation, but the pixels do not revert to their
      * original color.
-     *
-     * @see Wipe
      */
     @NonRepetitive
     private val wipe = { animation: AnimationData ->

@@ -97,14 +97,13 @@ val Bounce = AnimationInfo(
  */
 val BounceToColor = AnimationInfo(
     color1 = ReqLevel.REQUIRED,
-    color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 5
 )
 
 
 /**
- * Info about the Multi Pixel Run animation.
+ * Info about the Multi-Pixel Run animation.
  *
  * @see AnimatedLEDStrip.multiPixelRun
  */
@@ -120,7 +119,7 @@ val MultiPixelRun = AnimationInfo(
 
 
 /**
- * Info about the Multi Pixel Run to Color animation.
+ * Info about the Multi-Pixel Run to Color animation.
  *
  * @see AnimatedLEDStrip.multiPixelRunToColor
  */

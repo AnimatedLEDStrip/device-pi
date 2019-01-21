@@ -25,6 +25,8 @@ package animatedledstrip.leds
 
 
 import com.diozero.ws281xj.rpiws281x.WS281x
+import org.pmw.tinylog.Logger
+import java.lang.NumberFormatException
 import kotlin.math.roundToInt
 
 /**
@@ -96,8 +98,14 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
  *
  * @param string The hex String to decode
  */
-fun parseHex(string: String): Long = java.lang.Long.parseLong(string, 16)
-
+fun parseHex(string: String): Long {
+    return try {
+        java.lang.Long.parseLong(string, 16)
+    } catch (e: NumberFormatException) {
+        Logger.warn("Format of string \"$string\" is malformed: $e")
+        0x0
+    }
+}
 @Deprecated("Use colorsFromPalette()")
 fun fillGradientRGB(leds: WS281x, startpos: Int, startcolor: ColorContainer, endpos: Int, endcolor: ColorContainer) {
     var endColor = endcolor
