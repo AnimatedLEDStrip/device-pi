@@ -241,8 +241,8 @@ open class AnimatedLEDStrip(
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
 
-        if (chaseDirection == Direction.BACKWARD) {
-            for (q in 0 until spacing) {
+        when (chaseDirection) {
+            Direction.BACKWARD -> for (q in 0 until spacing) {
                 setStripColor(colorValues2)
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
@@ -255,8 +255,7 @@ open class AnimatedLEDStrip(
                     colorValues2
                 )
             }
-        } else if (chaseDirection == Direction.FORWARD) {
-            for (q in spacing - 1 downTo 0) {
+            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 setStripColor(colorValues2)
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
@@ -288,8 +287,8 @@ open class AnimatedLEDStrip(
         val endPixel = animation.endPixel
         val delay = animation.delay
 
-        if (chaseDirection == Direction.BACKWARD) {
-            for (q in 0 until spacing) {
+        when (chaseDirection) {
+            Direction.BACKWARD -> for (q in 0 until spacing) {
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
@@ -297,8 +296,7 @@ open class AnimatedLEDStrip(
                 show()
                 delay((delay * delayMod).toInt())
             }
-        } else if (chaseDirection == Direction.FORWARD) {
-            for (q in spacing - 1 downTo 0) {
+            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
@@ -325,8 +323,8 @@ open class AnimatedLEDStrip(
         val delay = animation.delay
 
         setStripColor(colorValues2)
-        if (movementDirection == Direction.FORWARD) {
-            for (q in 0 until ledStrip.numPixels) {
+        when (movementDirection) {
+            Direction.FORWARD -> for (q in 0 until ledStrip.numPixels) {
                 runBlocking {
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
@@ -336,8 +334,7 @@ open class AnimatedLEDStrip(
                     }
                 }
             }
-        } else if (movementDirection == Direction.BACKWARD) {
-            for (q in ledStrip.numPixels - 1 downTo 0) {
+            Direction.BACKWARD -> for (q in ledStrip.numPixels - 1 downTo 0) {
                 runBlocking {
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
@@ -365,8 +362,8 @@ open class AnimatedLEDStrip(
         val endPixel = animation.endPixel
         val delay = animation.delay
 
-        if (movementDirection == Direction.FORWARD) {
-            for (q in startPixel..endPixel) {
+        when (movementDirection) {
+            Direction.FORWARD -> for (q in startPixel..endPixel) {
                 setPixelColor(q, colorValues1)
                 show()
                 GlobalScope.launch(animationThreadPool) {
@@ -374,8 +371,7 @@ open class AnimatedLEDStrip(
                 }
                 delay((delay * delayMod).toInt())
             }
-        } else if (movementDirection == Direction.BACKWARD) {
-            for (q in endPixel downTo startPixel) {
+            Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
                 setPixelColor(q, colorValues1)
                 show()
                 GlobalScope.launch(animationThreadPool) {
@@ -415,18 +411,18 @@ open class AnimatedLEDStrip(
 
         val palette = colorsFromPalette(colorList, numLEDs)
 
-        if (movementDirection == Direction.FORWARD)
-            for (m in startPixel..endPixel) {
+        when (movementDirection) {
+            Direction.FORWARD -> for (m in startPixel..endPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
             }
-        else
-            for (m in endPixel downTo startPixel) {
+            else -> for (m in endPixel downTo startPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
                 delay((delay * delayMod).toInt())
             }
+        }
     }
 
 
@@ -523,8 +519,8 @@ open class AnimatedLEDStrip(
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
 
-        if (stackDirection == Direction.FORWARD) {
-            for (q in endPixel downTo startPixel) {
+        when (stackDirection) {
+            Direction.FORWARD -> for (q in endPixel downTo startPixel) {
                 var originalColor: ColorContainer
                 for (i in startPixel until q) {
                     runBlocking {
@@ -540,8 +536,7 @@ open class AnimatedLEDStrip(
                 setPixelColor(q, colorValues1)
                 show()
             }
-        } else if (stackDirection == Direction.BACKWARD) {
-            for (q in startPixel..endPixel) {
+            Direction.BACKWARD -> for (q in startPixel..endPixel) {
                 var originalColor: ColorContainer
                 for (i in endPixel downTo q) {
                     runBlocking {
@@ -577,14 +572,13 @@ open class AnimatedLEDStrip(
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
 
-        if (wipeDirection == Direction.BACKWARD) {
-            for (i in endPixel downTo startPixel) {
+        when (wipeDirection) {
+            Direction.BACKWARD -> for (i in endPixel downTo startPixel) {
                 setPixelColor(i, colorValues)
                 show()
                 delay((delay * delayMod).toInt())
             }
-        } else if (wipeDirection == Direction.FORWARD) {
-            for (i in startPixel..endPixel) {
+            Direction.FORWARD -> for (i in startPixel..endPixel) {
                 setPixelColor(i, colorValues)
                 show()
                 delay((delay * delayMod).toInt())
