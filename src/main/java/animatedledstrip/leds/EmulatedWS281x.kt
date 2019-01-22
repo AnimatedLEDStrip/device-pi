@@ -70,29 +70,57 @@ import java.nio.ByteBuffer
  * @property numPixels Number of pixels in the strip
  */
 open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixels: Int) : LedDriverInterface {
+    /**
+     * Returns the number of pixels in the strip.
+     */
     override fun getNumPixels() = numPixels
 
+    /** Empty override for render() */
     override fun render() {}
 
+    /** Empty override for allOff() */
     override fun allOff() {}
 
+    /** Empty override for close() */
     override fun close() {}
 
+    /**
+     * Size of an Int for use in ByteBuffer index calculations.
+     */
     private val SIZE_OF_INT = 4
 
+    /**
+     * A ByteBuffer emulating the ByteBuffer used by the regular WS281x class.
+     */
     private var ledArray: ByteBuffer = ByteBuffer.allocate(numPixels * SIZE_OF_INT)
 
+    /**
+     * Check that the pixel is part of the strip.
+     *
+     * @param pixel The index to check
+     */
     private fun validatePixel(pixel: Int) {
         if (pixel < 0 || pixel >= numPixels) {
             throw IllegalArgumentException("pixel must be 0.." + (numPixels - 1))
         }
     }
 
+    /**
+     * Get the color of a pixel in the strip.
+     *
+     * @param pixel The pixel to check
+     */
     override fun getPixelColour(pixel: Int): Int {
         validatePixel(pixel)
         return ledArray.getInt(pixel * SIZE_OF_INT)
     }
 
+    /**
+     * Set the color of a pixel in the strip.
+     *
+     * @param pixel The pixel to set
+     * @param colour The color to set the pixel to
+     */
     override fun setPixelColour(pixel: Int, colour: Int) {
         validatePixel(pixel)
         ledArray.putInt(pixel * SIZE_OF_INT, colour)
