@@ -306,11 +306,12 @@ open class LEDStrip(
      */
     fun getPixelColor(pixel: Int): ColorContainer {
         try {
-            return runBlocking {
-//                locks[pixel]!!.withLock {
+            return if (!imageDebugging) runBlocking {
+                locks[pixel]!!.withLock {
                     return@runBlocking ColorContainer(ledStrip.getPixelColour(pixel).toLong())
-//                }
+                }
             }
+            else ColorContainer(ledStrip.getPixelColour(pixel).toLong())
         } catch (e: Exception) {
             Logger.error("ERROR in getPixelColor: $e")
         }
