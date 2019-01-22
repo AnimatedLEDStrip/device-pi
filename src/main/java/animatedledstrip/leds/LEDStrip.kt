@@ -69,7 +69,7 @@ open class LEDStrip(
     /**
      * The thread in which the rendering loop will run.
      */
-    private val renderThread = newSingleThreadContext("Render Loop")
+    private val renderThread = newFixedThreadPoolContext(50, "Render Loops")
 
     /**
      * The thread used to save values to outFile so the program doesn't
@@ -123,6 +123,7 @@ open class LEDStrip(
                 GlobalScope.launch(renderThread) {
                     var renderNum = 0
                     while (rendering) {
+                        Logger.trace("Rendering")
                         ledStrip.render()
                         if (imageDebugging) {
                             getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
@@ -133,9 +134,9 @@ open class LEDStrip(
                                     outLock.withLock {
                                         outFile!!.append(buffer)
                                         buffer.clear()
-                                        renderNum = 0
                                     }
                                 }
+                                renderNum = 0
                             }
                         }
                     }
@@ -306,9 +307,9 @@ open class LEDStrip(
     fun getPixelColor(pixel: Int): ColorContainer {
         try {
             return runBlocking {
-                locks[pixel]!!.withLock {
+//                locks[pixel]!!.withLock {
                     return@runBlocking ColorContainer(ledStrip.getPixelColour(pixel).toLong())
-                }
+//                }
             }
         } catch (e: Exception) {
             Logger.error("ERROR in getPixelColor: $e")
