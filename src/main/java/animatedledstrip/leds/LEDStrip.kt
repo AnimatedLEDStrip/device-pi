@@ -224,7 +224,6 @@ open class LEDStrip(
      */
     fun setStripColor(colorValues: ColorContainer) {
         for (i in 0 until numLEDs) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
-        show()
     }
 
 
@@ -236,7 +235,6 @@ open class LEDStrip(
      */
     fun setStripColor(hexIn: Long) {
         for (i in 0 until numLEDs) setPixelColor(i, hexIn)
-        show()
     }
 
 
@@ -250,7 +248,6 @@ open class LEDStrip(
      */
     fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
         for (i in 0 until numLEDs) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
-        show()
     }
 
     /**
@@ -264,7 +261,6 @@ open class LEDStrip(
      */
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainer) {
         for (i in start..end) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
-        show()
     }
 
 
@@ -278,7 +274,6 @@ open class LEDStrip(
      */
     fun setSectionColor(start: Int, end: Int, hexIn: Long) {
         for (i in start..end) setPixelColor(i, hexIn)
-        show()
     }
 
 
@@ -294,7 +289,6 @@ open class LEDStrip(
      */
     fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
         for (i in start..end) ledStrip.setPixelColourRGB(i, rIn, gIn, bIn)
-        show()
     }
 
 
