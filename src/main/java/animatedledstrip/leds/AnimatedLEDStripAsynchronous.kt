@@ -25,6 +25,8 @@ package animatedledstrip.leds
 
 import animatedledstrip.ccpresets.*
 import com.diozero.ws281xj.PixelAnimations.delay
+import kotlinx.coroutines.runBlocking
+import org.pmw.tinylog.Logger
 
 
 /**
@@ -34,7 +36,8 @@ import com.diozero.ws281xj.PixelAnimations.delay
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, private val emulated: Boolean = false) : LEDStripAsynchronous(numLEDs, pin) {
+class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = false) :
+    LEDStripAsynchronous(numLEDs, pin, emulated) {
 
 
     /**
@@ -46,210 +49,325 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, private val emulated:
         for (i in 0 until numLEDs) shuffleArray.add(i)      // Initialize shuffleArray
     }
 
+    /**
+     * Run an animation.
+     *
+     * @param animation An [AnimationData] instance with details about the
+     * animation to run
+     */
+    fun run(animation: AnimationData) {
+        animation.endPixel = when (animation.endPixel) {
+            0 -> numLEDs - 1
+            else -> animation.endPixel
+        }
+        when (animation.animation) {
+            Animation.ALTERNATE -> alternate(animation)
+            Animation.BOUNCETOCOLOR -> bounceToColor(animation)
+            Animation.COLOR -> setStripColor(animation.color1)
+            Animation.MULTICOLOR -> setStripColorWithGradient(animation.colorList)
+            Animation.MULTIPIXELRUN -> multiPixelRun(animation)
+            Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
+            Animation.PIXELRUN -> pixelRun(animation)
+            Animation.SMOOTHCHASE -> smoothChase(animation)
+            Animation.SPARKLE -> sparkle(animation)
+            Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
+            Animation.STACK -> stack(animation)
+            Animation.WIPE -> wipe(animation)
+            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStripAsynchronous")
+        }
+    }
+
+
+    private val delayMod = 1.0      // TODO: Remove delayMod from animations as it is implemented in AnimationData
+
 
     /**
-     * Function to run an Alternate animation.
+     * Runs an Alternate animation.
      *
-     * Strip alternates between two colors at the specified rate (delay between changes).
-     *
-     * @param colorValues1 First color to be displayed
-     * @param colorValues2 Second color to be displayed
-     * @param delayTime Delay in milliseconds before color changes from first to
-     * second color and between second color and returning
+     * Strip alternates between color1 and color2 at the specified rate (delay between changes).
      */
-    fun alternate(colorValues1: ColorContainer, colorValues2: ColorContainer, delayTime: Int) {
-        setStripColor(colorValues1)
-        delay(delayTime)
-        setStripColor(colorValues2)
-        delay(delayTime)
+    private val alternate = { animation: AnimationData ->
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+        val colorValues1 = animation.color1
+        val colorValues2 = animation.color2
+        val delay = animation.delay
+
+        setSectionColor(startPixel, endPixel, colorValues1)
+        delay((delay * delayMod).toInt())
+        setSectionColor(startPixel, endPixel, colorValues2)
+        delay((delay * delayMod).toInt())
     }
 
 
     /**
-     * Function to run a Multi Pixel Run animation.
+     * Runs a Bounce to Color animation.
+     *
+     * Pixel 'bounces' back and forth, leaving behind a pixel set to color1
+     * at each end like Stack, eventually ending in the middle.
+     */
+    @NonRepetitive
+    private val bounceToColor = { animation: AnimationData ->
+        for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
+            for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
+                setPixelColor(j, animation.color1)
+                show()
+                delay(animation.delay)
+                setPixelColor(j, CCBlack)
+                show()
+            }
+            setPixelColor(animation.endPixel - i, animation.color1)
+            for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
+                setPixelColor(j, animation.color1)
+                show()
+                delay(animation.delay)
+                setPixelColor(j, CCBlack)
+                show()
+            }
+            setPixelColor(i, animation.color1)
+            show()
+        }
+        if ((animation.endPixel - animation.startPixel) % 2 == 1) {
+            setPixelColor((animation.endPixel - animation.startPixel) / 2 + animation.startPixel, animation.color1)
+            show()
+        }
+    }
+
+
+    /**
+     * Runs a Multi-Pixel Run animation.
      *
      * Similar to Pixel Run but with multiple leds at a specified spacing.
-     *
-     * @param spacing Spacing between lit leds (for example, if spacing is 3
-     * and led 0 is lit, led 3 will also be lit)
-     * @param chaseDirection [Direction] of animation
-     * @param colorValues1 Color of moving pixels
-     * @param colorValues2 Color of background pixels
      */
-    fun multiPixelRun(
-        spacing: Int,
-        chaseDirection: Direction,
-        colorValues1: ColorContainer,
-        colorValues2: ColorContainer = CCBlack
-    ) {
-        if (chaseDirection == Direction.BACKWARD) {
-            for (q in 0 until spacing) {
+    private val multiPixelRun = { animation: AnimationData ->
+        val chaseDirection = animation.direction
+        val spacing = animation.spacing
+        val colorValues1 = animation.color1
+        val colorValues2 = animation.color2
+        val delay = animation.delay
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+
+        when (chaseDirection) {
+            Direction.BACKWARD -> for (q in 0 until spacing) {
                 setStripColor(colorValues2)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
-                delay(100)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                delay((delay * delayMod).toInt())
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
                 )
+                show()
             }
-        } else if (chaseDirection == Direction.FORWARD) {
-            for (q in spacing - 1 downTo 0) {
+            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 setStripColor(colorValues2)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
                 show()
-                delay(100)
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+                delay((delay * delayMod).toInt())
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
                 )
+                show()
             }
         }
     }
 
 
     /**
-     * A non-repetitive function to run a Multi Pixel Run To Color animation.
+     * Runs a Multi-Pixel Run To Color animation.
      *
-     * @param spacing Spacing between lit leds (for example, if spacing is 3
-     * and led 0 is lit, led 3 will also be lit)
-     * @param chaseDirection [Direction] of animation
-     * @param colorValues1 Color of moving pixels and color strip will
-     * be at end of animation
+     * Similar to Multi-Pixel Run but leds do not revert back to their original
+     * color.
      */
-    fun multiPixelRunToColor(spacing: Int, chaseDirection: Direction, colorValues1: ColorContainer) {
-        if (chaseDirection == Direction.BACKWARD) {
-            for (q in 0 until spacing) {
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+    @NonRepetitive
+    private val multiPixelRunToColor = { animation: AnimationData ->
+        val chaseDirection = animation.direction
+        val spacing = animation.spacing
+        val destinationColor = animation.color1
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+        val delay = animation.delay
+
+        when (chaseDirection) {
+            Direction.BACKWARD -> for (q in 0 until spacing) {
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
-                    colorValues1
+                    destinationColor
                 )
                 show()
-                delay(150)
+                delay((delay * delayMod).toInt())
             }
-        } else if (chaseDirection == Direction.FORWARD) {
-            for (q in spacing - 1 downTo 0) {
-                for (i in 0 until ledStrip.numPixels - 1 step spacing) setPixelColor(
+            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
+                for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
-                    colorValues1
+                    destinationColor
                 )
                 show()
-                delay(150)
+                delay((delay * delayMod).toInt())
             }
         }
     }
 
 
     /**
-     * Function to run a Pixel Run animation.
+     * Runs a Pixel Run animation.
      *
-     * The strip is set to colorValues2, then a pixel 'runs' along the strip.
-     * Similar to Multi Pixel Run but with only one pixel.
-     *
-     * @param movementDirection [Direction] of animation
-     * @param colorValues1 Color of 'running' pixel
-     * @param colorValues2 Background color
+     * The strip is set to color2, then a pixel 'runs' along the strip.
+     * Similar to Multi-Pixel Run but with only one pixel.
      */
-    fun pixelRun(movementDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
+    private val pixelRun = { animation: AnimationData ->
+        val colorValues1 = animation.color1
+        val colorValues2 = animation.color2
+        val movementDirection = animation.direction
+        val delay = animation.delay
+
         setStripColor(colorValues2)
-        if (movementDirection == Direction.FORWARD) {
-            for (q in 0 until ledStrip.numPixels) {
+        when (movementDirection) {
+            Direction.FORWARD -> for (q in 0 until ledStrip.numPixels) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay((delay * delayMod).toInt())
                 setPixelColor(q, colorValues2)
+                show()
             }
-        } else if (movementDirection == Direction.BACKWARD) {
-            for (q in ledStrip.numPixels - 1 downTo 0) {
+            Direction.BACKWARD -> for (q in ledStrip.numPixels - 1 downTo 0) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay((delay * delayMod).toInt())
                 setPixelColor(q, colorValues2)
+                show()
             }
         }
     }
 
 
     /**
-     * Function to run a Pixel Run With Trail animation.
+     * Runs a Pixel Run with Trail animation.
      *
      * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
-     * where the pixels fade from colorValues1 to colorValues2 over ~20 iterations.
-     *
-     * @param movementDirection [Direction] of animation
-     * @param colorValues1 Color of 'running' pixel
-     * @param colorValues2 Background color
+     * where the pixels fade from color1 to color2. Note: the end of the strip
+     * might remain lit with the tail after the animation completes unless if
+     * another Pixel Run with Trail is run.
      */
-    fun pixelRunWithTrail(
-        movementDirection: Direction,
-        colorValues1: ColorContainer,
-        colorValues2: ColorContainer = CCBlack
-    ) {
-        if (movementDirection == Direction.FORWARD) {
-            for (q in 0 until ledStrip.numPixels) {
-                for (i in 0 until ledStrip.numPixels - 1) {
+    private val pixelRunWithTrail = { animation: AnimationData ->
+        val colorValues1 = animation.color1
+        val colorValues2 = animation.color2
+        val movementDirection = animation.direction
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+        val delay = animation.delay
+
+        when (movementDirection) {
+            Direction.FORWARD -> for (q in startPixel..endPixel) {
+                for (i in startPixel until endPixel) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay(delay)
             }
-        } else if (movementDirection == Direction.BACKWARD) {
-            for (q in ledStrip.numPixels - 1 downTo 0) {
-                for (i in 0 until ledStrip.numPixels - 1) {
+            Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
+                for (i in startPixel until endPixel) {
                     setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
                 }
                 setPixelColor(q, colorValues1)
                 show()
-                delay(50)
+                delay(delay)
             }
         }
     }
 
 
     /**
-     * Function to run a Sparkle animation.
+     * Runs a Smooth Chase animation.
      *
-     * Each LED is changed to sparkleColor for delay milliseconds before reverting
-     * to its original color.
+     * The [colorsFromPalette] function is used to create a collection of colors
+     * for the strip:
+     * *The palette colors are spread out along the strip at approximately equal
+     * intervals. All pixels between these 'pure' pixels are a blend of the
+     * colors of the two nearest pure pixels. The blend ratio is determined by the
+     * location of the pixel relative to the nearest pure pixels.*
      *
-     * shuffleArray is shuffled and used to determine the order in which the LEDs
-     * are sparkled. Only one pixel will sparkle at any given time.
-     *
-     * @param sparkleColor The color the pixels will sparkle with
+     * The collection created, palette2, is a map of integers to ColorContainers
+     * where each integer is a pixel index. Each pixel is set to palette2&#91;i&#93;,
+     * where i is the pixel index. Then, if the direction is [Direction].FORWARD,
+     * each pixel is set to palette2&#91;i + 1&#93;, then palette&#91;i + 2&#93;, etc.
+     * to create the illusion that the animation is 'moving'. If the direction is
+     * [Direction].BACKWARD, the same happens but with indices i, i-1, i-2, etc.
+     * The index is found with (i + a) mod s, where i is the pixel index, a is the
+     * offset for this iteration and s is the number of pixels in the strip.
      */
-    fun sparkle(sparkleColor: ColorContainer) {
+    private val smoothChase = { animation: AnimationData ->
+        val colorList = animation.colorList
+        val movementDirection = animation.direction
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+        val delay = animation.delay
+
+        val palette = colorsFromPalette(colorList, numLEDs)
+
+        when (movementDirection) {
+            Direction.FORWARD -> for (m in startPixel..endPixel) {
+                setStripColorWithPalette(palette, m)
+                show()
+                delay((delay * delayMod).toInt())
+            }
+            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
+                setStripColorWithPalette(palette, m)
+                show()
+                delay((delay * delayMod).toInt())
+            }
+        }
+    }
+
+
+    /**
+     * Runs a Sparkle animation.
+     *
+     * Each LED is changed to color1 for delay milliseconds before reverting
+     * to its original color. At the beginning, shuffleArray is shuffled, then
+     * the LEDs are sparkled in the order given in shuffleArray.
+     */
+    private val sparkle = { animation: AnimationData ->
+        val sparkleColor = animation.color1
+        val delay = animation.delay
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+
         var originalColor: ColorContainer
         shuffleArray.shuffle()
-        for (i in 0 until ledStrip.numPixels) {
+        for (i in startPixel..endPixel) {
             originalColor = getPixelColor(shuffleArray[i])
             setPixelColor(shuffleArray[i], sparkleColor)
             show()
-            delay(50)
+            delay(delay)
             setPixelColor(shuffleArray[i], originalColor)
+            show()
         }
     }
 
 
     /**
-     * A non-repetitive function to run a Sparkle To Color animation.
+     * Runs a Sparkle To Color animation.
      *
      * Very similar to the Sparkle animation, but the LEDs are not reverted to their
-     * original color after the sparkle.
-     *
-     * shuffleArray is shuffled and used to determine the order in which the LEDs
-     * are sparkled. Only one pixel will sparkle at any given time.
-     *
-     * @param destinationColor The color the pixels will sparkle with
-     * @param delay Duration of each sparkle
+     * original color after the sparkle. At the beginning, shuffleArray is shuffled, then
+     * the LEDs are sparkled in the order given in shuffleArray.
      */
-    fun sparkleToColor(destinationColor: ColorContainer, delay: Int = 50) {
+    private val sparkleToColor = { animation: AnimationData ->
+        val destinationColor = animation.color1
+        val delay = animation.delay
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numPixels) {
             setPixelColor(shuffleArray[i], destinationColor)
@@ -260,31 +378,36 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, private val emulated:
 
 
     /**
-     * TODO(Katie)
-     * @param stackDirection
-     * @param colorValues1
+     * TODO (Katie)
      */
-    fun stack(stackDirection: Direction, colorValues1: ColorContainer, colorValues2: ColorContainer = CCBlack) {
-        if (stackDirection == Direction.FORWARD) {
-            setStripColor(colorValues2)
-            for (q in ledStrip.numPixels - 1 downTo 0) {
-                for (i in 0 until q) {
+    private val stack = { animation: AnimationData ->
+        val colorValues1 = animation.color1
+        val stackDirection = animation.direction
+        val delay = animation.delay
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+
+        when (stackDirection) {
+            Direction.FORWARD -> for (q in endPixel downTo startPixel) {
+                var originalColor: ColorContainer
+                for (i in startPixel until q) {
+                    originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
                     show()
-                    delay(10)
-                    setPixelColor(i, colorValues2)
+                    delay((delay * delayMod).toInt())
+                    setPixelColor(i, originalColor)
                 }
                 setPixelColor(q, colorValues1)
                 show()
             }
-        } else if (stackDirection == Direction.BACKWARD) {
-            setStripColor(colorValues2)
-            for (q in 0 until ledStrip.numPixels) {
-                for (i in q - 1 downTo 0) {
+            Direction.BACKWARD -> for (q in startPixel..endPixel) {
+                var originalColor: ColorContainer
+                for (i in endPixel downTo q) {
+                    originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
                     show()
-                    delay(10)
-                    setPixelColor(i, colorValues2)
+                    delay((delay * delayMod).toInt())
+                    setPixelColor(i, originalColor)
                 }
                 setPixelColor(q, colorValues1)
                 show()
@@ -294,29 +417,30 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, private val emulated:
 
 
     /**
-     * A non-repetitive function to run a Wipe animation.
+     * Runs a Wipe animation.
      *
      * Similar to a Pixel Run animation, but the pixels do not revert to their
      * original color.
-     *
-     * @param colorValues Color of moving pixel and color strip will be at end
-     * of animation
-     * @param wipeDirection [Direction] of animation
      */
-    fun wipe(colorValues: ColorContainer, wipeDirection: Direction) {
-        if (wipeDirection == Direction.BACKWARD) {
-            for (i in ledStrip.numPixels - 1 downTo 0) {
+    @NonRepetitive
+    private val wipe = { animation: AnimationData ->
+        val colorValues = animation.color1
+        val wipeDirection = animation.direction
+        val delay = animation.delay
+        val startPixel = animation.startPixel
+        val endPixel = animation.endPixel
+
+        when (wipeDirection) {
+            Direction.BACKWARD -> for (i in endPixel downTo startPixel) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(10)
+                delay((delay * delayMod).toInt())
             }
-        } else if (wipeDirection == Direction.FORWARD) {
-            for (i in 0 until ledStrip.numPixels) {
+            Direction.FORWARD -> for (i in startPixel..endPixel) {
                 setPixelColor(i, colorValues)
                 show()
-                delay(10)
+                delay((delay * delayMod).toInt())
             }
         }
     }
-
 }

@@ -163,7 +163,7 @@ open class AnimatedLEDStrip(
             Animation.STACK -> stack(animation)
             Animation.STACKOVERFLOW -> TODO()
             Animation.WIPE -> wipe(animation)
-            else -> Logger.warn("Animation ${animation.animation} not supported")
+            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
         }
     }
 
@@ -441,7 +441,7 @@ open class AnimatedLEDStrip(
                 setStripColorWithPalette(palette, m)
                 delay((delay * delayMod).toInt())
             }
-            else -> for (m in endPixel downTo startPixel) {
+            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
                 setStripColorWithPalette(palette, m)
                 delay((delay * delayMod).toInt())
             }
