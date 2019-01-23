@@ -153,7 +153,7 @@ open class AnimatedLEDStrip(
             Animation.MULTICOLOR -> setStripColorWithGradient(animation.colorList)
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
-            Animation.PIXELMARATHON -> TODO()
+            Animation.PIXELMARATHON -> pixelMarathon(animation)
             Animation.PIXELRUN -> pixelRun(animation)
             Animation.PIXELRUNWITHTRAIL -> pixelRunWithTrail(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
@@ -162,7 +162,7 @@ open class AnimatedLEDStrip(
             Animation.SPARKLEFADE -> sparkleFade(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
             Animation.STACK -> stack(animation)
-            Animation.STACKOVERFLOW -> TODO()
+            Animation.STACKOVERFLOW -> stackOverflow(animation)
             Animation.WIPE -> wipe(animation)
             else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
         }
@@ -345,7 +345,10 @@ open class AnimatedLEDStrip(
         }
     }
 
-    // TODO: Add pixelMarathon
+
+    private val pixelMarathon = { animation: AnimationData ->
+        // TODO: Add pixelMarathon
+    }
 
 
     /**
@@ -595,7 +598,10 @@ open class AnimatedLEDStrip(
         }
     }
 
-    // TODO: Add stackOverflow
+
+    private val stackOverflow = { animation: AnimationData ->
+        // TODO: Add stackOverflow
+    }
 
 
     /**
