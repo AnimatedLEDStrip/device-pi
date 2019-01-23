@@ -34,7 +34,7 @@ import org.pmw.tinylog.Logger
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
+open class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
 
     /**
      * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.

@@ -25,19 +25,18 @@ package animatedledstrip.leds
 
 import animatedledstrip.ccpresets.*
 import com.diozero.ws281xj.PixelAnimations.delay
-import kotlinx.coroutines.runBlocking
 import org.pmw.tinylog.Logger
 
 
 /**
- * A subclass of [LEDStripAsynchronous] adding animations
+ * A subclass of [LEDStripNonConcurrent] adding animations
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
-class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = false) :
-    LEDStripAsynchronous(numLEDs, pin, emulated) {
+class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: Boolean = false) :
+    LEDStripNonConcurrent(numLEDs, pin, emulated) {
 
 
     /**
@@ -73,7 +72,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
             Animation.STACK -> stack(animation)
             Animation.WIPE -> wipe(animation)
-            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStripAsynchronous")
+            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStripNonConcurrent")
         }
     }
 
