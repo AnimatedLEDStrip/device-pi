@@ -41,7 +41,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
 
 
     /**
-     * Array used for shuffle animation
+     * Array used for shuffle animation.
      */
     private var shuffleArray = mutableListOf<Int>()
 
@@ -84,7 +84,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
     /**
      * Runs an Alternate animation.
      *
-     * Strip alternates between color1 and color2 at the specified rate (delay between changes).
+     * Strip alternates between `color1` and `color2` at the specified rate (delay between changes).
      */
     private val alternate = { animation: AnimationData ->
         val startPixel = animation.startPixel
@@ -103,7 +103,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
     /**
      * Runs a Bounce to Color animation.
      *
-     * Pixel 'bounces' back and forth, leaving behind a pixel set to color1
+     * Pixel 'bounces' back and forth, leaving behind a pixel set to `color1`
      * at each end like Stack, eventually ending in the middle.
      */
     @NonRepetitive
@@ -220,7 +220,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
     /**
      * Runs a Pixel Run animation.
      *
-     * The strip is set to color2, then a pixel 'runs' along the strip.
+     * The strip is set to `color2`, then a pixel 'runs' along the strip.
      * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
@@ -253,7 +253,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
      * Runs a Pixel Run with Trail animation.
      *
      * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
-     * where the pixels fade from color1 to color2. Note: the end of the strip
+     * where the pixels fade from `color1` to `color2`. Note: the end of the strip
      * might remain lit with the tail after the animation completes unless if
      * another Pixel Run with Trail is run.
      */
@@ -296,14 +296,14 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
      * colors of the two nearest pure pixels. The blend ratio is determined by the
      * location of the pixel relative to the nearest pure pixels.*
      *
-     * The collection created, palette2, is a map of integers to ColorContainers
-     * where each integer is a pixel index. Each pixel is set to palette2&#91;i&#93;,
-     * where i is the pixel index. Then, if the direction is [Direction].FORWARD,
-     * each pixel is set to palette2&#91;i + 1&#93;, then palette&#91;i + 2&#93;, etc.
+     * The collection created, `palette2`, is a map of integers to `ColorContainer`s
+     * where each integer is a pixel index. Each pixel is set to `palette2[i]`,
+     * where `i` is the pixel index. Then, if the direction is [Direction].`FORWARD`,
+     * each pixel is set to `palette2[i + 1]`, then `palette[i + 2]`, etc.
      * to create the illusion that the animation is 'moving'. If the direction is
-     * [Direction].BACKWARD, the same happens but with indices i, i-1, i-2, etc.
-     * The index is found with (i + a) mod s, where i is the pixel index, a is the
-     * offset for this iteration and s is the number of pixels in the strip.
+     * [Direction].`BACKWARD`, the same happens but with indices `i`, `i-1`, `i-2`, etc.
+     * The index is found with `(i + a) % s`, where `i` is the pixel index, `a` is the
+     * offset for this iteration and `s` is the number of pixels in the strip.
      */
     private val smoothChase = { animation: AnimationData ->
         val colorList = animation.colorList
@@ -332,7 +332,7 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
     /**
      * Runs a Sparkle animation.
      *
-     * Each LED is changed to color1 for delay milliseconds before reverting
+     * Each LED is changed to `color1` for delay milliseconds before reverting
      * to its original color. At the beginning, shuffleArray is shuffled, then
      * the LEDs are sparkled in the order given in shuffleArray.
      */
@@ -359,8 +359,8 @@ class AnimatedLEDStripAsynchronous(numLEDs: Int, pin: Int, emulated: Boolean = f
      * Runs a Sparkle To Color animation.
      *
      * Very similar to the Sparkle animation, but the LEDs are not reverted to their
-     * original color after the sparkle. At the beginning, shuffleArray is shuffled, then
-     * the LEDs are sparkled in the order given in shuffleArray.
+     * original color after the sparkle. At the beginning, `shuffleArray` is shuffled, then
+     * the LEDs are sparkled in the order given in `shuffleArray`.
      */
     private val sparkleToColor = { animation: AnimationData ->
         val destinationColor = animation.color1

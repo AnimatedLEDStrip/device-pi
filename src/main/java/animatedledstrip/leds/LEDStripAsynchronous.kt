@@ -28,7 +28,7 @@ import org.pmw.tinylog.Logger
 
 
 /**
- * Class that represents a led strip.
+ * Class that represents an led strip.
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
@@ -37,7 +37,7 @@ import org.pmw.tinylog.Logger
 open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
 
     /**
-     * The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.
+     * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.
      */
     var ledStrip = when (emulated) {
         true -> EmulatedWS281x(pin, 255, numLEDs)
@@ -50,13 +50,13 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
     }
 
     /**
-     * Returns true if this is an emulated LED strip
+     * Returns `true` if this is an emulated LED strip.
      */
     fun isEmulated() = emulated
 
 
     /**
-     * Sets a pixel's color with a ColorContainer.
+     * Sets a pixel's color with a `ColorContainer`.
      *
      * @param pixel The pixel to change
      * @param colorValues The color to set the pixel to
@@ -67,7 +67,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Set a pixel's color with r, g, b (ranges 0-255).
+     * Set a pixel's color with `r`, `g`, `b` (ranges 0-255).
      *
      * @param pixel The pixel to change
      * @param rIn Red intensity of the color
@@ -80,7 +80,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Set a pixel's color with a Long, such as a 24-bit integer.
+     * Set a pixel's color with a `Long`, such as a 24-bit integer.
      *
      * @param pixel The pixel to change
      * @param hexIn The color to set the pixel to
@@ -91,7 +91,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Loops through all pixels and sets their color to colorValues.
+     * Loops through all pixels and sets their color to `colorValues`.
      *
      * @param colorValues The color to set the strip to
      */
@@ -101,7 +101,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
     }
 
     /**
-     * Set the strip color with a Long, such as a 24-bit integer.
+     * Set the strip color with a `Long`, such as a 24-bit integer.
      *
      * @param hexIn The color to set the strip to
      */
@@ -112,7 +112,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Set the strip color with r, g, b (ranges 0-255).
+     * Set the strip color with `r`, `g`, `b` (ranges 0-255).
      *
      * @param rIn Red intensity of the color
      * @param gIn Green intensity of the color
@@ -125,7 +125,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
     /**
      * Set the color of a section of the strip. Loops through all leds between start
-     * and end (inclusive) and sets their color to colorValues.
+     * and end (inclusive) and sets their color to `colorValues`.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -138,7 +138,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Set a section's color with a Long, such as a 24-bit integer.
+     * Set a section's color with a `Long`, such as a 24-bit integer.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -151,7 +151,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Set a section's color with r, g, b (ranges 0-255).
+     * Set a section's color with `r`, `g`, `b` (ranges 0-255).
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -176,7 +176,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Get the color of a pixel as a Long.
+     * Get the color of a pixel as a `Long`.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel as a Long
@@ -190,7 +190,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
      * Get the color of a pixel as a hexadecimal string.
      *
      * @param pixel The pixel to find the color of
-     * @return A string containing the color of the pixel in hexadecimal
+     * @return A `String` containing the color of the pixel in hexadecimal
      */
     fun getPixelHexString(pixel: Int): String {
         return getPixelLong(pixel).toString(16)
@@ -198,7 +198,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Get the colors of all pixels as a List of Longs.
+     * Get the colors of all pixels as a `List<Long>`.
      */
     fun getPixelColorList(): List<Long> {
         val temp = mutableListOf<Long>()
@@ -209,7 +209,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
     /**
      * Set the color of the strip using a map with each pixel index mapped to a
-     * ColorContainer.
+     * `ColorContainer`.
      *
      * @param palette The map of colors
      * @param offset The index of the pixel that will be set to the color at
@@ -222,7 +222,7 @@ open class LEDStripAsynchronous(var numLEDs: Int, pin: Int, private val emulated
 
 
     /**
-     * Sets the color of the strip with a list. The list is converted to a map
+     * Sets the color of the strip with a `List<ColorContainer>`. The list is converted to a map
      * before that map is sent to [setStripColorWithPalette] with an offset of 0.
      *
      * @param colorList The list of colors

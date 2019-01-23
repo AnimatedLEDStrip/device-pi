@@ -36,7 +36,7 @@ import javafx.scene.paint.Color
 open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
     /**
-     * Constructor for ColorContainer that extracts r, g and b from a Long.
+     * Constructor for ColorContainer that extracts `r`, `g` and `b` from a `Long`.
      *
      * @param hexIn The integer representation of the color's RGB
      */
@@ -48,8 +48,8 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
 
     /**
-     * Returns a Long containing the RGB data held by this ColorContainer.
-     * Color can also be set using a Long via this property.
+     * Returns a `Long` containing the RGB data held by this `ColorContainer`.
+     * Color can also be set using a `Long` via this property.
      */
     var hex: Long
         get() {
@@ -65,12 +65,12 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
     /**
      * Returns a hexadecimal string representation (without a 0x) of the color held
-     * by this ColorContainer.
+     * by this `ColorContainer`.
      */
     var hexString = hex.toString(16)
 
     /**
-     * Set the color held by this ColorContainer using individual r, g, b values.
+     * Set the color held by this `ColorContainer` using individual `r`, `g`, `b` values.
      * @param rIn Red intensity
      * @param gIn Green intensity
      * @param bIn Blue intensity
@@ -90,17 +90,17 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
     fun getColorHex() = hex
 
     /**
-     * Returns the color held by this ColorContainer as a JavaFX Color
+     * Returns the color held by this `ColorContainer` as a JavaFX `Color`.
      */
     fun toColor(): Color = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
 
     /**
-     * Returns a ColorContainer with the inverse of the color held by this ColorContainer
+     * Returns a `ColorContainer` with the inverse of the color held by this `ColorContainer`.
      */
     fun invert() = ColorContainer(255 - this.r, 255 - this.g, 255 - this.b)
 
     /**
-     * Returns the average of r, g, b
+     * Returns the average of `r`, `g`, `b`.
      */
     fun grayscale() = ((r + g + b) / 3).toLong()
 

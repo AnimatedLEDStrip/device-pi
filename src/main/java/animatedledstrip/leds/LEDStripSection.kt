@@ -24,11 +24,11 @@ package animatedledstrip.leds
 
 
 /**
- * Class used for running animations on only part of a LED strip.
+ * Class used for running animations on only part of an LED strip.
  *
- * When this instance's run method is called, it modifies the startPixel and
- * endPixel parameters in the AnimationData instance before passing it on to
- * the ledStrip specified.
+ * When this instance's run method is called, it modifies the `startPixel` and
+ * `endPixel` parameters in the `AnimationData` instance before passing it on to
+ * the `ledStrip` specified.
  *
  * @property startPixel First pixel in the section
  * @property endPixel Last pixel in the section (inclusive)
@@ -38,7 +38,7 @@ class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: Anim
     /**
      * Run an animation on this section of the LED strip.
      *
-     * @param animation An AnimationData instance specifying the animation to
+     * @param animation An `AnimationData` instance specifying the animation to
      * be run
      */
     fun run(animation: AnimationData) {

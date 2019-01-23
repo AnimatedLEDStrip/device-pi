@@ -62,7 +62,7 @@ import java.nio.ByteBuffer
 
 
 /**
- * Modification on the WS281x class from the diozero-ws281x-java library that
+ * Modification on the `WS281x` class from the diozero-ws281x-java library that
  * doesn't attempt to send data to any LEDs.
  *
  * @property pin Pin the strip is connected to
@@ -75,22 +75,22 @@ open class EmulatedWS281x(val pin: Int, val brightness: Int, private val numPixe
      */
     override fun getNumPixels() = numPixels
 
-    /** Empty override for render() */
+    /** Empty override for `render()` */
     override fun render() {}
 
-    /** Empty override for allOff() */
+    /** Empty override for `allOff()` */
     override fun allOff() {}
 
-    /** Empty override for close() */
+    /** Empty override for `close()` */
     override fun close() {}
 
     /**
-     * Size of an Int for use in ByteBuffer index calculations.
+     * Size of an `Int` for use in `ByteBuffer` index calculations.
      */
     private val SIZE_OF_INT = 4
 
     /**
-     * A ByteBuffer emulating the ByteBuffer used by the regular WS281x class.
+     * A `ByteBuffer` emulating the `ByteBuffer` used by the regular `WS281x` class.
      */
     private var ledArray: ByteBuffer = ByteBuffer.allocate(numPixels * SIZE_OF_INT)
 

@@ -34,7 +34,7 @@ import org.pmw.tinylog.Logger
  * @param a The starting byte value
  * @param b The byte value to blend toward
  * @param amountOfB The proportion (0-255) of b to blend
- * @return A byte value between a and b, inclusive
+ * @return A byte value between `a` and `b`, inclusive
  */
 fun blend8(a: Int, b: Int, amountOfB: Int): Int {
     Logger.trace("params: a = $a, b = $b, amountOfB = $amountOfB")

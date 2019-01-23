@@ -29,13 +29,13 @@ import java.lang.NumberFormatException
 import kotlin.math.roundToInt
 
 /**
- * Blend two [ColorContainer]s together and return a new ColorContainer.
+ * Blend two [ColorContainer]s together and return a new `ColorContainer`.
  *
  * Adapted from the FastLED library.
  *
- * @param existing The starting ColorContainer
- * @param overlay The ColorContainer to blend toward
- * @param amountOfOverlay The proportion (0-255) of b to blend
+ * @param existing The starting `ColorContainer`
+ * @param overlay The `ColorContainer` to blend toward
+ * @param amountOfOverlay The proportion (0-255) of `b` to blend
  */
 fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: Int): ColorContainer {
     if (amountOfOverlay == 0) return existing
@@ -60,7 +60,7 @@ fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: In
  *
  * @param palette A list of [ColorContainer]s used to create the collection's colors
  * @param numLEDs The number of LEDs to create colors for
- * @return A map with each pixel index mapped to a ColorContainer
+ * @return A `Map<Int, ColorContainer>` with each pixel index mapped to a `ColorContainer`
  */
 fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
 
@@ -93,9 +93,9 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
 
 
 /**
- * Returns a Long from a hexadecimal String.
+ * Returns a `Long` from a hexadecimal String.
  *
- * @param string The hex String to decode
+ * @param string The hex `String` to decode
  */
 fun parseHex(string: String): Long {
     val s = string.removePrefix("0x")     // remove leading 0x if present

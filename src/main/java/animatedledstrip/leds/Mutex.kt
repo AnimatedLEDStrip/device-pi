@@ -33,10 +33,10 @@ import org.pmw.tinylog.Logger
 
 
 /**
- * An extension function based on Mutex.withLock().
+ * An extension function based on `Mutex.withLock()`.
  *
- * If another thread has already locked the Mutex, this will return and print a
- * message to the terminal. Otherwise, this will lock the Mutex and execute the
+ * If another thread has already locked the `Mutex`, this will return and print a
+ * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
  * action.
  *
  * @param T

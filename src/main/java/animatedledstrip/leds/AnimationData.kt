@@ -28,7 +28,6 @@ import animatedledstrip.ccpresets.CCBlack
 /**
  * Class used when calling animations to specify colors, parameters, etc.
  * for the animation.
- *
  */
 class AnimationData() {
 
@@ -90,7 +89,7 @@ class AnimationData() {
         }
 
     /**
-     * Multiplier for the delay value.
+     * Multiplier for the `delay` value.
      */
     var delayMod = 1.0
 
@@ -137,7 +136,7 @@ class AnimationData() {
     /* Helper functions for setting values */
 
     /**
-     * Sets the animation parameter.
+     * Sets the `animation` parameter.
      *
      * @param animation The animation to run.
      */
@@ -148,27 +147,27 @@ class AnimationData() {
 
 
     /**
-     * Set the first color with a ColorContainer.
+     * Set the first color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color1(color: ColorContainer): AnimationData {
         this.color1 = color
         return this
     }
     /**
-     * Set the first color with a Long.
+     * Set the first color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color1(color: Long): AnimationData {
         this.color1 = ColorContainer(color)
         return this
     }
     /**
-     * Set the first color with an Int.
+     * Set the first color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color1(color: Int): AnimationData {
         this.color1 = ColorContainer(color.toLong())
@@ -177,34 +176,34 @@ class AnimationData() {
     /**
      * Set the first color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color1(color: String): AnimationData {
         this.color1 = ColorContainer(parseHex(color))
         return this
     }
     /**
-     * Set the first color with a ColorContainer.
+     * Set the first color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color(color: ColorContainer): AnimationData {
         this.color1 = color
         return this
     }
     /**
-     * Set the first color with a Long.
+     * Set the first color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color(color: Long): AnimationData {
         this.color1 = ColorContainer(color)
         return this
     }
     /**
-     * Set the first color with an Int.
+     * Set the first color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color(color: Int): AnimationData {
         this.color1 = ColorContainer(color.toLong())
@@ -213,7 +212,7 @@ class AnimationData() {
     /**
      * Set the first color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color(color: String): AnimationData {
         this.color1 = ColorContainer(parseHex(color))
@@ -221,27 +220,27 @@ class AnimationData() {
     }
 
     /**
-     * Set the second color with a ColorContainer.
+     * Set the second color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color2(color: ColorContainer): AnimationData {
         this.color2 = color
         return this
     }
     /**
-     * Set the second color with a Long.
+     * Set the second color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color2(color: Long): AnimationData {
         this.color2 = ColorContainer(color)
         return this
     }
     /**
-     * Set the second color with an Int.
+     * Set the second color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color2(color: Int): AnimationData {
         this.color2 = ColorContainer(color.toLong())
@@ -250,7 +249,7 @@ class AnimationData() {
     /**
      * Set the second color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color2(color: String): AnimationData {
         this.color2 = ColorContainer(parseHex(color))
@@ -258,27 +257,27 @@ class AnimationData() {
     }
 
     /**
-     * Set the third color with a ColorContainer.
+     * Set the third color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color3(color: ColorContainer): AnimationData {
         this.color3 = color
         return this
     }
     /**
-     * Set the third color with a Long.
+     * Set the third color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color3(color: Long): AnimationData {
         this.color3 = ColorContainer(color)
         return this
     }
     /**
-     * Set the third color with an Int.
+     * Set the third color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color3(color: Int): AnimationData {
         this.color3 = ColorContainer(color.toLong())
@@ -287,7 +286,7 @@ class AnimationData() {
     /**
      * Set the third color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color3(color: String): AnimationData {
         this.color3 = ColorContainer(parseHex(color))
@@ -295,27 +294,27 @@ class AnimationData() {
     }
 
     /**
-     * Set the fourth color with a ColorContainer.
+     * Set the fourth color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color4(color: ColorContainer): AnimationData {
         this.color4 = color
         return this
     }
     /**
-     * Set the fourth color with a Long.
+     * Set the fourth color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color4(color: Long): AnimationData {
         this.color4 = ColorContainer(color)
         return this
     }
     /**
-     * Set the fourth color with an Int.
+     * Set the fourth color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color4(color: Int): AnimationData {
         this.color4 = ColorContainer(color.toLong())
@@ -324,7 +323,7 @@ class AnimationData() {
     /**
      * Set the fourth color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color4(color: String): AnimationData {
         this.color4 = ColorContainer(parseHex(color))
@@ -332,27 +331,27 @@ class AnimationData() {
     }
 
     /**
-     * Set the fifth color with a ColorContainer.
+     * Set the fifth color with a `ColorContainer`.
      *
-     * @param color A ColorContainer instance.
+     * @param color A `ColorContainer` instance.
      */
     fun color5(color: ColorContainer): AnimationData {
         this.color5 = color
         return this
     }
     /**
-     * Set the fifth color with a Long.
+     * Set the fifth color with a `Long`.
      *
-     * @param color A Long in range(0..16777215)
+     * @param color A `Long` in range(0..16777215)
      */
     fun color5(color: Long): AnimationData {
         this.color5 = ColorContainer(color)
         return this
     }
     /**
-     * Set the fifth color with an Int.
+     * Set the fifth color with an `Int`.
      *
-     * @param color An Int in range(0..16777215)
+     * @param color An `Int` in range(0..16777215)
      */
     fun color5(color: Int): AnimationData {
         this.color5 = ColorContainer(color.toLong())
@@ -361,7 +360,7 @@ class AnimationData() {
     /**
      * Set the fifth color with a hexadecimal string.
      *
-     * @param color A string in hexadecimal format
+     * @param color A `String` in hexadecimal format
      */
     fun color5(color: String): AnimationData {
         this.color5 = ColorContainer(parseHex(color))
@@ -370,10 +369,10 @@ class AnimationData() {
 
 
     /**
-     * Set the colorList with a List of ColorContainers, Longs, or Strings in
+     * Set the colorList with a `List` of `ColorContainer`s, `Long`s, or `String`s in
      * hexadecimal format.
      *
-     * @param colorList A List<ColorContainer>, List<Long>, or List<String> instance
+     * @param colorList A `List<ColorContainer>`, `List<Long>`, or `List<String>` instance
      */
     fun colorList(colorList: List<*>): AnimationData {
         this.colorList = mutableListOf<ColorContainer>().apply {
@@ -390,7 +389,7 @@ class AnimationData() {
     /**
      * Add a color to the colorList (added by reference).
      *
-     * @param color A ColorContainer instance that will be added by reference
+     * @param color A `ColorContainer` instance that will be added by reference
      * to colorList
      */
     fun addToColorList(color: ColorContainer): AnimationData {
@@ -398,31 +397,31 @@ class AnimationData() {
         return this
     }
     /**
-     * Add a color to the colorList (creates new ColorContainer instance)
+     * Add a color to the colorList (creates new `ColorContainer` instance)
      *
-     * @param color A Long that will be converted to ColorContainer and added
-     * to colorList
+     * @param color A `Long` that will be converted to `ColorContainer` and added
+     * to `colorList`
      */
     fun addToColorList(color: Long): AnimationData {
         this.colorList.add(ColorContainer(color))
         return this
     }
     /**
-     * Add a color to the colorList (creates new ColorContainer instance)
+     * Add a color to `colorList` (creates new ColorContainer instance)
      *
-     * @param color A String in hexadecimal format that will be converted
-     * to ColorContainer and added to colorList
+     * @param color A `String` in hexadecimal format that will be converted
+     * to `ColorContainer` and added to colorList
      */
     fun addToColorList(color: String): AnimationData {
         this.colorList.add(ColorContainer(parseHex(color)))
         return this
     }
     /**
-     * Append a List of ColorContainers, Longs, or Strings in hexadecimal
-     * format to the end of colorList.
+     * Append a `List` of `ColorContainer`s, `Long`s, or `String`s in hexadecimal
+     * format to the end of `colorList`.
      *
-     * @param colorList A List<ColorContainer>, List<Long> or List<String>
-     * instance to be added to colorList
+     * @param colorList A `List<ColorContainer>`, `List<Long>` or `List<String>`
+     * instance to be added to `colorList`
      */
     fun addToColorList(colorList: List<*>): AnimationData {
         this.colorList.apply {
@@ -438,9 +437,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the continuous parameter.
+     * Set the `continuous` parameter.
      *
-     * @param continuous A Boolean
+     * @param continuous A `Boolean`
      */
     fun continuous(continuous: Boolean): AnimationData {
         this.continuous = continuous
@@ -448,9 +447,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the delay parameter.
+     * Set the `delay` parameter.
      *
-     * @param delay An Int representing the delay time in milliseconds the
+     * @param delay An `Int` representing the delay time in milliseconds the
      * animation will use
      */
     fun delay(delay: Int): AnimationData {
@@ -459,9 +458,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the delayMod parameter.
+     * Set the `delayMod` parameter.
      *
-     * @param delayMod A Double that is a multiplier for delay
+     * @param delayMod A `Double` that is a multiplier for `delay`
      */
     fun delayMod(delayMod: Double): AnimationData {
         this.delayMod = delayMod
@@ -469,19 +468,19 @@ class AnimationData() {
     }
 
     /**
-     * Set the direction parameter.
+     * Set the `direction` parameter.
      *
-     * @param direction A Direction value (Direction.FORWARD or Direction.BACKWARD)
+     * @param direction A `Direction` value ([Direction].`FORWARD` or [Direction].`BACKWARD`)
      */
     fun direction(direction: Direction): AnimationData {
         this.direction = direction
         return this
     }
     /**
-     * Set the direction parameter with a Char.
+     * Set the `direction` parameter with a `Char`.
      *
-     * @param direction A Char representing Direction.FORWARD ('F') or
-     * Direction.BACKWARD ('B')
+     * @param direction A `Char` representing `Direction.FORWARD` ('`F`') or
+     * `Direction.BACKWARD` ('`B`')
      */
     fun direction(direction: Char): AnimationData {
         this.direction = when (direction) {
@@ -493,9 +492,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the endPixel parameter.
+     * Set the `endPixel` parameter.
      *
-     * @param endPixel An Int that is the index of the last pixel showing the
+     * @param endPixel An `Int` that is the index of the last pixel showing the
      * animation (inclusive)
      */
     fun endPixel(endPixel: Int): AnimationData {
@@ -504,9 +503,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the ID parameter.
+     * Set the `id` parameter.
      *
-     * @param id A String used to identify a continuous animation instance
+     * @param id A `String` used to identify a continuous animation instance
      */
     fun id(id: String): AnimationData {
         this.id = id
@@ -514,9 +513,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the spacing parameter.
+     * Set the `spacing` parameter.
      *
-     * @param spacing An Int that is the spacing used by the animation
+     * @param spacing An `Int` that is the spacing used by the animation
      */
     fun spacing(spacing: Int): AnimationData {
         this.spacing = spacing
@@ -524,9 +523,9 @@ class AnimationData() {
     }
 
     /**
-     * Set the startPixel parameter.
+     * Set the `startPixel` parameter.
      *
-     * @param startPixel An Int that is the index of the first pixel showing the
+     * @param startPixel An `Int` that is the index of the first pixel showing the
      * animation (inclusive)
      */
     fun startPixel(startPixel: Int): AnimationData {
@@ -535,7 +534,7 @@ class AnimationData() {
     }
 
     /**
-     * Constructor used by the server when receiving a map from a client
+     * Constructor used by the server when receiving a `Map` from a client
      */
     constructor(params: Map<*, *>) : this() {
         animation = params["Animation"] as Animation? ?: throw Exception("Animation not defined")
@@ -566,7 +565,7 @@ class AnimationData() {
 
 
     /**
-     * Create a string out of the values of this instance.
+     * Create a `String` out of the values of this instance.
      *
      */
     override fun toString() =
@@ -574,7 +573,7 @@ class AnimationData() {
 
 
     /**
-     * Create a map that can be sent over a socket.
+     * Create a `Map` that can be sent over a socket.
      *
      */
     fun toMap() = mapOf<String, Any?>(

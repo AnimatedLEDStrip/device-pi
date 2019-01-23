@@ -25,7 +25,7 @@ package animatedledstrip.leds
 
 /**
  * Helper data class for specifying what parameters are required, optional and
- * not used for an animation along with default values for delay and spacing,
+ * not used for an animation along with default values for `delay` and `spacing`,
  * when applicable.
  *
  * @property color1 First color
@@ -65,7 +65,7 @@ enum class ReqLevel {
     REQUIRED,
     /**
      * Animation parameter may be set by the user, otherwise will be set to a
-     * default as specified (color# will default to [animatedledstrip.ccpresets.CCBlack])
+     * default as specified (`color#` will default to [animatedledstrip.ccpresets.CCBlack])
      */
     OPTIONAL,
     /**
@@ -286,7 +286,7 @@ val Wipe = AnimationInfo(
 
 
 /**
- * Map of animations to their AnimationInfo instances.
+ * Map of animations to their `AnimationInfo` instances.
  */
 val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,

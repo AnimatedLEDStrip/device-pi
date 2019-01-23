@@ -36,8 +36,8 @@ import kotlin.text.StringBuilder
 
 
 /**
- * A LED Strip with concurrency added. Bridge between the AnimatedLEDStrip
- * class and the WS281x class
+ * An LED Strip with concurrency added. Bridge between the `AnimatedLEDStrip`
+ * class and the `WS281x` class
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
@@ -53,7 +53,7 @@ open class LEDStrip(
 ) {
 
     /**
-     * The LED Strip. Chooses between WS281x and EmulatedWS281x based on value of emulated.
+     * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.
      */
     var ledStrip = when (emulated) {
         true -> EmulatedWS281x(pin, 255, numLEDs)
@@ -61,8 +61,8 @@ open class LEDStrip(
     }
 
     /**
-     * Map containing Mutex instances for locking access to each led while it is
-     * being used
+     * `Map` containing `Mutex` instances for locking access to each led while it is
+     * being used.
      */
     private val locks = mutableMapOf<Int, Mutex>()
 
@@ -72,18 +72,18 @@ open class LEDStrip(
     private val renderThread = newFixedThreadPoolContext(50, "Render Loops")
 
     /**
-     * The thread used to save values to outFile so the program doesn't
+     * The thread used to save values to `outFile` so the program doesn't
      * experience slowdowns because of I/O.
      */
     private val outThread = newSingleThreadContext("Image Debug Save Thread")
 
     /**
-     * Tracks if the strip is rendering. Starts false and is set to true in init.
+     * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.
      */
     private var rendering = false
 
     /**
-     * The file that the csv output will be saved to if imageDebugging is enabled.
+     * The file that the csv output will be saved to if image debugging is enabled.
      */
     private val outFile = if (imageDebugging) FileWriter(
         "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
@@ -91,13 +91,13 @@ open class LEDStrip(
     ) else null
 
     /**
-     * Buffer that stores renders until renderNum in toggleRender reaches 1000,
-     * at which point buffer is appended to outFile and cleared.
+     * Buffer that stores renders until `renderNum` in `toggleRender` reaches 1000,
+     * at which point buffer is appended to `outFile` and cleared.
      */
     private val buffer = if (imageDebugging) StringBuilder() else null
 
     /**
-     * Mutex tracking if a thread is saving to outFile in order to prevent
+     * `Mutex` tracking if a thread is saving to `outFile` in order to prevent
      * overlaps.
      */
     private val outLock = Mutex()
@@ -148,11 +148,11 @@ open class LEDStrip(
 
 
     /**
-     * Helper object for creating [LEDStripSection]s
+     * Helper object for creating [LEDStripSection]s.
      */
     object SectionCreator {
         /**
-         * Create a new [LEDStripSection]
+         * Create a new [LEDStripSection].
          *
          * @param startPixel First pixel in the section
          * @param endPixel Last pixel in the section
@@ -164,13 +164,13 @@ open class LEDStrip(
 
 
     /**
-     * Returns true if this is an emulated LED strip
+     * Returns `true` if this is an emulated LED strip.
      */
     fun isEmulated() = emulated
 
 
     /**
-     * Sets a pixel's color. If another thread has locked the pixel's Mutex,
+     * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
      * this skips setting the pixel's color and returns.
      *
      * @param pixel The pixel to change
@@ -190,8 +190,8 @@ open class LEDStrip(
 
 
     /**
-     * Set a pixel's color with r, g, b (ranges 0-255). If another thread has
-     * locked the pixel's Mutex, this skips setting the pixel's color and returns.
+     * Set a pixel's color with `r`, `g`, `b` (ranges 0-255). If another thread has
+     * locked the pixel's `Mutex`, this skips setting the pixel's color and returns.
      *
      * @param pixel The pixel to change
      * @param rIn Red intensity of the color
@@ -204,8 +204,8 @@ open class LEDStrip(
 
 
     /**
-     * Set a pixel's color with a Long, such as a 24-bit integer. If another
-     * thread has locked the pixel's Mutex, this skips setting the pixel's color
+     * Set a pixel's color with a `Long`, such as a 24-bit integer. If another
+     * thread has locked the pixel's `Mutex`, this skips setting the pixel's color
      * and returns.
      *
      * @param pixel The pixel to change
@@ -217,8 +217,8 @@ open class LEDStrip(
 
 
     /**
-     * Loops through all pixels and sets their color to colorValues. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Loops through all pixels and sets their color to `colorValues`. If a pixel's
+     * `Mutex` is locked by another thread, it is skipped.
      *
      * @param colorValues The color to set the strip to
      */
@@ -228,8 +228,8 @@ open class LEDStrip(
 
 
     /**
-     * Set the strip color with a Long, such as a 24-bit integer. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Set the strip color with a `Long`, such as a 24-bit integer. If a pixel's
+     * `Mutex` is locked by another thread, it is skipped.
      *
      * @param hexIn The color to set the strip to
      */
@@ -239,7 +239,7 @@ open class LEDStrip(
 
 
     /**
-     * Set the strip color with r, g, b (ranges 0-255). If a pixel's Mutex is
+     * Set the strip color with `r`, `g`, `b` (ranges 0-255). If a pixel's `Mutex` is
      * locked by another thread, it is skipped.
      *
      * @param rIn Red intensity of the color
@@ -252,7 +252,7 @@ open class LEDStrip(
 
     /**
      * Set the color of a section of the strip. Loops through all leds between start
-     * and end (inclusive) and sets their color to colorValues. If a pixel's Mutex
+     * and end (inclusive) and sets their color to `colorValues`. If a pixel's `Mutex`
      * is locked by another thread, it is skipped.
      *
      * @param start First pixel in section
@@ -265,8 +265,8 @@ open class LEDStrip(
 
 
     /**
-     * Set a section's color with a Long, such as a 24-bit integer. If a pixel's
-     * Mutex is locked by another thread, it is skipped.
+     * Set a section's color with a `Long`, such as a 24-bit integer. If a pixel's
+     * `Mutex` is locked by another thread, it is skipped.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
@@ -278,7 +278,7 @@ open class LEDStrip(
 
 
     /**
-     * Set a section's color with r, g, b (ranges 0-255). If a pixel's Mutex is
+     * Set a section's color with `r`, `g`, `b` (ranges 0-255). If a pixel's `Mutex` is
      * locked by another thread, it is skipped.
      *
      * @param start First pixel in section
@@ -293,7 +293,7 @@ open class LEDStrip(
 
 
     /**
-     * Get the color of a pixel. Waits until the pixel's Mutex is unlocked.
+     * Get the color of a pixel. Waits until the pixel's `Mutex` is unlocked.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
@@ -315,7 +315,7 @@ open class LEDStrip(
 
 
     /**
-     * Get the color of a pixel as a Long. Waits until the pixel's Mutex is
+     * Get the color of a pixel as a `Long`. Waits until the pixel's `Mutex` is
      * unlocked.
      *
      * @param pixel The pixel to find the color of
@@ -328,10 +328,10 @@ open class LEDStrip(
 
     /**
      * Get the color of a pixel as a hexadecimal string. Waits until the pixel's
-     * Mutex is unlocked.
+     * `Mutex` is unlocked.
      *
      * @param pixel The pixel to find the color of
-     * @return A string containing the color of the pixel in hexadecimal
+     * @return A `String` containing the color of the pixel in hexadecimal
      */
     fun getPixelHexString(pixel: Int): String {
         return getPixelLong(pixel).toString(16)
@@ -339,8 +339,8 @@ open class LEDStrip(
 
 
     /**
-     * Get the colors of all pixels as a List of Longs. Waits until each pixel's
-     * Mutex is unlocked.
+     * Get the colors of all pixels as a `List<Long>`. Waits until each pixel's
+     * `Mutex` is unlocked.
      */
     fun getPixelColorList(): List<Long> {
         val temp = mutableListOf<Long>()
@@ -351,7 +351,7 @@ open class LEDStrip(
 
     /**
      * Set the color of the strip using a map with each pixel index mapped to a
-     * ColorContainer.
+     * `ColorContainer`.
      *
      * @param palette The map of colors
      * @param offset The index of the pixel that will be set to the color at
@@ -364,7 +364,7 @@ open class LEDStrip(
 
 
     /**
-     * Sets the color of the strip with a list. The list is converted to a map
+     * Sets the color of the strip with a `List<ColorContainer>`. The list is converted to a map
      * before that map is sent to [setStripColorWithPalette] with an offset of 0.
      *
      * @param colorList The list of colors

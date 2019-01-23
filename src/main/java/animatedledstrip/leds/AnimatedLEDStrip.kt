@@ -31,7 +31,7 @@ import org.pmw.tinylog.Logger
 import java.lang.Math.random
 
 /**
- * A subclass of [LEDStrip] adding animations
+ * A subclass of [LEDStrip] adding animations.
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
@@ -47,7 +47,7 @@ open class AnimatedLEDStrip(
 
     /**
      * Map containing Mutex instances for locking access to each led while it is
-     * being used
+     * being used.
      */
     private val locks = mutableMapOf<Int, Mutex>()
 
@@ -68,7 +68,7 @@ open class AnimatedLEDStrip(
 
 
     /**
-     * Map of pixel indices to FadePixel instances
+     * Map of pixel indices to `FadePixel` instances.
      */
     private val fadeMap = mutableMapOf<Int, FadePixel>()
 
@@ -86,10 +86,10 @@ open class AnimatedLEDStrip(
 
 
         /**
-         * Fade a pixel from its current color to destinationColor.
+         * Fade a pixel from its current color to `destinationColor`.
          *
-         * Blends the current color with destinationColor using [blend] every
-         * delay milliseconds until the pixel reaches destinationColor or 40
+         * Blends the current color with `destinationColor` using [blend] every
+         * `delay` milliseconds until the pixel reaches `destinationColor` or 40
          * iterations have passed, whichever comes first.
          *
          * @param destinationColor The color to end with
@@ -110,7 +110,7 @@ open class AnimatedLEDStrip(
     }
 
     /**
-     * Helper function for fading a pixel from its current color to destinationColor.
+     * Helper function for fading a pixel from its current color to `destinationColor`.
      *
      * @param pixel The pixel to be faded
      * @param destinationColor The color to fade to
@@ -175,7 +175,8 @@ open class AnimatedLEDStrip(
     /**
      * Runs an Alternate animation.
      *
-     * Strip alternates between color1 and color2 at the specified rate (delay between changes).
+     * Strip alternates between `color1` and `color2` at the specified rate
+     * (delay between changes).
      */
     private val alternate = { animation: AnimationData ->
         val startPixel = animation.startPixel
@@ -194,8 +195,8 @@ open class AnimatedLEDStrip(
     /**
      * Runs a Bounce animation.
      *
-     * Similar to Bounce to Color but the ends fade to color2 after being set
-     * to color1.
+     * Similar to Bounce to Color but the ends fade to `color2` after being set
+     * to `color1`.
      */
     private val bounce = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
@@ -354,7 +355,7 @@ open class AnimatedLEDStrip(
     /**
      * Runs a Pixel Run animation.
      *
-     * The strip is set to color2, then a pixel 'runs' along the strip.
+     * The strip is set to `color2`, then a pixel 'runs' along the strip.
      * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
@@ -391,7 +392,7 @@ open class AnimatedLEDStrip(
      * Runs a Pixel Run with Trail animation.
      *
      * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
-     * where the pixels fade from color1 to color2 over ~20 iterations.
+     * where the pixels fade from `color1` to `color2` over ~20 iterations.
      */
     private val pixelRunWithTrail = { animation: AnimationData ->
         val colorValues1 = animation.color1
@@ -430,14 +431,14 @@ open class AnimatedLEDStrip(
      * colors of the two nearest pure pixels. The blend ratio is determined by the
      * location of the pixel relative to the nearest pure pixels.*
      *
-     * The collection created, palette2, is a map of integers to ColorContainers
-     * where each integer is a pixel index. Each pixel is set to palette2&#91;i&#93;,
-     * where i is the pixel index. Then, if the direction is [Direction].FORWARD,
-     * each pixel is set to palette2&#91;i + 1&#93;, then palette&#91;i + 2&#93;, etc.
+     * The collection created, `palette2`, is a map of integers to `ColorContainer`s
+     * where each integer is a pixel index. Each pixel is set to `palette2[i]`,
+     * where `i` is the pixel index. Then, if the direction is [Direction].`FORWARD`,
+     * each pixel is set to `palette2[i + 1]`, then `palette[i + 2]`, etc.
      * to create the illusion that the animation is 'moving'. If the direction is
-     * [Direction].BACKWARD, the same happens but with indices i, i-1, i-2, etc.
-     * The index is found with (i + a) mod s, where i is the pixel index, a is the
-     * offset for this iteration and s is the number of pixels in the strip.
+     * [Direction].`BACKWARD`, the same happens but with indices `i`, `i-1`, `i-2`, etc.
+     * The index is found with `(i + a) % s`, where `i` is the pixel index, `a` is the
+     * offset for this iteration and `s` is the number of pixels in the strip.
      */
     private val smoothChase = { animation: AnimationData ->
         val colorList = animation.colorList
@@ -478,7 +479,7 @@ open class AnimatedLEDStrip(
     /**
      * Runs a Sparkle animation.
      *
-     * Each LED is changed to color1 for delay milliseconds before reverting
+     * Each LED is changed to `color1` for delay milliseconds before reverting
      * to its original color. A separate thread is created for each pixel. Each
      * thread saves its pixel's original color, then waits for 0-5 seconds
      * before sparkling its pixel.
@@ -508,7 +509,7 @@ open class AnimatedLEDStrip(
     /**
      * Runs a Sparkle Fade animation.
      *
-     * Similar to Sparkle but pixels fade back to color2.
+     * Similar to Sparkle but pixels fade back to `color2`.
      */
     private val sparkleFade = { animation: AnimationData ->
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
