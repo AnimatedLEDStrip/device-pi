@@ -201,6 +201,17 @@ val SmoothChase = AnimationInfo(
 
 
 /**
+ * Info about the Smooth Fade animation.
+ *
+ * @see AnimatedLEDStrip.smoothFade
+ */
+val SmoothFade = AnimationInfo(
+    colorList = ReqLevel.REQUIRED,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 50
+)
+
+/**
  * Info about the Sparkle animation.
  *
  * @see AnimatedLEDStrip.sparkle
@@ -287,6 +298,7 @@ val animationInfoMap = mapOf(
     Animation.PIXELRUN to PixelRun,
     Animation.PIXELRUNWITHTRAIL to PixelRunWithTrail,
     Animation.SMOOTHCHASE to SmoothChase,
+    Animation.SMOOTHFADE to SmoothFade,
     Animation.SPARKLE to Sparkle,
     Animation.SPARKLEFADE to SparkleFade,
     Animation.SPARKLETOCOLOR to SparkleToColor,

@@ -76,6 +76,10 @@ enum class Animation {
      */
     SMOOTHCHASE,
     /**
+     * @see AnimatedLEDStrip.smoothFade
+     */
+    SMOOTHFADE,
+    /**
      * @see AnimatedLEDStrip.sparkle
      */
     SPARKLE,
