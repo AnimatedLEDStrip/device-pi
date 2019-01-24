@@ -67,7 +67,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      * Returns a hexadecimal string representation (without a 0x) of the color held
      * by this `ColorContainer`.
      */
-    var hexString = hex.toString(16)
+    var hexString = hex.toString(16).toUpperCase()
 
     /**
      * Set the color held by this `ColorContainer` using individual `r`, `g`, `b` values.
@@ -103,5 +103,9 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      * Returns the average of `r`, `g`, `b`.
      */
     fun grayscale() = ((r + g + b) / 3).toLong()
+
+    override fun toString(): String {
+        return hexString
+    }
 
 }
