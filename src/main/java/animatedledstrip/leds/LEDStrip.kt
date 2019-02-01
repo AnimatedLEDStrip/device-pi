@@ -69,13 +69,13 @@ open class LEDStrip(
     /**
      * The thread in which the rendering loop will run.
      */
-    private val renderThread = newFixedThreadPoolContext(50, "Render Loops")
+    private val renderThread = newFixedThreadPoolContext(50, "Render Loops")    // Ignore Overload Resolution Ambiguity error
 
     /**
      * The thread used to save values to `outFile` so the program doesn't
      * experience slowdowns because of I/O.
      */
-    private val outThread = newSingleThreadContext("Image Debug Save Thread")
+    private val outThread = newSingleThreadContext("Image Debug Save Thread")           // Ignore Overload Resolution Ambiguity error
 
     /**
      * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.

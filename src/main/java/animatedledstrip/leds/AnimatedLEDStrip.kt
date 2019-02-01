@@ -63,14 +63,14 @@ open class AnimatedLEDStrip(
      * (with the exception of sparkle-type animations, those use the
      * [sparkleThreadPool]).
      */
-    private val animationThreadPool = newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
+    private val animationThreadPool = newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")  // Ignore Overload Resolution Ambiguity error
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
      * number of threads a concurrent sparkle animation uses. This prevents
      * memory leaks caused by the overhead associated with creating new threads.
      */
-    private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
+    private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")      // Ignore Overload Resolution Ambiguity error
 
 
     /**
