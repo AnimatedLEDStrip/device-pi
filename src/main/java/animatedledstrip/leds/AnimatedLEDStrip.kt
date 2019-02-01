@@ -23,12 +23,18 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.*
+import animatedledstrip.ccpresets.CCBlack
 import com.diozero.ws281xj.PixelAnimations.delay
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
+import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
+import javax.script.CompiledScript
+import javax.script.ScriptContext
+import javax.script.ScriptEngineManager
+import javax.script.SimpleScriptContext
 
 /**
  * A subclass of [LEDStrip] adding animations.
@@ -124,8 +130,20 @@ open class AnimatedLEDStrip(
         Logger.trace("Fade of pixel $pixel complete")
     }
 
+    private val customAnimationMap = mutableMapOf<String, CompiledScript>()
+
+    private var customAnimationCompiler: KotlinJsr223JvmLocalScriptEngine
+
+    private val scriptContext = SimpleScriptContext()
+
 
     init {
+        setIdeaIoUseFallback()
+
+        customAnimationCompiler = ScriptEngineManager().getEngineByExtension("kts") as KotlinJsr223JvmLocalScriptEngine
+        customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
+            put("leds", this@AnimatedLEDStrip)
+        }
 
         for (i in 0 until numLEDs) {
             locks += Pair(i, Mutex())        // Initialize locks map
@@ -133,6 +151,18 @@ open class AnimatedLEDStrip(
         }
     }
 
+    fun addCustomAnimation(animation: String, abbr: String) {
+        animationInfoMap.forEach {
+            if (it.value.abbr == abbr) {
+                Logger.warn("Animation $abbr not added: Built-in animation ${it.key} exists with abbreviation ${it.value.abbr}")
+                return@forEach
+            }
+        }
+        customAnimationMap.putIfAbsent(abbr, customAnimationCompiler.compile(animation, scriptContext))
+//            ?: Logger.warn(
+//            "Animation $abbr not added: Custom animation with abbreviation $abbr already exists"
+//        )
+    }
 
     /**
      * Run an animation.
@@ -164,8 +194,13 @@ open class AnimatedLEDStrip(
             Animation.STACK -> stack(animation)
             Animation.STACKOVERFLOW -> stackOverflow(animation)
             Animation.WIPE -> wipe(animation)
+            Animation.CUSTOMANIMATION, Animation.CUSTOMREPETITIVEANIMATION -> runCustomAnimation(animation)
             else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
         }
+    }
+
+    private fun runCustomAnimation(animation: AnimationData) {
+        customAnimationMap[animation.id]?.eval()
     }
 
 

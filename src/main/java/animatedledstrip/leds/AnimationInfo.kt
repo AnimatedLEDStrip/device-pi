@@ -41,6 +41,7 @@ package animatedledstrip.leds
  * @property spacingDefault Default if spacing is missing
  */
 data class AnimationInfo(
+    val abbr: String = "",
     val color1: ReqLevel = ReqLevel.NOTUSED,
     val color2: ReqLevel = ReqLevel.NOTUSED,
     val color3: ReqLevel = ReqLevel.NOTUSED,
@@ -80,6 +81,7 @@ enum class ReqLevel {
  * @see AnimatedLEDStrip.alternate
  */
 val Alternate = AnimationInfo(
+    abbr = "ALT",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
@@ -93,6 +95,7 @@ val Alternate = AnimationInfo(
  * @see AnimatedLEDStrip.bounce
  */
 val Bounce = AnimationInfo(
+    abbr = "BNC",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
@@ -106,6 +109,7 @@ val Bounce = AnimationInfo(
  * @see AnimatedLEDStrip.bounceToColor
  */
 val BounceToColor = AnimationInfo(
+    abbr = "BTC",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 5
@@ -118,6 +122,7 @@ val BounceToColor = AnimationInfo(
  * @see AnimatedLEDStrip.multiPixelRun
  */
 val MultiPixelRun = AnimationInfo(
+    abbr = "MPR",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
@@ -134,6 +139,7 @@ val MultiPixelRun = AnimationInfo(
  * @see AnimatedLEDStrip.multiPixelRunToColor
  */
 val MultiPixelRunToColor = AnimationInfo(
+    abbr = "MTC",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 150,
@@ -149,6 +155,7 @@ val MultiPixelRunToColor = AnimationInfo(
  *
  */
 val PixelMarathon = AnimationInfo(
+    abbr = "PXM",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED,
     color3 = ReqLevel.REQUIRED,
@@ -165,6 +172,7 @@ val PixelMarathon = AnimationInfo(
  * @see AnimatedLEDStrip.pixelRun
  */
 val PixelRun = AnimationInfo(
+    abbr = "PXR",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
@@ -179,6 +187,7 @@ val PixelRun = AnimationInfo(
  * @see AnimatedLEDStrip.pixelRunWithTrail
  */
 val PixelRunWithTrail = AnimationInfo(
+    abbr = "PXRT",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
@@ -193,6 +202,7 @@ val PixelRunWithTrail = AnimationInfo(
  * @see AnimatedLEDStrip.smoothChase
  */
 val SmoothChase = AnimationInfo(
+    abbr = "SCH",
     colorList = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50,
@@ -206,6 +216,7 @@ val SmoothChase = AnimationInfo(
  * @see AnimatedLEDStrip.smoothFade
  */
 val SmoothFade = AnimationInfo(
+    abbr = "SMF",
     colorList = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
@@ -217,6 +228,7 @@ val SmoothFade = AnimationInfo(
  * @see AnimatedLEDStrip.sparkle
  */
 val Sparkle = AnimationInfo(
+    abbr = "SPK",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
@@ -229,6 +241,7 @@ val Sparkle = AnimationInfo(
  * @see AnimatedLEDStrip.sparkleFade
  */
 val SparkleFade = AnimationInfo(
+    abbr = "SPF",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.OPTIONAL,
     delay = ReqLevel.OPTIONAL,
@@ -242,6 +255,7 @@ val SparkleFade = AnimationInfo(
  * @see AnimatedLEDStrip.sparkleToColor
  */
 val SparkleToColor = AnimationInfo(
+    abbr = "STC",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
@@ -254,6 +268,7 @@ val SparkleToColor = AnimationInfo(
  * @see AnimatedLEDStrip.stack
  */
 val Stack = AnimationInfo(
+    abbr = "STK",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 10,
@@ -267,6 +282,7 @@ val Stack = AnimationInfo(
  *
  */
 val StackOverflow = AnimationInfo(
+    abbr = "STO",
     color1 = ReqLevel.REQUIRED,
     color2 = ReqLevel.REQUIRED
 )
@@ -278,6 +294,7 @@ val StackOverflow = AnimationInfo(
  * @see AnimatedLEDStrip.wipe
  */
 val Wipe = AnimationInfo(
+    abbr = "WIP",
     color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 10,

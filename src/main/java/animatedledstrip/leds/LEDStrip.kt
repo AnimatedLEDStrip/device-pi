@@ -123,7 +123,6 @@ open class LEDStrip(
                 GlobalScope.launch(renderThread) {
                     var renderNum = 0
                     while (rendering) {
-                        Logger.trace("Rendering")
                         ledStrip.render()
                         if (imageDebugging) {
                             getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }

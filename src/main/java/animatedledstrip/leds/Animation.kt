@@ -37,6 +37,9 @@ enum class Animation {
      */
     @NonRepetitive
     MULTICOLOR,
+    @NonRepetitive
+    CUSTOMANIMATION,
+    CUSTOMREPETITIVEANIMATION,
     /**
      * @see AnimatedLEDStrip.alternate
      */

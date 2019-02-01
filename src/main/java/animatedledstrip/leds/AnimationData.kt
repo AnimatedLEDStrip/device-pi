@@ -537,7 +537,25 @@ class AnimationData() {
      * Constructor used by the server when receiving a `Map` from a client
      */
     constructor(params: Map<*, *>) : this() {
-        animation = params["Animation"] as Animation? ?: throw Exception("Animation not defined")
+        val a = params["Animation"]
+        animation = when (a) {
+            null -> throw Exception("Animation not defined")
+            is Animation -> params["Animation"] as Animation? ?: throw Exception("Animation not defined")
+            is String -> {
+                when(a.toUpperCase()) {
+                    "COL" -> Animation.COLOR
+                    "MCOL" -> Animation.MULTICOLOR
+                    else -> try{
+                        animationInfoMap.entries.filter {
+                            it.value.abbr == (params["Animation"] as String).toUpperCase()
+                        }[0].key
+                    } catch (e: IndexOutOfBoundsException) {
+                        throw Exception("Animation not defined")
+                    }
+                }
+            }
+            else -> throw Exception("Invalid type for animation parameter")
+        }
         color1 = ColorContainer(params["Color1"] as Long? ?: 0x0)
         color2 = ColorContainer(params["Color2"] as Long? ?: 0x0)
         color3 = ColorContainer(params["Color3"] as Long? ?: 0x0)
