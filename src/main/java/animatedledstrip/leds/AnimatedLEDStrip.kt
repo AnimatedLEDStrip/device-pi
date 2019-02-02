@@ -63,14 +63,16 @@ open class AnimatedLEDStrip(
      * (with the exception of sparkle-type animations, those use the
      * [sparkleThreadPool]).
      */
-    private val animationThreadPool = newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")  // Ignore Overload Resolution Ambiguity error
+    private val animationThreadPool =
+        newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")  // Ignore Overload Resolution Ambiguity error
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
      * number of threads a concurrent sparkle animation uses. This prevents
      * memory leaks caused by the overhead associated with creating new threads.
      */
-    private val sparkleThreadPool = newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")      // Ignore Overload Resolution Ambiguity error
+    private val sparkleThreadPool =
+        newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")      // Ignore Overload Resolution Ambiguity error
 
 
     /**
@@ -143,6 +145,7 @@ open class AnimatedLEDStrip(
         customAnimationCompiler = ScriptEngineManager().getEngineByExtension("kts") as KotlinJsr223JvmLocalScriptEngine
         customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
             put("leds", this@AnimatedLEDStrip)
+            put("animation", AnimationData())
         }
 
         for (i in 0 until numLEDs) {
@@ -151,17 +154,31 @@ open class AnimatedLEDStrip(
         }
     }
 
-    fun addCustomAnimation(animation: String, abbr: String) {
+    fun addCustomAnimation(animation: String, name: String) {
         animationInfoMap.forEach {
-            if (it.value.abbr == abbr) {
-                Logger.warn("Animation $abbr not added: Built-in animation ${it.key} exists with abbreviation ${it.value.abbr}")
+            if (it.value.abbr == name) {
+                Logger.warn("Animation $name not added: Built-in animation ${it.key} exists with abbreviation ${it.value.abbr}")
                 return@forEach
             }
         }
-        customAnimationMap.putIfAbsent(abbr, customAnimationCompiler.compile(animation, scriptContext))
-//            ?: Logger.warn(
-//            "Animation $abbr not added: Custom animation with abbreviation $abbr already exists"
-//        )
+        when (customAnimationMap.putIfAbsent(
+            name,
+            customAnimationCompiler.compile(prepareAnimationCode(animation), scriptContext)
+        )) {
+            null -> Logger.info("Custom animation $name added successfully")
+            else -> Logger.warn("Animation $name not added: Custom animation with abbreviation $name already exists")
+        }
+    }
+
+    private fun prepareAnimationCode(animation: String): String {
+        return """
+            import animatedledstrip.leds.*
+            val leds = bindings["leds"]!! as AnimatedLEDStrip
+            var animation = bindings["animation"] as AnimationData
+            with(leds) {
+                $animation
+            }
+        """.trimIndent()
     }
 
     /**
@@ -200,6 +217,9 @@ open class AnimatedLEDStrip(
     }
 
     private fun runCustomAnimation(animation: AnimationData) {
+        customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
+            put("animation", animation)
+        }
         customAnimationMap[animation.id]?.eval()
     }
 
