@@ -1,8 +1,7 @@
 [![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripKotlinPi/animatedledstrip-kotlin-pi/)
 
 # AnimatedLEDStripKotlinPi
-
-A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) to Kotlin for Raspberry Pis
+A extension of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) for Raspberry Pis.
 
 ## Uses Java 9
 Because we use the dokka plugin to generate our documentation, we must use Java <=9
