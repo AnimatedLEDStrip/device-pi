@@ -35,6 +35,10 @@ import javafx.scene.paint.Color
  */
 open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
+    constructor(ccIn: ColorContainer) : this(
+        ccIn.r, ccIn.g, ccIn.b
+    )
+
     /**
      * Constructor for ColorContainer that extracts `r`, `g` and `b` from a `Long`.
      *
@@ -45,7 +49,6 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
         (hexIn and 0x00FF00 shr 8).toInt(),
         (hexIn and 0x0000FF).toInt()
     )
-
 
     /**
      * Returns a `Long` containing the RGB data held by this `ColorContainer`.
@@ -92,7 +95,8 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
     /**
      * Returns the color held by this `ColorContainer` as a JavaFX `Color`.
      */
-    fun toColor(): Color = Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
+    fun toColor(): Color =
+        Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
 
     /**
      * Returns a `ColorContainer` with the inverse of the color held by this `ColorContainer`.

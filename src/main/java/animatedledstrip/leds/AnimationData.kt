@@ -155,6 +155,7 @@ class AnimationData() {
         this.color1 = color
         return this
     }
+
     /**
      * Set the first color with a `Long`.
      *
@@ -164,6 +165,7 @@ class AnimationData() {
         this.color1 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the first color with an `Int`.
      *
@@ -173,6 +175,7 @@ class AnimationData() {
         this.color1 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the first color with a hexadecimal string.
      *
@@ -182,6 +185,7 @@ class AnimationData() {
         this.color1 = ColorContainer(parseHex(color))
         return this
     }
+
     /**
      * Set the first color with a `ColorContainer`.
      *
@@ -191,6 +195,7 @@ class AnimationData() {
         this.color1 = color
         return this
     }
+
     /**
      * Set the first color with a `Long`.
      *
@@ -200,6 +205,7 @@ class AnimationData() {
         this.color1 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the first color with an `Int`.
      *
@@ -209,6 +215,7 @@ class AnimationData() {
         this.color1 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the first color with a hexadecimal string.
      *
@@ -228,6 +235,7 @@ class AnimationData() {
         this.color2 = color
         return this
     }
+
     /**
      * Set the second color with a `Long`.
      *
@@ -237,6 +245,7 @@ class AnimationData() {
         this.color2 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the second color with an `Int`.
      *
@@ -246,6 +255,7 @@ class AnimationData() {
         this.color2 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the second color with a hexadecimal string.
      *
@@ -265,6 +275,7 @@ class AnimationData() {
         this.color3 = color
         return this
     }
+
     /**
      * Set the third color with a `Long`.
      *
@@ -274,6 +285,7 @@ class AnimationData() {
         this.color3 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the third color with an `Int`.
      *
@@ -283,6 +295,7 @@ class AnimationData() {
         this.color3 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the third color with a hexadecimal string.
      *
@@ -302,6 +315,7 @@ class AnimationData() {
         this.color4 = color
         return this
     }
+
     /**
      * Set the fourth color with a `Long`.
      *
@@ -311,6 +325,7 @@ class AnimationData() {
         this.color4 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the fourth color with an `Int`.
      *
@@ -320,6 +335,7 @@ class AnimationData() {
         this.color4 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the fourth color with a hexadecimal string.
      *
@@ -339,6 +355,7 @@ class AnimationData() {
         this.color5 = color
         return this
     }
+
     /**
      * Set the fifth color with a `Long`.
      *
@@ -348,6 +365,7 @@ class AnimationData() {
         this.color5 = ColorContainer(color)
         return this
     }
+
     /**
      * Set the fifth color with an `Int`.
      *
@@ -357,6 +375,7 @@ class AnimationData() {
         this.color5 = ColorContainer(color.toLong())
         return this
     }
+
     /**
      * Set the fifth color with a hexadecimal string.
      *
@@ -386,6 +405,7 @@ class AnimationData() {
         }
         return this
     }
+
     /**
      * Add a color to the colorList (added by reference).
      *
@@ -396,6 +416,7 @@ class AnimationData() {
         this.colorList.add(color)
         return this
     }
+
     /**
      * Add a color to the colorList (creates new `ColorContainer` instance)
      *
@@ -406,6 +427,7 @@ class AnimationData() {
         this.colorList.add(ColorContainer(color))
         return this
     }
+
     /**
      * Add a color to `colorList` (creates new ColorContainer instance)
      *
@@ -416,6 +438,7 @@ class AnimationData() {
         this.colorList.add(ColorContainer(parseHex(color)))
         return this
     }
+
     /**
      * Append a `List` of `ColorContainer`s, `Long`s, or `String`s in hexadecimal
      * format to the end of `colorList`.
@@ -476,6 +499,7 @@ class AnimationData() {
         this.direction = direction
         return this
     }
+
     /**
      * Set the `direction` parameter with a `Char`.
      *
@@ -542,27 +566,58 @@ class AnimationData() {
             null -> throw Exception("Animation not defined")
             is Animation -> params["Animation"] as Animation? ?: throw Exception("Animation not defined")
             is String -> {
-                when(a.toUpperCase()) {
+                when (a.toUpperCase()) {
                     "COL" -> Animation.COLOR
                     "MCOL" -> Animation.MULTICOLOR
-                    else -> try{
+                    else -> try {
                         animationInfoMap.entries.filter {
                             it.value.abbr == (params["Animation"] as String).toUpperCase()
                         }[0].key
                     } catch (e: IndexOutOfBoundsException) {
-                        throw Exception("Animation not defined")
+                        throw Exception("Animation parameter not defined")
                     }
                 }
             }
             else -> throw Exception("Invalid type for animation parameter")
         }
-        color1 = ColorContainer(params["Color1"] as Long? ?: 0x0)
-        color2 = ColorContainer(params["Color2"] as Long? ?: 0x0)
-        color3 = ColorContainer(params["Color3"] as Long? ?: 0x0)
-        color4 = ColorContainer(params["Color4"] as Long? ?: 0x0)
-        color5 = ColorContainer(params["Color5"] as Long? ?: 0x0)
+        color1 = when (params["Color1"]) {
+            is Long -> ColorContainer(params["Color1"] as Long? ?: 0x0)
+            is ColorContainer -> ColorContainer(params["Color1"] as ColorContainer)
+            else -> ColorContainer(0x0)
+        }
+
+
+        color2 = when (params["Color2"]) {
+            is Long -> ColorContainer(params["Color2"] as Long? ?: 0x0)
+            is ColorContainer -> ColorContainer(params["Color2"] as ColorContainer)
+            else -> ColorContainer(0x0)
+        }
+
+        color3 = when (params["Color3"]) {
+            is Long -> ColorContainer(params["Color3"] as Long? ?: 0x0)
+            is ColorContainer -> ColorContainer(params["Color3"] as ColorContainer)
+            else -> ColorContainer(0x0)
+        }
+
+        color4 = when (params["Color4"]) {
+            is Long -> ColorContainer(params["Color4"] as Long? ?: 0x0)
+            is ColorContainer -> ColorContainer(params["Color4"] as ColorContainer)
+            else -> ColorContainer(0x0)
+        }
+
+        color5 = when (params["Color5"]) {
+            is Long -> ColorContainer(params["Color5"] as Long? ?: 0x0)
+            is ColorContainer -> ColorContainer(params["Color5"] as ColorContainer)
+            else -> ColorContainer(0x0)
+        }
+
         if (params["ColorList"] as List<*>? != null) {
-            (params["ColorList"] as List<*>).forEach { c -> colorList.add(ColorContainer(c as Long)) }
+            (params["ColorList"] as List<*>).forEach { c ->
+                when (c) {
+                    is Long -> colorList.add(ColorContainer(c))
+                    is ColorContainer -> colorList.add(ColorContainer(c))
+                }
+            }
         }
         continuous = params["Continuous"] as Boolean? ?: false
         delay = params["Delay"] as Int? ?: when (animationInfoMap[animation]?.delay) {
