@@ -39,6 +39,8 @@
         <kotlin.version>1.3.20</kotlin.version>
         <dokka.version>0.9.17</dokka.version>
         <github.global.server>github</github.global.server>
+        <!--suppress CheckTagEmptyBody -->
+        <argLine></argLine>
     </properties>
 
     <distributionManagement>
@@ -175,7 +177,7 @@
                             <goal>dokka</goal>
                         </goals>
                         <configuration>
-                            <outputDir>${project.basedir}\target\site</outputDir>
+                            <outputDir>${project.basedir}/dokka</outputDir>
                         </configuration>
                     </execution>
                 </executions>
@@ -208,20 +210,27 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Creating site for ${project.version}</message>
-                </configuration>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>site</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
-                        <phase>site</phase>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
