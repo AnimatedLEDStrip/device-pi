@@ -10,7 +10,7 @@ package animatedledstrip.leds
  */
 class AnimatedLEDStripKotlinPi(numLEDs: Int,
                                pin: Int,
-                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, pin, imageDebugging) {
+                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, imageDebugging) {
 
     override var ledStrip: LEDStripInterface = WS281xCompat(pin, 255, numLEDs)
 }
