@@ -1,4 +1,5 @@
 [![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripKotlinPi/animatedledstrip-kotlin-pi/)
+[![Build Status](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi)
 
 # AnimatedLEDStripKotlinPi
 A extension of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) for Raspberry Pis.
