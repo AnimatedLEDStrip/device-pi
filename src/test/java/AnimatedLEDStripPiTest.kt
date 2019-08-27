@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.test
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -23,34 +23,21 @@ package animatedledstrip.leds
  */
 
 
-import com.github.mbelling.ws281x.LedStripType
-import com.github.mbelling.ws281x.Ws281xLedStrip
+import animatedledstrip.leds.AnimatedLEDStripPi
+import animatedledstrip.leds.AnimatedLEDStripPiNonConcurrent
+import org.junit.Test
+import kotlin.test.assertFailsWith
 
+class AnimatedLEDStripPiTest {
 
-/**
- * Connection between the WS281x class and the LEDStripInterface interface.
- *
- * @param pin Pin the strip is connected to
- * @param brightness Brightness of the strip
- * @param numLEDs Number of LEDs in the strip
- */
-class WS281xCompat(pin: Int, brightness: Int, override val numLEDs: Int) : Ws281xLedStrip(
-        numLEDs,
-        pin,
-        800000,
-        10,
-        brightness,
-        0,
-        false,
-        LedStripType.WS2811_STRIP_RGB,
-        false
-), LEDStripInterface {
+    @Test
+    fun testAnimatedLEDStripEvenThoughItWillFail() {
+        assertFailsWith(UnsatisfiedLinkError::class) {
+            AnimatedLEDStripPi(50, 10)
+        }
+        assertFailsWith(UnsatisfiedLinkError::class) {
+            AnimatedLEDStripPiNonConcurrent(50, 10)
+        }
+    }
 
-    override fun close() = destroy()
-    override fun getPixelColor(pixel: Int): Int = getPixel(pixel).toInt()
-    override fun setPixelColor(pixel: Int, color: Int) =
-            setPixel(pixel,
-                    color shr 16 and 0xFF,
-                    color shr 8 and 0xFF,
-                    color and 0xFF)
 }

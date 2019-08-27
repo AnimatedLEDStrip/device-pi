@@ -23,34 +23,18 @@ package animatedledstrip.leds
  */
 
 
-import com.github.mbelling.ws281x.LedStripType
-import com.github.mbelling.ws281x.Ws281xLedStrip
-
-
 /**
- * Connection between the WS281x class and the LEDStripInterface interface.
+ * Class for running an LED strip from a Raspberry Pi.
  *
- * @param pin Pin the strip is connected to
- * @param brightness Brightness of the strip
  * @param numLEDs Number of LEDs in the strip
+ * @param pin GPIO pin connected for signal
+ * @param imageDebugging Should a csv file be created containing all renders of
+ * the strip?
  */
-class WS281xCompat(pin: Int, brightness: Int, override val numLEDs: Int) : Ws281xLedStrip(
-        numLEDs,
-        pin,
-        800000,
-        10,
-        brightness,
-        0,
-        false,
-        LedStripType.WS2811_STRIP_RGB,
-        false
-), LEDStripInterface {
+class AnimatedLEDStripPi(numLEDs: Int,
+                         pin: Int,
+                         imageDebugging: Boolean = false,
+                         fileName: String? = null) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName) {
 
-    override fun close() = destroy()
-    override fun getPixelColor(pixel: Int): Int = getPixel(pixel).toInt()
-    override fun setPixelColor(pixel: Int, color: Int) =
-            setPixel(pixel,
-                    color shr 16 and 0xFF,
-                    color shr 8 and 0xFF,
-                    color and 0xFF)
+    override var ledStrip: LEDStripInterface = WS281xCompat(pin, 255, numLEDs)
 }
