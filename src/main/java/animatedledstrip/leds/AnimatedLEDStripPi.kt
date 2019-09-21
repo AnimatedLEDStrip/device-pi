@@ -31,10 +31,13 @@ package animatedledstrip.leds
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
-class AnimatedLEDStripPi(numLEDs: Int,
-                         pin: Int,
-                         imageDebugging: Boolean = false,
-                         fileName: String? = null) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName) {
+class AnimatedLEDStripPi(
+    numLEDs: Int,
+    pin: Int,
+    imageDebugging: Boolean = false,
+    fileName: String? = null,
+    rendersBeforeSave: Int = 1000
+) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName, rendersBeforeSave) {
 
     override var ledStrip: LEDStripInterface = WS281xCompat(pin, 255, numLEDs)
 }
