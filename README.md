@@ -1,4 +1,4 @@
-[![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripKotlinPi/animatedledstrip-kotlin-pi/)
+[![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripPi/animatedledstrip-kotlin-pi/)
 [![Build Status](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripKotlinPi)
 [![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripKotlinPi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripKotlinPi)
 
