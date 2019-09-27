@@ -3,11 +3,8 @@
 [![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi)
 
 # AnimatedLEDStripPi
-A extension of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) for Raspberry Pis.
-
-## Uses Java 9
-Because we use the dokka plugin to generate our documentation, we must use Java <=9
-> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
+A extension of the [AnimatedLEDStrip Library](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip) for Raspberry Pis.
+See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki) for usage instructions.
 
 ## Maven Coordinates/Dependency
 Use the following dependency to use this library in your project
@@ -41,3 +38,7 @@ Development versions of the AnimatedLEDStrip library are available from the Sona
 >     <version>0.5-SNAPSHOT</version>
 >   </dependency>
 > </dependencies>
+
+## Note About Building
+Because we use the dokka plugin to generate our documentation, we must build using Java <=9
+> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
