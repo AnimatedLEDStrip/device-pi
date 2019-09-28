@@ -2,12 +2,9 @@
 [![Build Status](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripPi.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStripPi)
 [![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi)
 
-# AnimatedLEDStripKotlinPi
-A extension of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStrip) for Raspberry Pis.
-
-## Uses Java 9
-Because we use the dokka plugin to generate our documentation, we must use Java <=9
-> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
+# AnimatedLEDStripPi
+Device library for using AnimatedLEDStrip on a Raspberry Pi.
+See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki) for usage instructions.
 
 ## Maven Coordinates/Dependency
 Use the following dependency to use this library in your project
@@ -15,7 +12,7 @@ Use the following dependency to use this library in your project
 > <dependency>
 >   <groupId>io.github.animatedledstrip</groupId>
 >   <artifactId>animatedledstrip-kotlin-pi</artifactId>
->   <version>0.3</version>
+>   <version>0.4</version>
 > </dependency>
 > ```
 
@@ -38,6 +35,10 @@ Development versions of the AnimatedLEDStrip library are available from the Sona
 >   <dependency>
 >     <groupId>io.github.animatedledstrip</groupId>
 >     <artifactId>animatedledstrip-kotlin-pi</artifactId>
->     <version>0.4-SNAPSHOT</version>
+>     <version>0.5-SNAPSHOT</version>
 >   </dependency>
 > </dependencies>
+
+## Note About Building
+Because we use the dokka plugin to generate our documentation, we must build using Java <=9
+> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
