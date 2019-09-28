@@ -42,7 +42,7 @@ class WS281xCompat(pin: Int, brightness: Int, override val numLEDs: Int) : Ws281
         brightness,
         0,
         false,
-        LedStripType.WS2811_STRIP_RGB,
+        LedStripType.WS2811_STRIP_GRB,
         false
 ), LEDStripInterface {
 
