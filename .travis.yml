@@ -2,6 +2,10 @@
 language: java
 jdk: openjdk9
 
+cache:
+  directories:
+    - $HOME/.m2
+
 before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
@@ -54,6 +58,6 @@ jobs:
       install: skip
       deploy:
         - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B -Dregistry=https://maven.pkg.github.com/AnimatedLEDStrip -Dtoken=$GITHUB_TOKEN
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B
           on:
             branch: master
