@@ -6,31 +6,35 @@ before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
   - mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+  - mvn help:evaluate -N -Dexpression=project.version
+  - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
 branches:
   only:
     - master
-    - /^travis/
+    - /^travis.*/
     - /^v.*/
 
 stages:
   - name: test
   - name: deploy
+    if: tag IS present
+  - name: deploy snapshot
+    if: branch = master AND type != pull_request AND tag IS blank
 
 jobs:
   include:
     - stage: test
-      install:
-        -
+      install: skip
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy
-      install:
-        -
-      test:
-        -
+      script: skip
+      install: skip
       deploy:
         - provider: script
           script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+          on:
+            tags: true
         - provider: pages
           skip-cleanup: true
           github-token: $GITHUB_TOKEN
@@ -38,15 +42,20 @@ jobs:
           verbose: true
           local_dir: ./dokka
           on:
-            branch: master
+            tags: true
     - stage: deploy
-      install:
-        -
-      test:
-        -
+      script: skip
+      install: skip
       deploy:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
           on:
-            branch: master
-
+            tags: true
+    - stage: deploy snapshot
+      script: skip
+      install: skip
+      deploy:
+        - provider: script
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B -Dregistry=https://maven.pkg.github.com/AnimatedLEDStrip -Dtoken=$GITHUB_TOKEN
+          on:
+            condition: ("$PROJECT_VERSION" =~ /^.*-SNAPSHOT/)
