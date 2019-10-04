@@ -8,7 +8,6 @@ before_install:
   - mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
   - mvn help:evaluate -N -Dexpression=project.version
   - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
-  - echo "$PROJECT_VERSION"
 
 branches:
   only:
@@ -19,9 +18,9 @@ branches:
 stages:
   - name: test
   - name: deploy
-    if: branch = master AND type != pull_request
+    if: tag IS present
   - name: deploy snapshot
-    if: ("$PROJECT_VERSION" =~ /^.*-SNAPSHOT/)
+    if: branch = master AND type != pull_request AND tag IS blank
 
 jobs:
   include:
@@ -51,12 +50,12 @@ jobs:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
           on:
-            branch: master
+            tags: true
     - stage: deploy snapshot
       script: skip
       install: skip
       deploy:
         - provider: script
-          script: mvn deploy -Dregistry=https://maven.pkg.github.com/AnimatedLEDStrip -Dtoken=$GITHUB_TOKEN
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B -Dregistry=https://maven.pkg.github.com/AnimatedLEDStrip -Dtoken=$GITHUB_TOKEN
           on:
-            all_branches: true
+            condition: ("$PROJECT_VERSION" =~ /^.*-SNAPSHOT/)
