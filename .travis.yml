@@ -7,8 +7,7 @@ before_install:
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
   - mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
   - mvn help:evaluate -N -Dexpression=project.version
-  - mvn help:evaluate -q -N -Dexpression=project.version
-#  - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+  - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
   - echo "$PROJECT_VERSION"
 
 branches:
