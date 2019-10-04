@@ -6,7 +6,7 @@ before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
   - mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
-#  - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+  - export PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
 branches:
   only:
@@ -19,7 +19,7 @@ stages:
   - name: deploy
     if: branch = master AND type != pull_request
   - name: deploy snapshot
-#    if: "$PROJECT_VERSION" =~ /^.*-SNAPSHOT/
+    if: ("$PROJECT_VERSION" =~ /^.*-SNAPSHOT/)
 
 jobs:
   include:
