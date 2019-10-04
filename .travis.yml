@@ -11,7 +11,7 @@ before_install:
 branches:
   only:
     - master
-    - /^travis/
+    - /^travis.*/
     - /^v.*/
 
 stages:
