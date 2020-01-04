@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds
 
 import com.github.mbelling.ws281x.LedStripType
 import com.github.mbelling.ws281x.Ws281xLedStrip
@@ -44,7 +43,7 @@ class WS281xCompat(pin: Int, brightness: Int, override val numLEDs: Int) : Ws281
         false,
         LedStripType.WS2811_STRIP_GRB,
         false
-), LEDStripInterface {
+), NativeLEDStrip {
 
     override fun close() {}
     override fun getPixelColor(pixel: Int): Int = getPixel(pixel).toInt()

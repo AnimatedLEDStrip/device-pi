@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,22 +20,14 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds
 
 /**
  * Class for running an LED strip from a Raspberry Pi.
- *
- * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
- * @param imageDebugging Should a csv file be created containing all renders of
- * the strip?
  */
 class AnimatedLEDStripPi(
-    numLEDs: Int,
-    pin: Int,
-    imageDebugging: Boolean = false,
-    fileName: String? = null,
-    rendersBeforeSave: Int = 1000
-) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName, rendersBeforeSave) {
+    info: StripInfo
+) : AnimatedLEDStrip(info) {
 
-    override var ledStrip: LEDStripInterface = WS281xCompat(pin, 255, numLEDs)
+    override var ledStrip: NativeLEDStrip = WS281xCompat(info.pin ?: 12, 255, info.numLEDs)
 }

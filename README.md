@@ -11,8 +11,8 @@ Use the following dependency to use this library in your project
 > ```
 > <dependency>
 >   <groupId>io.github.animatedledstrip</groupId>
->   <artifactId>animatedledstrip-kotlin-pi</artifactId>
->   <version>0.4</version>
+>   <artifactId>animatedledstrip-pi</artifactId>
+>   <version>0.5</version>
 > </dependency>
 > ```
 
@@ -34,8 +34,8 @@ Development versions of the AnimatedLEDStrip library are available from the Sona
 > <dependencies>
 >   <dependency>
 >     <groupId>io.github.animatedledstrip</groupId>
->     <artifactId>animatedledstrip-kotlin-pi</artifactId>
->     <version>0.5-SNAPSHOT</version>
+>     <artifactId>animatedledstrip-pi</artifactId>
+>     <version>0.6-SNAPSHOT</version>
 >   </dependency>
 > </dependencies>
 

@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,9 +20,10 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.leds.AnimatedLEDStripPi
-import animatedledstrip.leds.AnimatedLEDStripPiNonConcurrent
+import animatedledstrip.leds.StripInfo
 import org.junit.Test
 import kotlin.test.assertFailsWith
 
@@ -33,11 +32,7 @@ class AnimatedLEDStripPiTest {
     @Test
     fun testAnimatedLEDStripEvenThoughItWillFail() {
         assertFailsWith(UnsatisfiedLinkError::class) {
-            AnimatedLEDStripPi(50, 10)
-        }
-        assertFailsWith(UnsatisfiedLinkError::class) {
-            AnimatedLEDStripPiNonConcurrent(50, 10)
+            AnimatedLEDStripPi(StripInfo(pin = 10, numLEDs = 50))
         }
     }
-
 }
