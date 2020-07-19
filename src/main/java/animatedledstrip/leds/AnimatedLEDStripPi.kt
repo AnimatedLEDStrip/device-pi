@@ -29,5 +29,5 @@ class AnimatedLEDStripPi(
     info: StripInfo
 ) : AnimatedLEDStrip(info) {
 
-    override var ledStrip: NativeLEDStrip = WS281xCompat(info.pin ?: 12, 255, info.numLEDs)
+    override val ledStrip: NativeLEDStrip = WS281xCompat(info.pin ?: 12, 255, info.numLEDs)
 }
