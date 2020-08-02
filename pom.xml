@@ -6,10 +6,10 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-pi</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <packaging>jar</packaging>
 
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>io.github.animatedledstrip:animatedledstrip-pi</name>
     <description>Library for using the AnimatedLEDStrip library on Raspberry Pis.</description>
     <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStripPi</url>
 
@@ -25,13 +25,13 @@
             <name>Max Narvaez</name>
             <email>mnmax.narvaez3@gmail.com</email>
             <organization>AnimatedLEDStrip</organization>
-            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+            <organizationUrl>https://animatedledstrip.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Katie Richter</name>
             <email>katierichter98@gmail.com</email>
             <organization>AnimatedLEDStrip</organization>
-            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+            <organizationUrl>https://animatedledstrip.github.io</organizationUrl>
         </developer>
     </developers>
 
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>io.github.animatedledstrip</groupId>
             <artifactId>animatedledstrip-core</artifactId>
-            <version>0.7-SNAPSHOT</version>
+            <version>0.7.1</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -128,7 +128,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
@@ -138,7 +138,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -220,7 +220,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>1.6.8</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -231,7 +231,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.9.1</version>
                 <configuration>
                     <skipDeploy>true</skipDeploy>
                 </configuration>
@@ -239,7 +239,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
+                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <goals>
@@ -258,7 +258,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0-M5</version>
             </plugin>
         </plugins>
     </build>
