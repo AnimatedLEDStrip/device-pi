@@ -25,9 +25,6 @@ package animatedledstrip.leds
 /**
  * Class for running an LED strip from a Raspberry Pi.
  */
-class AnimatedLEDStripPi(
-    info: StripInfo
-) : AnimatedLEDStrip(info) {
-
+class AnimatedLEDStripPi(info: StripInfo) : AnimatedLEDStrip(info) {
     override val ledStrip: NativeLEDStrip = WS281xCompat(info.pin ?: 12, 255, info.numLEDs)
 }

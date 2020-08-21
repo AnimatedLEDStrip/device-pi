@@ -34,22 +34,24 @@ import com.github.mbelling.ws281x.Ws281xLedStrip
  * @param numLEDs Number of LEDs in the strip
  */
 class WS281xCompat(pin: Int, brightness: Int, override val numLEDs: Int) : Ws281xLedStrip(
-        numLEDs,
-        pin,
-        800000,
-        10,
-        brightness,
-        0,
-        false,
-        LedStripType.WS2811_STRIP_GRB,
-        false
+    numLEDs,
+    pin,
+    800000,
+    10,
+    brightness,
+    0,
+    false,
+    LedStripType.WS2811_STRIP_GRB,
+    false,
 ), NativeLEDStrip {
 
     override fun close() {}
     override fun getPixelColor(pixel: Int): Int = getPixel(pixel).toInt()
     override fun setPixelColor(pixel: Int, color: Int) =
-            setPixel(pixel,
-                    color shr 16 and 0xFF,
-                    color shr 8 and 0xFF,
-                    color and 0xFF)
+        setPixel(
+            pixel,
+            color shr 16 and 0xFF,
+            color shr 8 and 0xFF,
+            color and 0xFF,
+        )
 }
