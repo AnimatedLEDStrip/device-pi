@@ -32,7 +32,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          script: mvn deploy --settings .maven.xml -DskipTests=true -Ddokka=true -B
 
     - stage: deploy
       install: skip
