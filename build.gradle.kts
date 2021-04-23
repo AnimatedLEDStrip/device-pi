@@ -66,6 +66,7 @@ publishing {
     publications.create<MavenPublication>("mavenPublication") {
         artifact(tasks.jar.get())
         artifact(javadocJar)
+        artifact(tasks.kotlinSourcesJar.get())
         pom {
             name.set("AnimatedLEDStrip Device - Raspberry Pi")
             description.set("A library for using the AnimatedLEDStrip library on Raspberry Pis")
