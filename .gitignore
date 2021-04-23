@@ -1,6 +1,7 @@
 /out
 /target
-/.idea
+.gradle/
+.idea/
 *.xml
 *.iml
 !pom.xml
