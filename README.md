@@ -1,12 +1,11 @@
 [![Build Status](https://travis-ci.com/AnimatedLEDStrip/device-pi.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/device-pi)
-[![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripPi/animatedledstrip-pi/)
-[![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStripPi)
+[![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripPi/device-pi/)
+[![codecov](https://codecov.io/gh/AnimatedLEDStrip/device-pi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/device-pi)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-pi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-pi)
 
-# AnimatedLEDStripPi
-Device library for using AnimatedLEDStrip on a Raspberry Pi.
-See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki) for usage instructions.
+# AnimatedLEDStrip on the Raspberry Pi
 
-## Note About Building
-Because we use the dokka plugin to generate our documentation, we must build using Java <=9
-> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
+Device library for using AnimatedLEDStrip on a Raspberry Pi.
+A device library is how AnimatedLEDStrip bridges the gap between the abstract code in the core library and the physical LEDs.
+
+See the [AnimatedLEDStrip website](https://animatedledstrip.github.io/device-libraries) for usage instructions.
