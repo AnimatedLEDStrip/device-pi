@@ -1,4 +1,3 @@
-
 tasks.wrapper {
     gradleVersion = "6.7.1"
 }
@@ -50,6 +49,7 @@ description = "A library for using the AnimatedLEDStrip library on Raspberry Pis
 //}
 
 val javadoc = tasks.named("javadoc")
+val jar = tasks.named("jar")
 
 val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
@@ -58,34 +58,36 @@ val javadocJar by tasks.creating(Jar::class) {
 
 publishing {
     publications.create<MavenPublication>("mavenPublication") {
-            artifact(javadocJar)
-            pom {
-                name.set("AnimatedLEDStrip Device - Raspberry Pi")
-                description.set("A library for using the AnimatedLEDStrip library on Raspberry Pis")
-                url.set("https://github.com/AnimatedLEDStrip/device-pi")
+//        artifact(sun.tools.jar.resources.jar)
+        artifact(tasks.jar.get())
+        artifact(javadocJar)
+        pom {
+            name.set("AnimatedLEDStrip Device - Raspberry Pi")
+            description.set("A library for using the AnimatedLEDStrip library on Raspberry Pis")
+            url.set("https://github.com/AnimatedLEDStrip/device-pi")
 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("http://www.opensource.org/licenses/mit-license.php")
-                    }
-                }
-
-                developers {
-                    developer {
-                        name.set("Max Narvaez")
-                        email.set("mnmax.narvaez3@gmail.com")
-                        organization.set("AnimatedLEDStrip")
-                        organizationUrl.set("https://animatedledstrip.github.io")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git:https://github.com/AnimatedLEDStrip/device-pi.git")
-                    developerConnection.set("scm:git:https://github.com/AnimatedLEDStrip/device-pi.git")
-                    url.set("https://github.com/AnimatedLEDStrip/device-pi")
+            licenses {
+                license {
+                    name.set("MIT License")
+                    url.set("http://www.opensource.org/licenses/mit-license.php")
                 }
             }
+
+            developers {
+                developer {
+                    name.set("Max Narvaez")
+                    email.set("mnmax.narvaez3@gmail.com")
+                    organization.set("AnimatedLEDStrip")
+                    organizationUrl.set("https://animatedledstrip.github.io")
+                }
+            }
+
+            scm {
+                connection.set("scm:git:https://github.com/AnimatedLEDStrip/device-pi.git")
+                developerConnection.set("scm:git:https://github.com/AnimatedLEDStrip/device-pi.git")
+                url.set("https://github.com/AnimatedLEDStrip/device-pi")
+            }
+        }
 
     }
 }
