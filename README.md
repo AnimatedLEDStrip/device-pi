@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/AnimatedLEDStrip/device-pi.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/device-pi)
+[![Build Status](https://github.com/AnimatedLEDStrip/device-pi/actions/workflows/test.yml/badge.svg)](https://github.com/AnimatedLEDStrip/device-pi/actions/workflows/test.yml)
 [![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStripPi/device-pi/)
 [![codecov](https://codecov.io/gh/AnimatedLEDStrip/device-pi/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/device-pi)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-pi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-pi)
