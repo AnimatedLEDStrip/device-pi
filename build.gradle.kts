@@ -4,7 +4,7 @@ tasks.wrapper {
 }
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.4.32"
     id("java-library")
     signing
     id("de.marcphilipp.nexus-publish") version "0.4.0"
@@ -17,20 +17,37 @@ repositories {
     mavenLocal()
 }
 
-dependencies {
-    implementation("io.github.animatedledstrip:animatedledstrip-core-jvm:1.0.1")
-    implementation("com.github.mbelling:rpi-ws281x-java:2.0.0-SNAPSHOT")
-    implementation("org.apache.logging.log4j:log4j-core:2.13.2")
-    implementation("org.apache.logging.log4j:log4j-api:2.13.2")
+kotlin {
+    sourceSets {
+        main {
+            dependencies {
+                implementation("io.github.animatedledstrip:animatedledstrip-core-jvm:1.0.1")
+                implementation("com.github.mbelling:rpi-ws281x-java:2.0.0-SNAPSHOT")
+                implementation("org.apache.logging.log4j:log4j-core:2.13.2")
+                implementation("org.apache.logging.log4j:log4j-api:2.13.2")
+            }
+        }
+    }
 }
+
+//sourceSets.main {
+//    dependencies {
+//        implementation("io.github.animatedledstrip:animatedledstrip-core-jvm:1.0.1")
+//        implementation("com.github.mbelling:rpi-ws281x-java:2.0.0-SNAPSHOT")
+//        implementation("org.apache.logging.log4j:log4j-core:2.13.2")
+//        implementation("org.apache.logging.log4j:log4j-api:2.13.2")
+//    }
+//
+//    java.srcDirs("src/main/kotlin")
+//}
 
 group = "io.github.animatedledstrip"
 version = "1.0.1"
 description = "A library for using the AnimatedLEDStrip library on Raspberry Pis"
 
-java {
-    withSourcesJar()
-}
+//java {
+//    withSourcesJar()
+//}
 
 val javadoc = tasks.named("javadoc")
 
@@ -40,8 +57,7 @@ val javadocJar by tasks.creating(Jar::class) {
 }
 
 publishing {
-    publications.withType<MavenPublication>().forEach {
-        it.apply {
+    publications.create<MavenPublication>("mavenPublication") {
             artifact(javadocJar)
             pom {
                 name.set("AnimatedLEDStrip Device - Raspberry Pi")
@@ -70,7 +86,6 @@ publishing {
                     url.set("https://github.com/AnimatedLEDStrip/device-pi")
                 }
             }
-        }
 
     }
 }

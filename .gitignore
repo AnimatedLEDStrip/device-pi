@@ -2,6 +2,7 @@
 /target
 .gradle/
 .idea/
+build/
 *.xml
 *.iml
 !pom.xml
